@@ -20,6 +20,7 @@ package partyguru;
 		
 		final String username = "derpartyguru@gmail.com";
 		final String password = "reichwald";
+		int erfolg = 1;
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -48,9 +49,10 @@ package partyguru;
 			
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			erfolg = 0;
+						
 		} 
-		return 1;
+		return erfolg;
 	}
 
 	//wichtig javax.mail.jar importieren
@@ -59,7 +61,7 @@ package partyguru;
 	//String titel = "Test Titel";
 	//String nachricht = "Test Nachricht";
 	//
-	//SendMailTLS.emailSenden(an, titel, nachricht);
+	//sendMail.emailSenden(an, titel, nachricht);
 
 
 
