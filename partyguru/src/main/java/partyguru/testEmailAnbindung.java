@@ -1,5 +1,7 @@
 package partyguru;
 
+import javax.mail.Multipart;
+
 public class testEmailAnbindung {
 
 	public testEmailAnbindung() {
@@ -12,6 +14,7 @@ public class testEmailAnbindung {
 		String an = "felix.siegmund@gmail.com";
 		String titel = "Test Titel";
 		String nachricht = "Test Nachricht";
+		
 		
 		System.out.println(sendMail.emailSenden(an, titel, nachricht));
 	}
