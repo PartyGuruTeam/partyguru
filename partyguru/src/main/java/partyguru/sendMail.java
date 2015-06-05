@@ -53,7 +53,7 @@ package partyguru;
 		return 1;
 	}
 
-
+	//wichtig javax.mail.jar importieren
 	//Aufruf an EmailMethode 
 	//String an = "testmail@gmail.com";
 	//String titel = "Test Titel";
