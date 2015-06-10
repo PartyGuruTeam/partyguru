@@ -6,6 +6,12 @@ public class Database
 {
 	Connection mCon;
 	
+	/**
+	 * Erstellt Verbindung zur Datenbank, die übergeben wurde.
+	 * @param db Pfad zur Datenbank
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public Database(String db) throws ClassNotFoundException, SQLException
 	{
 		if(db!=null && db!="")
@@ -15,13 +21,20 @@ public class Database
 		}
 	}
 
+	/**
+	 * Schließt Verbindung zur Datenbank
+	 */
 	@Override
 	protected void finalize() throws Throwable {
 		mCon.close();
 		super.finalize();
 	}
 	
-	
+	/**
+	 * Führt Datenbankanfrage aus und gibt ResultSet zurück
+	 * @param sql
+	 * @return
+	 */
 	public ResultSet executeQuery(String sql)
 	{
 		Statement stmt=null;
@@ -33,26 +46,6 @@ public class Database
 		} catch (SQLException e) {
 		}
 		return rs;
-	}
-	
-	
-	//for testing only
-	public static void main(String[] args) {
-		try {
-			Database db = new Database("C:/Users/Bastian/test");
-
-			ResultSet rs = db.executeQuery("SELECT * FROM TEST");
-			while(rs.next())
-			{
-				System.out.println(rs.getString(1));
-			}
-			
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 }
