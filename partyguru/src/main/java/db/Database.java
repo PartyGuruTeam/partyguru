@@ -7,6 +7,7 @@ public class Database
 	Connection mCon;
 	
 	/**
+	 * Konstruktor <br>
 	 * Erstellt Verbindung zur Datenbank, die übergeben wurde.
 	 * @param db Pfad zur Datenbank
 	 * @throws ClassNotFoundException
@@ -22,6 +23,7 @@ public class Database
 	}
 
 	/**
+	 * "Destruktor" <br>
 	 * Schließt Verbindung zur Datenbank
 	 */
 	@Override
@@ -46,6 +48,14 @@ public class Database
 		} catch (SQLException e) {
 		}
 		return rs;
+	}
+	
+	/**
+	 * 
+	 */
+	public void initDB()
+	{
+		//TODO neue Datenbank aufsetzen
 	}
 
 }
