@@ -19,6 +19,10 @@ public class Database
 		{
 			Class.forName("org.h2.Driver");
 			mCon = DriverManager.getConnection("jdbc:h2:"+db, "sa", "");
+			if(checkDB()==false)
+			{
+				initDB();
+			}
 		}
 	}
 
@@ -51,11 +55,21 @@ public class Database
 	}
 	
 	/**
-	 * 
+	 * Datenbank intial aufsetzen
 	 */
 	public void initDB()
 	{
 		//TODO neue Datenbank aufsetzen
+	}
+	
+	/**
+	 * Prüfen, ob Datenbank die benötigten Tabellen und Spalten enthält. 
+	 * @return true, wenn Prüfung erfolgreich
+	 */
+	private boolean checkDB()
+	{
+		//TODO DB checken
+		return true;
 	}
 
 }
