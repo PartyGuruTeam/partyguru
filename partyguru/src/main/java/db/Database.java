@@ -50,9 +50,11 @@ public class Database
 			if(stmt!=null)
 				rs = stmt.executeQuery(sql);
 		} catch (SQLException e) {
+			System.out.println("Error - Execute Query");
 		}
 		return rs;
 	}
+	
 	
 	/**
 	 * Datenbank intial aufsetzen
