@@ -2,6 +2,11 @@ package db;
 
 import java.sql.*;
 
+/**
+ * Klasse zur Herstellung der Verbindung zur Datenbank und um DB-Anfragen zu stellen
+ * @author Bastian
+ *
+ */
 public class Database 
 {
 	Connection mCon;
@@ -40,19 +45,32 @@ public class Database
 	 * Führt Datenbankanfrage aus und gibt ResultSet zurück
 	 * @param sql
 	 * @return
+	 * @throws SQLException 
 	 */
-	public ResultSet executeQuery(String sql)
+	public ResultSet executeQuery(String sql) throws SQLException
 	{
 		Statement stmt=null;
 		ResultSet rs=null;
-		try {
-			stmt = mCon.createStatement();
-			if(stmt!=null)
-				rs = stmt.executeQuery(sql);
-		} catch (SQLException e) {
-			System.out.println("Error - Execute Query");
-		}
+		stmt = mCon.createStatement();
+		if(stmt!=null)
+			rs = stmt.executeQuery(sql);
 		return rs;
+	}
+	
+	/**
+	 * Führt Datenbankanfragen aus, die etwas in der Datenbank verändern
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 */
+	public int executeUpdate(String sql) throws SQLException
+	{
+		Statement stmt=null;
+		int result=0;
+		stmt = mCon.createStatement();
+		if(stmt!=null)
+			result = stmt.executeUpdate(sql);
+		return result;
 	}
 	
 	
