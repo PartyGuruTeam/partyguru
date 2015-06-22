@@ -7,6 +7,11 @@ import javax.swing.table.DefaultTableModel;
 
 import db.Database;
 
+/**
+ * Testklasse zum Testen von TabellenLayout.
+ * @author Bastian
+ *
+ */
 public class TabellenLayoutImpl extends TabellenLayout 
 {
 
@@ -16,7 +21,7 @@ public class TabellenLayoutImpl extends TabellenLayout
 	
 	public TabellenLayoutImpl(Database db, MutterLayout parent) throws SQLException
 	{
-		super(db.executeQuery("SELECT * FROM PARTY"), parent);
+		super(db.executeQuery("SELECT * FROM PARTY"));
 		mDB = db;
 	}
 
