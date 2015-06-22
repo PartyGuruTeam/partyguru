@@ -40,19 +40,26 @@ public class Database
 	 * Führt Datenbankanfrage aus und gibt ResultSet zurück
 	 * @param sql
 	 * @return
+	 * @throws SQLException 
 	 */
-	public ResultSet executeQuery(String sql)
+	public ResultSet executeQuery(String sql) throws SQLException
 	{
 		Statement stmt=null;
 		ResultSet rs=null;
-		try {
-			stmt = mCon.createStatement();
-			if(stmt!=null)
-				rs = stmt.executeQuery(sql);
-		} catch (SQLException e) {
-			System.out.println("Error - Execute Query");
-		}
+		stmt = mCon.createStatement();
+		if(stmt!=null)
+			rs = stmt.executeQuery(sql);
 		return rs;
+	}
+	
+	public int executeUpdate(String sql) throws SQLException
+	{
+		Statement stmt=null;
+		int result=0;
+		stmt = mCon.createStatement();
+		if(stmt!=null)
+			result = stmt.executeUpdate(sql);
+		return result;
 	}
 	
 	
