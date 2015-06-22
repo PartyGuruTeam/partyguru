@@ -2,6 +2,11 @@ package db;
 
 import java.sql.*;
 
+/**
+ * Klasse zur Herstellung der Verbindung zur Datenbank und um DB-Anfragen zu stellen
+ * @author Bastian
+ *
+ */
 public class Database 
 {
 	Connection mCon;
@@ -52,6 +57,12 @@ public class Database
 		return rs;
 	}
 	
+	/**
+	 * Führt Datenbankanfragen aus, die etwas in der Datenbank verändern
+	 * @param sql
+	 * @return
+	 * @throws SQLException
+	 */
 	public int executeUpdate(String sql) throws SQLException
 	{
 		Statement stmt=null;

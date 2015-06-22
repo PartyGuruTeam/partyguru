@@ -1,18 +1,26 @@
 package gui;
 
-import java.sql.SQLException;
-
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+/**
+ * Klasse, die das Hauptfenster beinhaltet
+ * @author Bastian
+ *
+ */
 public class Frame extends JFrame 
 {
 	private static final long serialVersionUID = 1L;
 	
 	private JMenuBar mMenuBar;
-	JMenu mDatei;
+	
+	private JMenu mMenuDatei;
+	private JMenuItem mItemNeuesProj;
+	private JMenuItem mItemOeffnen;
+	
+	private JMenu mMenuBearbeiten;
 	
 	private MutterLayout mMutter;
 	
@@ -21,37 +29,24 @@ public class Frame extends JFrame
 	 */
 	public Frame()
 	{
+		long time = System.currentTimeMillis();
+		
 		mMenuBar = new JMenuBar();
 		this.setJMenuBar(mMenuBar);
 		
-		mDatei = new JMenu("Datei");
-		mMenuBar.add(mDatei);
-		/*TODO 
-		JMenuItem mntmNeuesProjekt = new JMenuItem("Neues Projekt");
-		mnDatei.add(mntmNeuesProjekt);
+		mMenuDatei = new JMenu("Datei");
+		mMenuBar.add(mMenuDatei);
 		
-		JMenuItem mntmffnen = new JMenuItem("\u00D6ffnen");
-		mnDatei.add(mntmffnen);
+		mItemNeuesProj = new JMenuItem("Neue Party...");
+		mMenuDatei.add(mItemNeuesProj);
 		
-		JMenuItem mntmSpeichern = new JMenuItem("Speichern");
-		mnDatei.add(mntmSpeichern);
+		mItemOeffnen = new JMenuItem("Party öffnen...");
+		mMenuDatei.add(mItemOeffnen);
 		
-		JMenuItem mntmSpeichernUnter = new JMenuItem("Speichern Unter");
-		mnDatei.add(mntmSpeichernUnter);
+		mMenuBearbeiten = new JMenu("Bearbeiten");
+		mMenuBar.add(mMenuBearbeiten);
 		
-		JMenuItem mntmSchlieen = new JMenuItem("Schlie\u00DFen");
-		mnDatei.add(mntmSchlieen);
-		
-		JMenu mnBearbeiten = new JMenu("Bearbeiten");
-		menuBar.add(mnBearbeiten);
-		*/
-		long time = System.currentTimeMillis();
-		try {
-			mMutter = new MutterLayout();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		mMutter = new MutterLayout();
 		this.add(mMutter);
 		this.setSize(500, 400);
 		this.setVisible(true);
@@ -59,10 +54,12 @@ public class Frame extends JFrame
 		System.out.println("Start-up Time: "+(double)(System.currentTimeMillis()-time)/1000);
 	}
 	
-
+	/**
+	 * Fenster aufrufen
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		new Frame();
-
 	}
 
 }

@@ -15,6 +15,12 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * Abstrakte Klasse, die als Grundlage für alle Views in einem Tabellen Layout dient. Enthält Tabelle 
+ * und Buttons zum Anlegen und Löschen von Einträgen.
+ * @author Bastian
+ *
+ */
 public abstract class TabellenLayout extends JPanel implements ActionListener, TableModelListener
 {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +31,11 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JTable mTabelle;
 	private DefaultTableModel mModell;
 
-	public TabellenLayout(ResultSet rs, MutterLayout parent)
+	/**
+	 * Konstruktor von Tabellen Layout.
+	 * @param rs ResultSet einer SQL Abfrage wird übergeben, um damit die Tabelle zu füllen.
+	 */
+	public TabellenLayout(ResultSet rs)
 	{
 		mTabelle = new JTable();
 		this.add(mTabelle);
@@ -46,9 +56,17 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		this.add(mLoeschenButton);
 		mLoeschenButton.addActionListener(this);
 	}
-
+	
+	/**
+	 * Funktion soll benötigte Tabelle vom Server ziehen und daraufhin an refreshTable(ResultSet rs) übergeben.
+	 */
 	public abstract void refreshTable();
 
+	/**
+	 * Soll von refreshTable() aufgerufen werden. Stellt übergebenes Resultset dar.
+	 * @param rs
+	 * @throws SQLException
+	 */
 	public void refreshTable(ResultSet rs) throws SQLException
 	{
 		ResultSetMetaData md = null;
@@ -78,6 +96,9 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		mTabelle.setModel(mModell);
 	}
 
+	/**
+	 * Wird aufgerufen, wenn auf Neu oder Löschen Button geklickt wird und führt entsprechende Funktion aus.
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(mNeuButton))
 		{
@@ -105,6 +126,9 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 	}
 
+	/**
+	 * Wird aufgerufen, wenn Tabelle geupdated wurde und führt entsprechende Funktion aus.
+	 */
 	public void tableChanged(TableModelEvent e) 
 	{
 		if(e.getType()==TableModelEvent.UPDATE)
@@ -114,8 +138,22 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 	}
 
+	/**
+	 * Soll Tupel aus Datenbank löschen. Wird von actionPerformed() aufgerufen.
+	 * @param id Id mithilfe dessen das Tupel identifiziert werden kann.
+	 */
 	public abstract void deleteRow(int id);
+	
+	/**
+	 * Neues Tupel der Datenbank hinzufügen. Wird von actionPerformed() aufgerufen.
+	 */
 	public abstract void addRow();
+	
+	/**
+	 * Bestimmtes Tupel verändern. Wird von tableChanged() aufgerufen.
+	 * @param row Zeile, in der Veränderung vorgenommen wurde.
+	 * @param modell TableModel, welches verwendet wird.
+	 */
 	public abstract void updateRow(int row, DefaultTableModel modell);
 
 }
