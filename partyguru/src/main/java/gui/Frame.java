@@ -50,7 +50,7 @@ public class Frame extends JFrame
 		this.add(mMutter);
 		this.setSize(700, 600);
 		this.setVisible(true);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		System.out.println("Start-up Time: "+(double)(System.currentTimeMillis()-time)/1000);
 	}
 	
