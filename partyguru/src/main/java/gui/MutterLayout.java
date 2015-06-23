@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.io.File;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
@@ -29,12 +30,15 @@ public class MutterLayout extends JPanel
 		
 		//!!!only temporary!!!
 		try {
-			db = new Database("~/party");
+			db = new Database("./db/party");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		File f = new File(".");
+		System.out.println(f.getAbsolutePath());
 		
 		JTabbedPane tp = new JTabbedPane(JTabbedPane.TOP);
 		this.add(tp, BorderLayout.CENTER);
