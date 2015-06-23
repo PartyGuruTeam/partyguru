@@ -29,7 +29,7 @@ public class MutterLayout extends JPanel
 		
 		//!!!only temporary!!!
 		try {
-			db = new Database("./db/party");
+			db = new Database("~/party");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
