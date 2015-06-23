@@ -1,8 +1,10 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.sql.SQLException;
 
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import db.Database;
 
@@ -22,17 +24,20 @@ public class MutterLayout extends JPanel
 	 */
 	public MutterLayout()
 	{
+		this.setLayout(new BorderLayout());
 		//TODO Verschiedene Seiten einfügen
-		//TODO Tabs einfügen
 		
 		//!!!only temporary!!!
 		try {
-			db = new Database("~/party");
+			db = new Database("./db/party");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		JTabbedPane tp = new JTabbedPane(JTabbedPane.TOP);
+		this.add(tp, BorderLayout.CENTER);
 		
 		//!!!only temporary!!!
 		TabellenLayoutImpl layout=null;
@@ -41,7 +46,7 @@ public class MutterLayout extends JPanel
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		this.add(layout);
+		tp.addTab("TabellenLayout", layout);
 	}
 
 }
