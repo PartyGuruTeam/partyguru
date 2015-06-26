@@ -114,6 +114,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			refreshTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
+			//TODO aktuell markierte Zeile(n) löschen
 			String result = JOptionPane.showInputDialog("ID eingeben:");
 			if(result!=null)
 			{
