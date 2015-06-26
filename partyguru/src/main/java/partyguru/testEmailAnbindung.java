@@ -1,7 +1,5 @@
 package partyguru;
 
-import javax.mail.Multipart;
-
 public class testEmailAnbindung {
 
 	public testEmailAnbindung() {
