@@ -11,11 +11,13 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 /**
  * Klasse die dem Versenden von Emails über einen SMTP Server dient.
- * Übergeben werden müssen die String Felder: an email Adresse, Titel der Nachricht, Nachricht in Plain text.
+ * Übergeben werden müssen die String Felder: an email Adresse, Titel der Nachricht, Nachricht in HTML.
  * Die Funktion gibt bei Erfolg eine 1 zurück, bei einem Fehler eine 0
  * @author siegmunf
  *
@@ -23,12 +25,25 @@ import javax.mail.internet.MimeMessage;
 
 public class sendMail {
 
-
+	static String password = "password";
 
 	public static int emailSenden(String an, String titel, String nachricht){
 
 		final String username = "derpartyguru@gmail.com";
-		final String password = "reichwald";
+
+		if (password == "password"){
+			
+			JFrame frame = new JFrame("PW Abfrage");
+		    password = JOptionPane.showInputDialog(
+		        frame, 
+		        "Bitte Passwort eingeben: ", 
+		        "Email Passwort wird benötigt!", 
+		        JOptionPane.QUESTION_MESSAGE
+		    );
+		}
+		
+	    
+		
 		int erfolg = 1;
 
 		Properties props = new Properties();
@@ -51,8 +66,9 @@ public class sendMail {
 			message.setRecipients(Message.RecipientType.TO,
 					InternetAddress.parse(an));
 			message.setSubject(titel);
-			message.setText(nachricht);
 
+			message.setContent(nachricht, "text/html; charset=ISO-8859-1");
+	         
 
 			Transport.send(message);
 
@@ -60,12 +76,13 @@ public class sendMail {
 
 		} catch (MessagingException e) {
 			erfolg = 0;
+			password = "password";
 
 		} 
 		return erfolg;
 	}
 
-	//wichtig javax.mail.jar importieren
+
 	//Aufruf an EmailMethode 
 	//String an = "testmail@gmail.com";
 	//String titel = "Test Titel";
@@ -76,6 +93,4 @@ public class sendMail {
 
 
 }
-
-
 
