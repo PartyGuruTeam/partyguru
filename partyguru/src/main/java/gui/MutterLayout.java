@@ -20,6 +20,7 @@ public class MutterLayout extends JPanel
 	private static final long serialVersionUID = 1L;
 	
 	private Database db;
+	int mPID;
 		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -46,13 +47,25 @@ public class MutterLayout extends JPanel
 			this.add(tp, BorderLayout.CENTER);
 			
 			//!!!only temporary!!!
-			TabellenLayoutImpl layout=null;
+			SelectParty selection=null;
 			try {
-				layout = new TabellenLayoutImpl(db, this);
-			} catch (SQLException e) {
-				e.printStackTrace();
+				selection = new SelectParty(db, this);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-			tp.addTab("TabellenLayout", layout);
+			mPID = -1;
+			while(mPID==-1)
+			{
+				if(!selection.isVisible())
+					System.exit(1); //TODO anders lösen
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			//JOptionPane.showMessageDialog(this, "PID: "+mPID);
 		} else 
 		{
 			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
