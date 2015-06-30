@@ -1,7 +1,10 @@
 package gui;
 
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -12,17 +15,30 @@ import db.Database;
  * @author Bastian
  *
  */
-public class TabellenLayoutImpl extends TabellenLayout 
+public class SelectParty extends TabellenLayout 
 {
 
 	private static final long serialVersionUID = 1L;
 
 	Database mDB;
+	MutterLayout mParent;
+	JButton mSubmit;
+	JFrame mFrame;
 	
-	public TabellenLayoutImpl(Database db, MutterLayout parent) throws SQLException
+	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
 		super(db.executeQuery("SELECT * FROM PARTY"));
+		mFrame = new JFrame("Datenbank auswählen");
+		mFrame.add(this);
+		mFrame.setSize(500, 500);
+		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		mFrame.setVisible(true);
 		mDB = db;
+		mParent = parent;
+		mSubmit = new JButton("Auswählen");
+		mSubmit.addActionListener(this);
+		this.mButtonPanel.add(mSubmit);
+		
 	}
 
 	@Override
@@ -75,6 +91,19 @@ public class TabellenLayoutImpl extends TabellenLayout
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		super.actionPerformed(e);
+		if(e.getSource().equals(mSubmit))
+		{
+			mParent.mPID = (int) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
+			
+			mFrame.dispose();		
+		}
+	}
+	
+	
 	
 	
 }
