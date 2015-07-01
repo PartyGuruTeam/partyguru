@@ -99,18 +99,17 @@ public class SelectParty extends TabellenLayout
 		{
 			if(super.mTabelle.getSelectedRow()>=0)
 			{
+				//TODO BUG: wenn Tabelle verändert wurde, richtigen Wert auslesen
 				Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
 				if(result!=null)
 				{
 					mParent.mPID = result;
 					mFrame.dispose();
-				} else
-				{
-					JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus.");
 				}
+			} else
+			{
+				JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus.");
 			}
-
-
 		}
 	}
 
