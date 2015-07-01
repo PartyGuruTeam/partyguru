@@ -97,7 +97,7 @@ public class SelectParty extends TabellenLayout
 		super.actionPerformed(e);
 		if(e.getSource().equals(mSubmit))
 		{
-			mParent.mPID = (int) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
+			mParent.mPID = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
 			
 			mFrame.dispose();		
 		}
