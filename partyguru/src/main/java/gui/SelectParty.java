@@ -97,15 +97,19 @@ public class SelectParty extends TabellenLayout
 		super.actionPerformed(e);
 		if(e.getSource().equals(mSubmit))
 		{
-			Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
-			if(result!=null)
+			if(super.mTabelle.getSelectedRow()>=0)
 			{
-				mParent.mPID = result;
-				mFrame.dispose();
-			} else
-			{
-				JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus!");
+				Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
+				if(result!=null)
+				{
+					mParent.mPID = result;
+					mFrame.dispose();
+				} else
+				{
+					JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus.");
+				}
 			}
+
 
 		}
 	}
