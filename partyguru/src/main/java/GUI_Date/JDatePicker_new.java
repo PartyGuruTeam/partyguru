@@ -1,11 +1,14 @@
 package GUI_Date;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Properties;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -64,12 +67,20 @@ public class JDatePicker_new extends JDatePickerImpl
 		JDatePicker_new  datePicker = createDatePicker();
 		panel.add(datePicker);
 		
+		JButton button = new JButton("senden");
+		button.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(datePicker.getDate());
+			}
+			
+		});
+		panel.add(button);
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 300);
-
-
 
 	}
 }
