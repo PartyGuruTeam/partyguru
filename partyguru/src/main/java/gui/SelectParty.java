@@ -24,7 +24,7 @@ public class SelectParty extends TabellenLayout
 	MutterLayout mParent;
 	JButton mSubmit;
 	JFrame mFrame;
-	
+
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
 		super(db.executeQuery("SELECT * FROM PARTY"));
@@ -38,7 +38,7 @@ public class SelectParty extends TabellenLayout
 		mSubmit = new JButton("Auswählen");
 		mSubmit.addActionListener(this);
 		this.mButtonPanel.add(mSubmit);
-		
+
 	}
 
 	@Override
@@ -50,25 +50,25 @@ public class SelectParty extends TabellenLayout
 		}
 
 	}
-	
+
 	@Override
 	public void refreshTable()
 	{
-		
+
 		try {
 			refreshTable(mDB.executeQuery("SELECT * FROM PARTY"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void addRow()
 	{
 		String name = JOptionPane.showInputDialog("Name eingeben:");
 		String ort = JOptionPane.showInputDialog("Ort eingeben:");
 		String motto = JOptionPane.showInputDialog("Motto eingeben:");
-		
+
 		try {
 			mDB.executeUpdate("INSERT INTO PARTY (NAME, ORT, MOTTO) VALUES ('"+name+"', '"+ort+"', '"+motto+"')");
 		} catch (SQLException e) {
@@ -97,13 +97,17 @@ public class SelectParty extends TabellenLayout
 		super.actionPerformed(e);
 		if(e.getSource().equals(mSubmit))
 		{
-			mParent.mPID = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
-			
-			mFrame.dispose();		
+			Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
+			if(result!=null)
+			{
+				mParent.mPID = result;
+				mFrame.dispose();
+			}
+
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 }
