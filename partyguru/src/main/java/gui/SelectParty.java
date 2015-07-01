@@ -102,6 +102,9 @@ public class SelectParty extends TabellenLayout
 			{
 				mParent.mPID = result;
 				mFrame.dispose();
+			} else
+			{
+				JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus!");
 			}
 
 		}
