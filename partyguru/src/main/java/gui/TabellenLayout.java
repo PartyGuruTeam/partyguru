@@ -30,10 +30,10 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JButton mNeuButton;
 	private JButton mLoeschenButton;
 
-	private JTable mTabelle;
+	JTable mTabelle;
 	private DefaultTableModel mModell;
 	
-	private JPanel mButtonPanel;
+	JPanel mButtonPanel;
 
 	/**
 	 * Konstruktor von Tabellen Layout.
