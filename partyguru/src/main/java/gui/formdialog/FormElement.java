@@ -1,6 +1,5 @@
 package gui.formdialog;
 
-import java.util.Vector;
 
 import javax.swing.JComponent;
 
