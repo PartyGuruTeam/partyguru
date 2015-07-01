@@ -46,12 +46,10 @@ public class MutterLayout extends JPanel
 			JTabbedPane tp = new JTabbedPane(JTabbedPane.TOP);
 			this.add(tp, BorderLayout.CENTER);
 			
-			//!!!only temporary!!!
 			SelectParty selection=null;
 			try {
 				selection = new SelectParty(db, this);
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			mPID = -1;
