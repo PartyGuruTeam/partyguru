@@ -51,6 +51,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 		
 		mModell.addTableModelListener(this);
+		mTabelle.getTableHeader().setReorderingAllowed(false);
 		
 		mButtonPanel = new JPanel();
 
