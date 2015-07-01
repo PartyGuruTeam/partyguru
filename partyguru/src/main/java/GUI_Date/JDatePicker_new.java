@@ -20,7 +20,7 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 /**
  * Kalenderkomponente in GUI
- * @author Lukas auf Basis von www.codejava.net
+ * @author Lukas
  * @version 1.0 beta
  */
 
