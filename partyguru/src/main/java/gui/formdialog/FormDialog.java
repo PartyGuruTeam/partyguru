@@ -1,11 +1,16 @@
 package gui.formdialog;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.AbstractButton;
+import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,8 +22,8 @@ public class FormDialog extends JPanel implements ActionListener
 	private static final long serialVersionUID = 1L;
 
 	JFrame mFrame;
-	ArrayList<JTextComponent> comps; 
 	JButton mSubmit;
+	FormElement[] mElements;
 
 	Vector<String> mResult;
 
@@ -28,18 +33,24 @@ public class FormDialog extends JPanel implements ActionListener
 		mFrame = new JFrame(titel);
 		mFrame.add(this);
 		
+		//this.setLayout(new GroupLayout(this));
+		
+		mElements = elements;
 		mResult = result;
 		
-		comps = new ArrayList<JTextComponent>();
-
-		for(FormElement f: elements)
+		for(FormElement f: mElements)
 		{
 			this.add(new JLabel(f.mLabel));
 			if(f.mType==FormElement.TEXT_FIELD)
 			{
 				JTextField t = new JTextField(20);
 				this.add(t);
-				comps.add(t);
+				f.setComponent(t);
+			} else if(f.mType==FormElement.DROP_DOWN)
+			{
+				JComboBox<String> b = new JComboBox<String>(f.mInitVector);
+				this.add(b);
+				f.setComponent(b);
 			}
 		}
 		
@@ -54,13 +65,30 @@ public class FormDialog extends JPanel implements ActionListener
 
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) 
+	public void actionPerformed(ActionEvent e) 
 	{
-		if(arg0.getSource().equals(mSubmit))
+		if(e.getSource().equals(mSubmit))
 		{	
-			for(JTextComponent c: comps)
+			for(FormElement element: mElements)
 			{
-				mResult.add(c.getText());
+				switch(element.mType)
+				{
+				case FormElement.TEXT_FIELD:
+					mResult.add(((JTextComponent) element.getComponent()).getText());
+					break;
+				case FormElement.DROP_DOWN:
+					if(element.getComponent() instanceof JComboBox<?>)
+					{
+						@SuppressWarnings("unchecked")
+						JComboBox<String> box = (JComboBox<String>) element.getComponent();
+						mResult.add((String) box.getSelectedItem());
+					}	
+					break;
+				default:
+					mResult.add(null);
+					break;
+				}
+				
 			}
 			mFrame.dispose();
 		}
@@ -87,7 +115,9 @@ public class FormDialog extends JPanel implements ActionListener
 	public static void main(String[] args) {
 		
 		Vector<String> result = getDialog("Hello World", new FormElement[] {
-				new FormElement("Hello", FormElement.TEXT_FIELD)
+				new FormElement("Hello", FormElement.TEXT_FIELD),
+				new FormElement("Drop Down", FormElement.DROP_DOWN, new String[] {
+						"Hello", "World" })
 		});
 		
 		for(String s: result)
