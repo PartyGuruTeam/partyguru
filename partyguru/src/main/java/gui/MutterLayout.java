@@ -25,6 +25,7 @@ public class MutterLayout extends JPanel
 	JTabbedPane mTabs;
 	
 	private PersonenTabelle mPersonen;
+	private PStammdaten mStammdaten;
 		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -51,8 +52,11 @@ public class MutterLayout extends JPanel
 			this.add(mTabs, BorderLayout.CENTER);
 			
 			try {
+				
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
+				mStammdaten = new PStammdaten(db, this);
+				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
