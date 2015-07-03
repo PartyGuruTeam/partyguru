@@ -55,7 +55,7 @@ public class CalenderFunction extends JDatePickerImpl
 		JPanel panel = new JPanel();
 		frame.add(panel);
 
-		CalenderFunction  datePicker = createDatePicker();
+		final CalenderFunction  datePicker = createDatePicker();
 		panel.add(datePicker);
 		
 		JButton button = new JButton("senden");
