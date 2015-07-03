@@ -49,14 +49,13 @@ public class Gaesteliste extends TabellenLayout
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
 			ResultSet rs = mDB.executeQuery("SELECT PERSID, NAME FROM PERSONEN");
-			Vector<String> elements = new Vector<String>();
+			final Vector<String> elements = new Vector<String>();
 			while(rs.next())
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
 			new Thread(new Runnable(){
 
-				@Override
 				public void run() {
 					Vector<String> result = FormDialog.getDialog("Neuen Gast hinzufügen", new FormElement[] {
 							new FormElement("Person", FormElement.DROP_DOWN, elements),

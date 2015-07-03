@@ -49,7 +49,6 @@ public class PersonenTabelle extends TabellenLayout {
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
-			@Override
 			public void run() {
 				Vector<String> v = new Vector<String>();
 				v.add("m");

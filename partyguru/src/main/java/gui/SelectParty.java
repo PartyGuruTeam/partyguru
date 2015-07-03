@@ -74,7 +74,6 @@ public class SelectParty extends TabellenLayout
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
-			@Override
 			public void run() {
 				Vector<String> result = FormDialog.getDialog("Neue Party erstellen", new FormElement[] {
 						new FormElement("Name", FormElement.TEXT_FIELD),
