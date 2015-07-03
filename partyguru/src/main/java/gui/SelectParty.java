@@ -71,7 +71,7 @@ public class SelectParty extends TabellenLayout
 	@Override
 	public void addRow()
 	{
-		Window w = SwingUtilities.getWindowAncestor(this);
+		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
 			@Override

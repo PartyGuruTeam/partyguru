@@ -1,7 +1,6 @@
 package gui.kontakte;
 
 import java.awt.Window;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -47,7 +46,7 @@ public class PersonenTabelle extends TabellenLayout {
 
 	@Override
 	public void addRow() {
-		Window w = SwingUtilities.getWindowAncestor(this);
+		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
 			@Override
