@@ -67,9 +67,9 @@ public class MutterLayout extends JPanel
 				mTabs.add(mMaterial, "Material");
 				mGaesteliste = new Gaesteliste(db, this);
 				mTabs.add(mGaesteliste, "Gästeliste");
-				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
+				//TODO BUG bei laden von Stammdaten
 				mStammdaten = new PStammdaten(db, this);
 				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
