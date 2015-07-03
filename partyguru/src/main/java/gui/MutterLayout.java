@@ -69,8 +69,8 @@ public class MutterLayout extends JPanel
 				mTabs.add(mPutzen, "Putzplan");
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} 
-		
+			}
+			
 		} else 
 		{
 			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
