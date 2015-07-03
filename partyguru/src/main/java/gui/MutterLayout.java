@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 
 import db.Database;
 import gui.kontakte.PersonenTabelle;
+import gui.putz.PutzTemplate;
 
 /**
  * 
@@ -25,7 +26,7 @@ public class MutterLayout extends JPanel
 	JTabbedPane mTabs;
 	
 	private PersonenTabelle mPersonen;
-		
+	private PutzTemplate mPutzen;
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -53,10 +54,13 @@ public class MutterLayout extends JPanel
 			try {
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
+				
+				mPutzen = new PutzTemplate(db, this);
+				mTabs.add(mPutzen, "Putzplan");
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			
+			} 
+		
 		} else 
 		{
 			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
