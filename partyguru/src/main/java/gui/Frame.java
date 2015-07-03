@@ -47,6 +47,7 @@ public class Frame extends JFrame
 
 		mMutter = new MutterLayout();
 		this.add(mMutter);
+		
 		this.setSize(700, 600);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
