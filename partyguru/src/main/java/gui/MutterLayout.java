@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.gelegenheiten.GelegenheitenTabelle;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
@@ -31,9 +32,16 @@ public class MutterLayout extends JPanel
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
+<<<<<<< HEAD
 	private Mitbringliste mMitbringliste;
+=======
+	private GelegenheitenTabelle mGelegenheiten;
+	
+>>>>>>> refs/heads/develop
 	
 	private PutzTemplate mPutzen;
+	private PStammdaten mStammdaten;
+		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -59,17 +67,22 @@ public class MutterLayout extends JPanel
 			this.add(mTabs, BorderLayout.CENTER);
 			
 			try {
+				
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
 				mTabs.add(mMaterial, "Material");
 				mGaesteliste = new Gaesteliste(db, this);
 				mTabs.add(mGaesteliste, "Gästeliste");
-				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
 				mMitbringliste = new Mitbringliste(db, this);
 				mTabs.add(mMitbringliste, "Mitbringliste");
+				mGelegenheiten = new GelegenheitenTabelle(db, this);
+				mTabs.add(mGelegenheiten, "Gelegenheiten");
+				//TODO BUG bei laden von Stammdaten
+				mStammdaten = new PStammdaten(db, this);
+				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

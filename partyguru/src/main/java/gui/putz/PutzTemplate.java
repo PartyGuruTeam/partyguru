@@ -49,7 +49,6 @@ private static final long serialVersionUID = 1L;
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
-			@Override
 			public void run() {
 				Vector<String> result = FormDialog.getDialog("Neue Putztätigkeit anlegen", new FormElement[] {
 						new FormElement("Tätigkeit", FormElement.TEXT_FIELD),

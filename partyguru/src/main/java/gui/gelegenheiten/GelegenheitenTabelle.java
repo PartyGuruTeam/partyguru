@@ -48,9 +48,16 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	@Override
 	public void addRow() {
 		final Window w = SwingUtilities.getWindowAncestor(this);
+		try {
+			ResultSet rs = mDB.executeQuery("SELECT PERSID, NAME FROM PERSONEN");
+			final Vector<String> element = new Vector<String>();
+			while(rs.next())
+			{
+				element.add(rs.getString(1)+"-"+rs.getString(2));
+			}
+		
 		new Thread(new Runnable(){
 
-			@Override
 			public void run() {
 				Vector<String> art = new Vector<String>();
 				art.add("Mitfahrgelegenheit");
@@ -58,19 +65,20 @@ public class GelegenheitenTabelle extends TabellenLayout {
 				
 				Vector<String> anz = new Vector<String>();
 				for(Integer i=1; i<=10;i++)
-					art.add(i.toString());
+					anz.add(i.toString());
 				Vector<String> result = FormDialog.getDialog("Neue Gelegenheit anlegen", new FormElement[] {
 						new FormElement("Ort", FormElement.TEXT_FIELD),
 						new FormElement("Art", FormElement.DROP_DOWN, art),
 						new FormElement("Anzahl Plaetze", FormElement.DROP_DOWN, anz),
-						new FormElement("Anbieter", FormElement.TEXT_FIELD),
+						new FormElement("Anbieter", FormElement.DROP_DOWN,element),
 				}, w);
 				//TODO verbessern
 				if(result.size()==4)
 				{
 					try {
+						String persid = result.elementAt(3).split("-")[0];
 						mDB.executeUpdate("INSERT INTO GELEGENHEITEN (ORT, ART, ANZPLAETZE, PERSID, PID) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"','"+mParent.getPID()+"')");
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+persid+"','"+mParent.getPID()+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -78,8 +86,12 @@ public class GelegenheitenTabelle extends TabellenLayout {
 				refreshTable();
 			}
 			
-		}).start();		
+		}).start();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}	
 	}
+	
 
 	@Override
 	public void updateRow(int row, DefaultTableModel modell) {
