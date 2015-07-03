@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.gelegenheiten.GelegenheitenTabelle;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
@@ -30,6 +31,7 @@ public class MutterLayout extends JPanel
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
+	private GelegenheitenTabelle mGelegenheiten;
 	
 	
 	private PutzTemplate mPutzen;
@@ -67,6 +69,10 @@ public class MutterLayout extends JPanel
 				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
+				
+				mGelegenheiten = new GelegenheitenTabelle(db, this);
+				mTabs.add(mGelegenheiten, "Gelegenheiten");
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} 
