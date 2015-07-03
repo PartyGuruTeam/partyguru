@@ -33,6 +33,8 @@ public class MutterLayout extends JPanel
 	
 	
 	private PutzTemplate mPutzen;
+	private PStammdaten mStammdaten;
+		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -58,6 +60,7 @@ public class MutterLayout extends JPanel
 			this.add(mTabs, BorderLayout.CENTER);
 			
 			try {
+				
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
@@ -67,6 +70,8 @@ public class MutterLayout extends JPanel
 				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
+				mStammdaten = new PStammdaten(db, this);
+				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
