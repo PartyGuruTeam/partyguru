@@ -86,4 +86,9 @@ public class MutterLayout extends JPanel
 		}
 	}
 
+	public int getPID(){
+		return mPID;
+		
+	}
+	
 }
