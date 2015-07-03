@@ -52,9 +52,13 @@ public class MaterialTabelle extends TabellenLayout {
 
 			@Override
 			public void run() {
+				Vector<String> v = new Vector<String>();
+				v.add("Essen");
+				v.add("Getränke");
+				v.add("Partyutensilien");
 				Vector<String> result = FormDialog.getDialog("Neues Material anlegen", new FormElement[] {
 						new FormElement("Name", FormElement.TEXT_FIELD),
-						new FormElement("Art", FormElement.DROP_DOWN, new String[] {"Essen", "Getränke", "Partyutensilien"}),
+						new FormElement("Art", FormElement.DROP_DOWN, v),
 						
 				}, w);
 				//TODO verbessern

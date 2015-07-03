@@ -51,9 +51,12 @@ public class PersonenTabelle extends TabellenLayout {
 
 			@Override
 			public void run() {
+				Vector<String> v = new Vector<String>();
+				v.add("m");
+				v.add("w");
 				Vector<String> result = FormDialog.getDialog("Neue Person anlegen", new FormElement[] {
 						new FormElement("Name", FormElement.TEXT_FIELD),
-						new FormElement("Geschlecht", FormElement.DROP_DOWN, new String[] {"m", "w"}),
+						new FormElement("Geschlecht", FormElement.DROP_DOWN, v),
 						new FormElement("Email", FormElement.TEXT_FIELD),
 						new FormElement("Handy", FormElement.TEXT_FIELD),
 				}, w);

@@ -10,6 +10,7 @@ import javax.swing.JTabbedPane;
 
 import db.Database;
 import gui.kontakte.MaterialTabelle;
+import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 
 /**
@@ -26,6 +27,7 @@ public class MutterLayout extends JPanel
 	JTabbedPane mTabs;
 	
 	private PersonenTabelle mPersonen;
+	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
 	
 	
@@ -58,6 +60,8 @@ public class MutterLayout extends JPanel
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
 				mTabs.add(mMaterial, "Material");
+				mGaesteliste = new Gaesteliste(db, this);
+				mTabs.add(mGaesteliste, "Gästeliste");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
