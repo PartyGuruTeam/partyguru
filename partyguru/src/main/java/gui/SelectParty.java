@@ -33,7 +33,7 @@ public class SelectParty extends TabellenLayout
 
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
-		super(db.executeQuery("SELECT * FROM PARTY"));
+		super(db.executeQuery("SELECT PID, NAME FROM PARTY"));
 		mFrame = new JFrame("Datenbank auswählen");
 		mFrame.add(this);
 		mFrame.setSize(500, 500);
@@ -62,7 +62,7 @@ public class SelectParty extends TabellenLayout
 	{
 
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM PARTY"));
+			refreshTable(mDB.executeQuery("SELECT PID, NAME FROM PARTY"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -71,21 +71,18 @@ public class SelectParty extends TabellenLayout
 	@Override
 	public void addRow()
 	{
-		Window w = SwingUtilities.getWindowAncestor(this);
+		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
-			@Override
 			public void run() {
 				Vector<String> result = FormDialog.getDialog("Neue Party erstellen", new FormElement[] {
-						new FormElement("Name", FormElement.TEXT_FIELD),
-						new FormElement("Ort", FormElement.TEXT_FIELD),
-						new FormElement("Motto", FormElement.TEXT_FIELD)
+						new FormElement("Name", FormElement.TEXT_FIELD)
 				}, w);
-				if(result.size()==3)
+				if(result.size()==1)
 				{
 					try {
-						mDB.executeUpdate("INSERT INTO PARTY (NAME, ORT, MOTTO) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"')");
+						mDB.executeUpdate("INSERT INTO PARTY"
+								+ " (NAME) VALUES ('"+result.elementAt(0)+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -103,9 +100,6 @@ public class SelectParty extends TabellenLayout
 		try {
 			mDB.executeUpdate("UPDATE PARTY SET "
 					+ "NAME='"+modell.getValueAt(row, 1)+"', "
-					//+ "ZEIT='"+modell.getValueAt(row, 2)+"', "
-					+ "ORT='"+modell.getValueAt(row, 3)+"', "
-					+ "MOTTO='"+modell.getValueAt(row, 4)+"'"
 					+ "WHERE PID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();

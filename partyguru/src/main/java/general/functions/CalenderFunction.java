@@ -1,4 +1,4 @@
-package GUI_Date;
+package general.functions;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,7 +55,7 @@ public class CalenderFunction extends JDatePickerImpl
 		JPanel panel = new JPanel();
 		frame.add(panel);
 
-		CalenderFunction  datePicker = createDatePicker();
+		final CalenderFunction datePicker = createDatePicker();
 		panel.add(datePicker);
 		
 		JButton button = new JButton("senden");
