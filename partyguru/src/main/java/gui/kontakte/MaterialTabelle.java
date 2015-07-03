@@ -22,7 +22,7 @@ public class MaterialTabelle extends TabellenLayout {
 	MutterLayout mParent;
 	
 	public MaterialTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM Material where PID="+parent.getPID()));
+		super(db.executeQuery("SELECT * FROM MaterialTemplate"));
 		mDB = db;
 		mParent = parent;
 	}
@@ -30,7 +30,7 @@ public class MaterialTabelle extends TabellenLayout {
 	@Override
 	public void refreshTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM Material"));
+			refreshTable(mDB.executeQuery("SELECT * FROM MaterialTemplate"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -39,7 +39,7 @@ public class MaterialTabelle extends TabellenLayout {
 	@Override
 	public void deleteRow(int id) {
 		try {
-			mDB.executeUpdate("DELETE FROM Material WHERE PERSID="+id);
+			mDB.executeUpdate("DELETE FROM MaterialTemplate WHERE MTID="+id);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,23 +47,22 @@ public class MaterialTabelle extends TabellenLayout {
 
 	@Override
 	public void addRow() {
-		Window w = SwingUtilities.getWindowAncestor(this);
+		final Window w = SwingUtilities.getWindowAncestor(this);
 		new Thread(new Runnable(){
 
 			@Override
 			public void run() {
-				Vector<String> result = FormDialog.getDialog("Neue Person anlegen", new FormElement[] {
+				Vector<String> result = FormDialog.getDialog("Neues Material anlegen", new FormElement[] {
 						new FormElement("Name", FormElement.TEXT_FIELD),
-						new FormElement("Geschlecht", FormElement.DROP_DOWN, new String[] {"m", "w"}),
-						new FormElement("Email", FormElement.TEXT_FIELD),
-						new FormElement("Handy", FormElement.TEXT_FIELD),
+						new FormElement("Art", FormElement.DROP_DOWN, new String[] {"Essen", "Getränke", "Partyutensilien"}),
+						
 				}, w);
 				//TODO verbessern
-				if(result.size()==4)
+				if(result.size()==2)
 				{
 					try {
-						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"')");
+						mDB.executeUpdate("INSERT INTO MaterialTemplate (NAME, Art) VALUES ('"+result.elementAt(0)+
+								"', '"+result.elementAt(1)+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
@@ -77,12 +76,10 @@ public class MaterialTabelle extends TabellenLayout {
 	@Override
 	public void updateRow(int row, DefaultTableModel modell) {
 		try {
-			mDB.executeUpdate("UPDATE PERSONEN SET "
+			mDB.executeUpdate("UPDATE MaterialTemplate SET "
 					+ "NAME='"+modell.getValueAt(row, 1)+"', "
-					+ "GESCHLECHT='"+modell.getValueAt(row, 2)+"', "
-					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
-					+ "HANDY='"+modell.getValueAt(row, 4)+"' "
-					+ "WHERE PERSID="+modell.getValueAt(row, 0));
+					+ "ART='"+modell.getValueAt(row, 2)+"', "
+					+ "WHERE MTID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
