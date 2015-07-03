@@ -1,2 +1,2 @@
 # partyguru
--- Du feierst, er plant.
+Du feierst, er plant.
