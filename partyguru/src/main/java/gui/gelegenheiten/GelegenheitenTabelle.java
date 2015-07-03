@@ -30,7 +30,7 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	@Override
 	public void refreshTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+parent.getPID()));
+			refreshTable(mDB.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -52,10 +52,17 @@ public class GelegenheitenTabelle extends TabellenLayout {
 
 			@Override
 			public void run() {
+				Vector<String> art = new Vector<String>();
+				art.add("Mitfahrgelegenheit");
+				art.add("Übernachtung");
+				
+				Vector<String> anz = new Vector<String>();
+				for(Integer i=1; i<=10;i++)
+					art.add(i.toString());
 				Vector<String> result = FormDialog.getDialog("Neue Gelegenheit anlegen", new FormElement[] {
 						new FormElement("Ort", FormElement.TEXT_FIELD),
-						new FormElement("Art", FormElement.DROP_DOWN, new String[] {"Mitfahrgelegenheit", "Übernachtung"}),
-						new FormElement("Anzahl Plaetze", FormElement.DROP_DOWN, new String[] {"1","2","3","4","5","6","7","8","9","10"}),
+						new FormElement("Art", FormElement.DROP_DOWN, art),
+						new FormElement("Anzahl Plaetze", FormElement.DROP_DOWN, anz),
 						new FormElement("Anbieter", FormElement.TEXT_FIELD),
 				}, w);
 				//TODO verbessern
@@ -63,7 +70,7 @@ public class GelegenheitenTabelle extends TabellenLayout {
 				{
 					try {
 						mDB.executeUpdate("INSERT INTO GELEGENHEITEN (ORT, ART, ANZPLAETZE, PERSID, PID) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"','"+parent.getPID()+"')");
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"','"+mParent.getPID()+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

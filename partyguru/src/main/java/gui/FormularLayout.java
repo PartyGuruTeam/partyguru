@@ -23,7 +23,7 @@ public  class FormularLayout {
 		gbl.columnWidths = new int[] {86, 86, 0};
 		gbl.rowHeights = new int[] { 20, 20, 20, 20, 20, 0 };
 	    gbl.columnWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
-	    gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+	    gbl.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 	    formular.setLayout(gbl);
 
 	    
@@ -53,7 +53,7 @@ public  class FormularLayout {
 	    
 	    bsp.add(formular);
 	    bsp.setVisible(true);
-	    bsp.setSize(800, 500);
+	    bsp.setSize(800, 600);
 	   
 	}
 	
