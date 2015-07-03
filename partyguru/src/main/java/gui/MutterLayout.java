@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.kontakte.MaterialTabelle;
 import gui.kontakte.PersonenTabelle;
 
 /**
@@ -25,7 +26,9 @@ public class MutterLayout extends JPanel
 	JTabbedPane mTabs;
 	
 	private PersonenTabelle mPersonen;
-		
+	private MaterialTabelle mMaterial;
+	
+	
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -53,6 +56,8 @@ public class MutterLayout extends JPanel
 			try {
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
+				mMaterial = new MaterialTabelle(db, this);
+				mTabs.add(mMaterial, "Material");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
