@@ -1,11 +1,17 @@
 package gui;
 
+import gui.formdialog.FormDialog;
+import gui.formdialog.FormElement;
+
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.sql.SQLException;
+import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
 import db.Database;
@@ -65,16 +71,30 @@ public class SelectParty extends TabellenLayout
 	@Override
 	public void addRow()
 	{
-		String name = JOptionPane.showInputDialog("Name eingeben:");
-		String ort = JOptionPane.showInputDialog("Ort eingeben:");
-		String motto = JOptionPane.showInputDialog("Motto eingeben:");
+		final Window w = SwingUtilities.getWindowAncestor(this);
+		new Thread(new Runnable(){
 
-		try {
-			mDB.executeUpdate("INSERT INTO PARTY (NAME, ORT, MOTTO) VALUES ('"+name+"', '"+ort+"', '"+motto+"')");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			@Override
+			public void run() {
+				Vector<String> result = FormDialog.getDialog("Neue Party erstellen", new FormElement[] {
+						new FormElement("Name", FormElement.TEXT_FIELD),
+						new FormElement("Ort", FormElement.TEXT_FIELD),
+						new FormElement("Motto", FormElement.TEXT_FIELD)
+				}, w);
+				if(result.size()==3)
+				{
+					try {
+						mDB.executeUpdate("INSERT INTO PARTY (NAME, ORT, MOTTO) VALUES ('"+result.elementAt(0)+
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"')");
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+				refreshTable();
+			}
+			
+		}).start();
+		
 	}
 
 	@Override
@@ -99,18 +119,17 @@ public class SelectParty extends TabellenLayout
 		{
 			if(super.mTabelle.getSelectedRow()>=0)
 			{
+				//TODO BUG: wenn Tabelle verändert wurde, richtigen Wert auslesen
 				Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
 				if(result!=null)
 				{
 					mParent.mPID = result;
 					mFrame.dispose();
-				} else
-				{
-					JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus.");
 				}
+			} else
+			{
+				JOptionPane.showMessageDialog(this, "Wählen Sie eine Party aus.");
 			}
-
-
 		}
 	}
 
