@@ -52,9 +52,7 @@ private static final long serialVersionUID = 1L;
 			public void run() {
 				Vector<String> result = FormDialog.getDialog("Neue Putztätigkeit anlegen", new FormElement[] {
 						new FormElement("Tätigkeit", FormElement.TEXT_FIELD),
-//						new FormElement("Geschlecht", FormElement.DROP_DOWN, new String[] {"m", "w"}),
-//						new FormElement("Email", FormElement.TEXT_FIELD),
-//						new FormElement("Handy", FormElement.TEXT_FIELD),
+//						
 				}, w);
 				//TODO verbessern
 				if(result.size()==1)
@@ -76,10 +74,6 @@ private static final long serialVersionUID = 1L;
 		try {
 			mDB.executeUpdate("UPDATE PUTZTEMPLATE SET "
 					+ "ART='"+modell.getValueAt(row, 1));
-//					+ "GESCHLECHT='"+modell.getValueAt(row, 2)+"', "
-//					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
-//					+ "HANDY='"+modell.getValueAt(row, 4)+"' "
-//					+ "WHERE PERSID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

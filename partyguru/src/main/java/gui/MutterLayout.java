@@ -13,6 +13,7 @@ import gui.gelegenheiten.GelegenheitenTabelle;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
+import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
 
 /**
@@ -32,6 +33,7 @@ public class MutterLayout extends JPanel
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
 	private GelegenheitenTabelle mGelegenheiten;
+	private PutzListe mPutzliste;
 	
 	
 	private PutzTemplate mPutzen;
@@ -68,7 +70,10 @@ public class MutterLayout extends JPanel
 				mTabs.add(mGaesteliste, "Gästeliste");
 				
 				mPutzen = new PutzTemplate(db, this);
-				mTabs.add(mPutzen, "Putzplan");
+				mTabs.add(mPutzen, "Putzliste");
+				
+				mPutzliste = new PutzListe(db,this);
+				mTabs.add(mPutzliste, "Putzplan");
 				
 				mGelegenheiten = new GelegenheitenTabelle(db, this);
 				mTabs.add(mGelegenheiten, "Gelegenheiten");
