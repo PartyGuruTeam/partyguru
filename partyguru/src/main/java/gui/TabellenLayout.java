@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -28,8 +30,10 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JButton mNeuButton;
 	private JButton mLoeschenButton;
 
-	private JTable mTabelle;
+	JTable mTabelle;
 	private DefaultTableModel mModell;
+	
+	JPanel mButtonPanel;
 
 	/**
 	 * Konstruktor von Tabellen Layout.
@@ -37,9 +41,9 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	 */
 	public TabellenLayout(ResultSet rs)
 	{
+		this.setLayout(new BorderLayout());
 		mTabelle = new JTable();
-		this.add(mTabelle);
-		//TODO Spaltennamen anzeigen
+		this.add(new JScrollPane(mTabelle), BorderLayout.CENTER);
 		try {
 			refreshTable(rs);
 		} catch (SQLException e) {
@@ -47,18 +51,23 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 		
 		mModell.addTableModelListener(this);
+		mTabelle.getTableHeader().setReorderingAllowed(false);
+		
+		mButtonPanel = new JPanel();
 
 		mNeuButton = new JButton("Neu...");
-		this.add(mNeuButton);
+		mButtonPanel.add(mNeuButton);
 		mNeuButton.addActionListener(this);
 
 		mLoeschenButton = new JButton("Löschen...");
-		this.add(mLoeschenButton);
+		mButtonPanel.add(mLoeschenButton);
 		mLoeschenButton.addActionListener(this);
+		
+		this.add(mButtonPanel, BorderLayout.SOUTH);
 	}
 	
 	/**
-	 * Funktion soll benötigte Tabelle vom Server ziehen und daraufhin an refreshTable(ResultSet rs) übergeben.
+	 * Funktion soll benötigte Tabelle von DB ziehen und daraufhin an refreshTable(ResultSet rs) übergeben.
 	 */
 	public abstract void refreshTable();
 
@@ -106,6 +115,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			refreshTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
+			//TODO aktuell markierte Zeile(n) löschen
 			String result = JOptionPane.showInputDialog("ID eingeben:");
 			if(result!=null)
 			{

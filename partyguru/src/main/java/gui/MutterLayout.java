@@ -1,10 +1,15 @@
 package gui;
 
+import java.awt.BorderLayout;
+import java.io.File;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.kontakte.PersonenTabelle;
 
 /**
  * 
@@ -15,33 +20,70 @@ public class MutterLayout extends JPanel
 {
 	private static final long serialVersionUID = 1L;
 	
-	Database db;
+	private Database db;
+	int mPID;
+	JTabbedPane mTabs;
 	
+	private PersonenTabelle mPersonen;
+		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
 	public MutterLayout()
+	{		
+		this.setLayout(new BorderLayout());
+		
+		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
+		File f = new File(path+".h2.db");
+		if(f.exists())
+		{
+			try {
+				db = new Database(path);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			selectDB();
+
+			mTabs = new JTabbedPane(JTabbedPane.TOP);
+			this.add(mTabs, BorderLayout.CENTER);
+			
+			try {
+				mPersonen = new PersonenTabelle(db, this);
+				mTabs.add(mPersonen, "Personen");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		} else 
+		{
+			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
+			System.exit(1);
+		}
+		
+	}
+	
+	private void selectDB()
 	{
-		//TODO Verschiedene Seiten einfügen
-		//TODO Tabs einfügen
-		
-		//!!!only temporary!!!
+		SelectParty selection=null;
 		try {
-			db = new Database("~/party");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			selection = new SelectParty(db, this);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
-		
-		//!!!only temporary!!!
-		TabellenLayoutImpl layout=null;
-		try {
-			layout = new TabellenLayoutImpl(db, this);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		mPID = -1;
+		while(mPID==-1)
+		{
+			if(!selection.isVisible())
+				System.exit(1); //TODO anders lösen
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		this.add(layout);
 	}
 
 }
