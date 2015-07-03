@@ -32,13 +32,9 @@ public class MutterLayout extends JPanel
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
-<<<<<<< HEAD
 	private Mitbringliste mMitbringliste;
-=======
 	private GelegenheitenTabelle mGelegenheiten;
-	
->>>>>>> refs/heads/develop
-	
+		
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
 		
