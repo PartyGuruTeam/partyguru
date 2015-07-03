@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 
 import javax.swing.table.DefaultTableModel;
 
+import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
 
@@ -11,8 +12,12 @@ public class Gaesteliste extends TabellenLayout
 {	
 	private static final long serialVersionUID = 1L;
 	
-	public Gaesteliste(ResultSet rs, MutterLayout parent) {
-		super(rs);
+	private Database mDB;
+	private MutterLayout mParent;
+	
+	public Gaesteliste(Database db, MutterLayout parent) {
+		super(db.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+parent.getP));
+		
 	}
 
 
