@@ -9,8 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
+import gui.putz.PutzTemplate;
 
 /**
  * 
@@ -26,9 +28,11 @@ public class MutterLayout extends JPanel
 	JTabbedPane mTabs;
 	
 	private PersonenTabelle mPersonen;
+	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
 	
 	
+	private PutzTemplate mPutzen;
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -58,6 +62,11 @@ public class MutterLayout extends JPanel
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
 				mTabs.add(mMaterial, "Material");
+				mGaesteliste = new Gaesteliste(db, this);
+				mTabs.add(mGaesteliste, "Gästeliste");
+				
+				mPutzen = new PutzTemplate(db, this);
+				mTabs.add(mPutzen, "Putzplan");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

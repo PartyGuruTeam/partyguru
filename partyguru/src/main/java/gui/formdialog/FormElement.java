@@ -1,6 +1,8 @@
 package gui.formdialog;
 
 
+import java.util.Vector;
+
 import javax.swing.JComponent;
 
 public class FormElement 
@@ -13,7 +15,7 @@ public class FormElement
 	
 	String mLabel;
 	int mType;
-	String[] mInitVector;
+	Vector<String> mInitVector;
 	JComponent mComp;
 	
 	public FormElement(String label, int type)
@@ -24,14 +26,14 @@ public class FormElement
 		mComp = null;
 	}
 	
-	public FormElement(String label, int type, String[] init)
+	public FormElement(String label, int type, Vector<String> init)
 	{
 		mLabel = label;
 		mType = type;
 		mInitVector = init;
 		mComp = null;
 	}
-	
+
 	public void setComponent(JComponent comp)
 	{
 		mComp = comp;
