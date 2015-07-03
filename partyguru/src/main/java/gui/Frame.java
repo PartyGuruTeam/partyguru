@@ -29,6 +29,7 @@ public class Frame extends JFrame
 	 */
 	public Frame()
 	{
+		super("Party Guru");
 		mMenuBar = new JMenuBar();
 		this.setJMenuBar(mMenuBar);
 
