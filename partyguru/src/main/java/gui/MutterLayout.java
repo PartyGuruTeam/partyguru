@@ -35,6 +35,8 @@ public class MutterLayout extends JPanel
 	
 	
 	private PutzTemplate mPutzen;
+	private PStammdaten mStammdaten;
+		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
@@ -60,23 +62,24 @@ public class MutterLayout extends JPanel
 			this.add(mTabs, BorderLayout.CENTER);
 			
 			try {
+				
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
 				mTabs.add(mMaterial, "Material");
 				mGaesteliste = new Gaesteliste(db, this);
 				mTabs.add(mGaesteliste, "Gästeliste");
-				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
-				
 				mGelegenheiten = new GelegenheitenTabelle(db, this);
 				mTabs.add(mGelegenheiten, "Gelegenheiten");
-				
+				//TODO BUG bei laden von Stammdaten
+				mStammdaten = new PStammdaten(db, this);
+				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} 
-		
+			}
+			
 		} else 
 		{
 			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
