@@ -12,6 +12,7 @@ import db.Database;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
+import gui.material.Mitbringliste;
 import gui.putz.PutzTemplate;
 
 /**
@@ -30,7 +31,7 @@ public class MutterLayout extends JPanel
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
-	
+	private Mitbringliste mMitbringliste;
 	
 	private PutzTemplate mPutzen;
 	/**
@@ -67,6 +68,8 @@ public class MutterLayout extends JPanel
 				
 				mPutzen = new PutzTemplate(db, this);
 				mTabs.add(mPutzen, "Putzplan");
+				mMitbringliste = new Mitbringliste(db, this);
+				mTabs.add(mMitbringliste, "Mitbringliste");
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
