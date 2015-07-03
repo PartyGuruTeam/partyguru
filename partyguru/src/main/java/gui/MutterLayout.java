@@ -9,8 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
-import gui.kontakte.MaterialTabelle;
 import gui.kontakte.PersonenTabelle;
+import gui.material.MaterialTabelle;
 
 /**
  * 

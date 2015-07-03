@@ -1,4 +1,4 @@
-package gui.kontakte;
+package gui.material;
 
 import java.awt.Window;
 import java.sql.ResultSet;
