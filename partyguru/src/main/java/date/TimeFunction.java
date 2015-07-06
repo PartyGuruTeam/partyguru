@@ -1,4 +1,4 @@
-package general.functions;
+package date;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,52 +16,41 @@ import javax.swing.text.DateFormatter;
  * @author Lukas
  * @version 1.0 beta
  */
-public class TimeFunction 
+public class TimeFunction extends JSpinner
 {
+	private static final long serialVersionUID = 1L;
+	
 	SpinnerDateModel mModel;
-	Date date;
-	JSpinner js1;
 	
-	public TimeFunction(JSpinner jSpinner)
+	public TimeFunction(SpinnerDateModel model)
 	{
-		date = new Date();
-		mModel = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
-		
-		js1 = jSpinner;
-		JSpinner jSpinner1 = new JSpinner(mModel);
-	
-		
-		JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm");
-		jSpinner1.setEditor(de);
-	}
+		super(model);
+		mModel = model;
 
-    public static JSpinner createJSpinner() 
-    {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 24);
-        calendar.set(Calendar.MINUTE, 0);
-
-        SpinnerDateModel model = new SpinnerDateModel();
-        model.setValue(calendar.getTime());
-
-        JSpinner spinner = new JSpinner(model);
-
-        JSpinner.DateEditor editor = new JSpinner.DateEditor(spinner, "HH:mm");
+        JSpinner.DateEditor editor = new JSpinner.DateEditor(this, "HH:mm");
         DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false);
+        formatter.setAllowsInvalid(false); //TODO Überschreiben
         formatter.setOverwriteMode(false);
 
-        spinner.setEditor(editor);
+        this.setEditor(editor);
+	}
 
-        
+    public static TimeFunction createTime() 
+    {
+        SpinnerDateModel model = new SpinnerDateModel();
+        TimeFunction spinner = new TimeFunction(model);
+
         return spinner;
     }
     
-	public int getTime()
+	public Date getTime()
 	{
-		//return (Date) js1.getValue();
-		return (Integer) js1.getValue();
+		return (Date) getValue();
+	}
+	
+	public void setTime(Date d)
+	{
+		mModel.setValue(d);
 	}
 
 	//Only for testing
@@ -72,7 +61,8 @@ public class TimeFunction
     	JPanel content = new JPanel();
     	frame.add(content);
     	
-    	final JSpinner timePicker = createJSpinner();
+    	final TimeFunction timePicker = createTime();
+    	timePicker.setTime(new Date(2015, 10, 23, 20, 15));
     	content.add(timePicker);
     	
     	JButton button = new JButton("prüfen");

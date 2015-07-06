@@ -28,9 +28,9 @@ public class MaterialTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM MaterialTemplate"));
+			printTable(mDB.executeQuery("SELECT * FROM MaterialTemplate"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -70,7 +70,7 @@ public class MaterialTabelle extends TabellenLayout {
 						e.printStackTrace();
 					}
 				}
-				refreshTable();
+				printTable();
 			}
 			
 		}).start();		

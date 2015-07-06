@@ -35,7 +35,6 @@ public class MutterLayout extends JPanel
 	private MaterialTabelle mMaterial;
 	private Mitbringliste mMitbringliste;
 	private GelegenheitenTabelle mGelegenheiten;
-		
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
 		
@@ -82,8 +81,7 @@ public class MutterLayout extends JPanel
 				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {
 				e.printStackTrace();
-			}
-			
+			}			
 		} else 
 		{
 			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");

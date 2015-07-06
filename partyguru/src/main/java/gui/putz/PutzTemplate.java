@@ -27,9 +27,9 @@ private static final long serialVersionUID = 1L;
 	}
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM PUTZTEMPLATE"));
+			printTable(mDB.executeQuery("SELECT * FROM PUTZTEMPLATE"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -63,7 +63,7 @@ private static final long serialVersionUID = 1L;
 						e.printStackTrace();
 					}
 				}
-				refreshTable();
+				printTable();
 			}
 			
 		}).start();		

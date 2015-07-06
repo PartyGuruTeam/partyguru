@@ -18,8 +18,11 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 
+import date.CalendarFunction;
+import date.TimeFunction;
 
-public abstract  class FormularLayout extends JTabbedPane implements ActionListener {
+
+public abstract  class FormularLayout extends JPanel implements ActionListener {
 
 	
 	/**
@@ -32,55 +35,89 @@ public abstract  class FormularLayout extends JTabbedPane implements ActionListe
 	private JButton mSpeichernButton;
 	//private JPanel mButtonPanel;
 	
-	private JPanel mForm;
-	
 	String mAusgabe;
 	Vector<JTextField> tfArray = new Vector<JTextField>();
+	CalendarFunction mDate;
+	TimeFunction mTime;
 
 	public FormularLayout()
 	{	
+		super();
 		mSpeichernButton = new JButton("Speichern");
 		//mButtonPanel = new JPanel();
-		
-		mForm = new JPanel();
-		this.add(mForm);
 
-		Border border = mForm.getBorder();
+		Border border = this.getBorder();
 		Border margin = new EmptyBorder(10, 10, 10, 10);
-		mForm.setBorder(new CompoundBorder(border, margin));
+		this.setBorder(new CompoundBorder(border, margin));
 
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] {86, 86, 0};
 		gbl.rowHeights = new int[] { 50, 20, 20, 20, 20, 20, 20, 30 };
 		gbl.columnWeights = new double[] { 0.0, 1.0,0.0, 0.0, Double.MIN_VALUE };
 		gbl.rowWeights = new double[] { 0.0, 0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,Double.MIN_VALUE };
-		mForm.setLayout(gbl);
+		this.setLayout(gbl);
 
 		
 
-		addLabel("Gebe hier deine Party-Stammdaten ein!", 0, mForm);
+		addLabel("Gebe hier deine Party-Stammdaten ein!", 0, this);
 		
-		addLabelAndTextField("Partyname:", 1, mForm);
-		addLabelAndTextField( "Gastgeber:*", 2, mForm);
-		addLabelAndTextField( "Ort:*", 3, mForm);
-		addLabelAndTextField( "Datum:*", 4, mForm);
-		addLabelAndTextField( "Startzeit:", 5, mForm);
-		addLabelAndTextField("Motto:", 6, mForm);
+		addLabelAndTextField("Partyname:", 1, this);
+		addLabelAndTextField( "Gastgeber:*", 2, this);
+		addLabelAndTextField( "Ort:*", 3, this);
+		//addLabelAndTextField( "Datum:*", 4, this);
+		addLabelAndDateField("Datum", 4, this);
+		//addLabelAndTextField( "Startzeit:", 5, this);
+		addLabelAndTimeField("Startzeit", 5, this);
+		addLabelAndTextField("Motto:", 6, this);
 		
-		addButttons(7, mForm);
-
-		
-		
-		
-		
+		addButttons(7, this);
 	}
+	private void addLabelAndTimeField(String labelText, int yPos, Container formular)
+	{
+		JLabel faxLabel = new JLabel(labelText);
+		GridBagConstraints gbcLabel = new GridBagConstraints();
+		gbcLabel.fill = GridBagConstraints.BOTH;
+		gbcLabel.insets = new Insets(0, 0, 5, 5);
+		gbcLabel.gridx = 0;
+		gbcLabel.gridy = yPos;
+		formular.add(faxLabel, gbcLabel);
 
-	/*
+		mTime = TimeFunction.createTime();
+		GridBagConstraints gbltf = new GridBagConstraints();
+		gbltf.fill = GridBagConstraints.BOTH;
+		gbltf.insets = new Insets(0, 0, 5, 0);
+		gbltf.gridx = 1;
+		gbltf.gridy = yPos;
+		
+		formular.add(mTime, gbltf);
+	}
+	
+	private void addLabelAndDateField(String labelText, int yPos, Container formular)
+	{
+		JLabel faxLabel = new JLabel(labelText);
+		GridBagConstraints gbcLabel = new GridBagConstraints();
+		gbcLabel.fill = GridBagConstraints.BOTH;
+		gbcLabel.insets = new Insets(0, 0, 5, 5);
+		gbcLabel.gridx = 0;
+		gbcLabel.gridy = yPos;
+		formular.add(faxLabel, gbcLabel);
+
+		mDate = CalendarFunction.createDatePicker(); 
+		GridBagConstraints gbltf = new GridBagConstraints();
+		gbltf.fill = GridBagConstraints.BOTH;
+		gbltf.insets = new Insets(0, 0, 5, 0);
+		gbltf.gridx = 1;
+		gbltf.gridy = yPos;
+		
+		formular.add(mDate, gbltf);
+	}
+	
+
+	/**
 	 * Dynamisch Erstellung der Zeilen mit Label und Textfeld: yPos steht für die Zeilenangaben, Container 
 	 * ist das JPanel und trägt sie in das tf-Array ein (Array von Textfeldern)
 	 * 
 	 */
-
 	private void addLabelAndTextField( String labelText, int yPos, Container formular) {
 
 		JLabel faxLabel = new JLabel(labelText);

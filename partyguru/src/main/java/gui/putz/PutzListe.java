@@ -30,7 +30,7 @@ public class PutzListe extends TabellenLayout
 
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
 			mDB.executeQuery("SELECT * FROM PUTZ WHERE PID="+mParent.getPID());
 		} catch (SQLException e) {
@@ -78,7 +78,7 @@ public class PutzListe extends TabellenLayout
 							e.printStackTrace();
 						}
 					}
-					refreshTable();
+					printTable();
 				}
 				
 			}).start();	

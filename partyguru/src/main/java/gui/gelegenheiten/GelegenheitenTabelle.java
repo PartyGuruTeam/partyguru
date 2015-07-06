@@ -28,9 +28,9 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+mParent.getPID()));
+			printTable(mDB.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class GelegenheitenTabelle extends TabellenLayout {
 						e.printStackTrace();
 					}
 				}
-				refreshTable();
+				printTable();
 			}
 			
 		}).start();
