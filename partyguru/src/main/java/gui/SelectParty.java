@@ -34,7 +34,7 @@ public class SelectParty extends TabellenLayout
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
 		super(db.executeQuery("SELECT PID, NAME FROM PARTY"));
-		mFrame = new JFrame("Datenbank auswählen");
+		mFrame = new JFrame("Party auswählen");
 		mFrame.add(this);
 		mFrame.setSize(500, 500);
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
