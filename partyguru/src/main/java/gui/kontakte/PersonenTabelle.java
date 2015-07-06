@@ -27,9 +27,9 @@ public class PersonenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
-			refreshTable(mDB.executeQuery("SELECT * FROM PERSONEN"));
+			printTable(mDB.executeQuery("SELECT * FROM PERSONEN"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,7 +69,7 @@ public class PersonenTabelle extends TabellenLayout {
 						e.printStackTrace();
 					}
 				}
-				refreshTable();
+				printTable();
 			}
 			
 		}).start();		

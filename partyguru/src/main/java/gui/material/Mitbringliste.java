@@ -30,7 +30,7 @@ public class Mitbringliste extends TabellenLayout
 
 
 	@Override
-	public void refreshTable() {
+	public void printTable() {
 		try {
 			mDB.executeQuery("SELECT * FROM Material WHERE PID="+mParent.getPID());
 		} catch (SQLException e) {
@@ -74,7 +74,7 @@ public class Mitbringliste extends TabellenLayout
 							e.printStackTrace();
 						}
 					}
-					refreshTable();
+					printTable();
 				}
 				
 			}).start();	

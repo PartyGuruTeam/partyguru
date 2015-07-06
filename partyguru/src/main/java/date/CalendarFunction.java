@@ -1,8 +1,13 @@
-package general.functions;
+package date;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -17,34 +22,41 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
  * @version 1.0 beta
  */
 
-public class CalenderFunction extends JDatePickerImpl
+public class CalendarFunction extends JDatePickerImpl
 {
 	private static final long serialVersionUID = 1L;
 
 	UtilDateModel mModel;
-	
-	public CalenderFunction(JDatePanelImpl panel, UtilDateModel model) 
+
+	public CalendarFunction(JDatePanelImpl panel, UtilDateModel model) 
 	{
 		super(panel);	
-		
+
 		mModel = model;
 	}
-	
-	public static CalenderFunction createDatePicker()
+
+	public static CalendarFunction createDatePicker()
 	{
 		UtilDateModel model = new UtilDateModel();
 		model.setDate(model.getYear(), model.getMonth(), model.getDay());
 		model.setSelected(true);	
-		
+
 		JDatePanelImpl datePanel = new JDatePanelImpl(model);
-		CalenderFunction picker = new CalenderFunction(datePanel, model);
-		
+		CalendarFunction picker = new CalendarFunction(datePanel, model);
+
 		return picker;
 	}
-	
+
 	public Date getDate()
 	{
 		return mModel.getValue();
+	}
+
+	public void setDate(Date d)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		mModel.setDate(cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH));
 	}
 
 	//Only for testing
@@ -55,9 +67,9 @@ public class CalenderFunction extends JDatePickerImpl
 		JPanel panel = new JPanel();
 		frame.add(panel);
 
-		final CalenderFunction datePicker = createDatePicker();
+		final CalendarFunction datePicker = createDatePicker();
 		panel.add(datePicker);
-		
+
 		JButton button = new JButton("senden");
 		button.addActionListener(new ActionListener(){
 
@@ -65,10 +77,10 @@ public class CalenderFunction extends JDatePickerImpl
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(datePicker.getDate());
 			}
-			
+
 		});
 		panel.add(button);
-		
+
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(400, 300);

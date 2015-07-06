@@ -58,11 +58,11 @@ public class SelectParty extends TabellenLayout
 	}
 
 	@Override
-	public void refreshTable()
+	public void printTable()
 	{
 
 		try {
-			refreshTable(mDB.executeQuery("SELECT PID, NAME FROM PARTY"));
+			printTable(mDB.executeQuery("SELECT PID, NAME FROM PARTY"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -87,7 +87,7 @@ public class SelectParty extends TabellenLayout
 						e.printStackTrace();
 					}
 				}
-				refreshTable();
+				printTable();
 			}
 			
 		}).start();

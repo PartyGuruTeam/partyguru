@@ -45,7 +45,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		mTabelle = new JTable();
 		this.add(new JScrollPane(mTabelle), BorderLayout.CENTER);
 		try {
-			refreshTable(rs);
+			printTable(rs);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -69,14 +69,14 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	/**
 	 * Funktion soll benötigte Tabelle von DB ziehen und daraufhin an refreshTable(ResultSet rs) übergeben.
 	 */
-	public abstract void refreshTable();
+	public abstract void printTable();
 
 	/**
-	 * Soll von refreshTable() aufgerufen werden. Stellt übergebenes Resultset dar.
+	 * Soll von printTable() aufgerufen werden. Stellt übergebenes Resultset dar.
 	 * @param rs
 	 * @throws SQLException
 	 */
-	public void refreshTable(ResultSet rs) throws SQLException
+	public void printTable(ResultSet rs) throws SQLException
 	{
 		ResultSetMetaData md = null;
 		Vector<Vector<Object>> tabelle = new Vector<Vector<Object>>();
@@ -112,7 +112,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		if(e.getSource().equals(mNeuButton))
 		{
 			addRow();
-			refreshTable();
+			printTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
 			//TODO aktuell markierte Zeile(n) löschen
@@ -130,7 +130,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 				if(r!=null)
 				{
 					deleteRow(r);
-					refreshTable();
+					printTable();
 				}
 			}
 		}
@@ -144,7 +144,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		if(e.getType()==TableModelEvent.UPDATE)
 		{
 			updateRow(e.getFirstRow(), mModell);
-			refreshTable();
+			printTable();
 		}
 	}
 
