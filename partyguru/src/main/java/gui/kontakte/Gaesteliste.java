@@ -18,10 +18,10 @@ import gui.formdialog.FormElement;
 public class Gaesteliste extends TabellenLayout 
 {	
 	private static final long serialVersionUID = 1L;
-	
+
 	private Database mDB;
 	private MutterLayout mParent;
-	
+
 	public Gaesteliste(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+parent.getPID()));
 		mDB = db;
@@ -32,7 +32,7 @@ public class Gaesteliste extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			mDB.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+mParent.getPID());
+			printTable(mDB.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +40,7 @@ public class Gaesteliste extends TabellenLayout
 
 	@Override
 	public void deleteRow(int id) {
-		
+
 	}
 
 	@Override
@@ -54,6 +54,7 @@ public class Gaesteliste extends TabellenLayout
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
+			
 			new Thread(new Runnable(){
 
 				public void run() {
@@ -63,8 +64,8 @@ public class Gaesteliste extends TabellenLayout
 					//TODO verbessern
 					if(result.size()==1)
 					{
+						String persid = result.elementAt(0).split("-")[0];
 						try {
-							String persid = result.elementAt(0).split("-")[0];
 							mDB.executeUpdate("INSERT INTO GAESTELISTE (PID, PERSID) VALUES ('"+mParent.getPID()+
 									"', '"+persid+"')");
 						} catch (SQLException e) {
@@ -73,7 +74,7 @@ public class Gaesteliste extends TabellenLayout
 					}
 					printTable();
 				}
-				
+
 			}).start();	
 		} catch (SQLException e1) {
 			e1.printStackTrace();
