@@ -14,7 +14,6 @@ import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
 import gui.material.Mitbringliste;
-import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
 
 /**
