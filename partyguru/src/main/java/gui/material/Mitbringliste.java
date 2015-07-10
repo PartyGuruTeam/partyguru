@@ -3,9 +3,9 @@ package gui.material;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,7 +23,7 @@ public class Mitbringliste extends TabellenLayout
 	private MutterLayout mParent;
 	
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM Material WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT * FROM Material WHERE PID="+parent.getPID()), new Boolean[]{ });
 		mDB = db;
 		mParent = parent;
 	}
@@ -39,8 +39,8 @@ public class Mitbringliste extends TabellenLayout
 	}
 
 	@Override
-	public void deleteRow(int id) {
-		
+	public void deleteRow(Vector<String> v) {
+		JOptionPane.showMessageDialog(this, "TODO");
 	}
 
 	@Override

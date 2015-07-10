@@ -3,7 +3,6 @@ package gui.kontakte;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
@@ -23,7 +22,9 @@ public class Gaesteliste extends TabellenLayout
 	private MutterLayout mParent;
 
 	public Gaesteliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT G.PERSID, P.NAME, G.KOMMT FROM GAESTELISTE G, "
+				+ "PERSONEN P WHERE G.PERSID=P.PERSID AND G.PID="+parent.getPID()),
+				new Boolean[]{ });
 		mDB = db;
 		mParent = parent;
 	}
@@ -32,15 +33,21 @@ public class Gaesteliste extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+mParent.getPID()));
+			printTable(mDB.executeQuery("SELECT G.PERSID, P.NAME, G.KOMMT FROM GAESTELISTE G, "
+				+ "PERSONEN P WHERE G.PERSID=P.PERSID AND G.PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void deleteRow(int id) {
-
+	public void deleteRow(Vector<String> v) {
+		try {
+			mDB.executeUpdate("DELETE FROM GAESTELISTE WHERE PID="+mParent.getPID()+"AND "
+					+ "PERSID="+v.elementAt(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -54,20 +61,23 @@ public class Gaesteliste extends TabellenLayout
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
-			
+			Vector<String> v = new Vector<String>();
+			v.add("true");
+			v.add("false");
 			new Thread(new Runnable(){
 
 				public void run() {
 					Vector<String> result = FormDialog.getDialog("Neuen Gast hinzufügen", new FormElement[] {
 							new FormElement("Person", FormElement.DROP_DOWN, elements),
+							new FormElement("Kommt", FormElement.DROP_DOWN, v)
 					}, w);
-					//TODO verbessern
-					if(result.size()==1)
+					if(result.size()==2)
 					{
 						String persid = result.elementAt(0).split("-")[0];
+						String kommt = result.elementAt(1);
 						try {
-							mDB.executeUpdate("INSERT INTO GAESTELISTE (PID, PERSID) VALUES ('"+mParent.getPID()+
-									"', '"+persid+"')");
+							mDB.executeUpdate("INSERT INTO GAESTELISTE (PID, PERSID, KOMMT) "
+									+ "VALUES ('"+mParent.getPID()+"', '"+persid+"', '"+kommt+"')");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -83,8 +93,7 @@ public class Gaesteliste extends TabellenLayout
 
 	@Override
 	public void updateRow(int row, DefaultTableModel modell) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
