@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,8 +40,8 @@ public class PutzListe extends TabellenLayout
 	}
 
 	@Override
-	public void deleteRow(int id) {
-		
+	public void deleteRow(Vector<String> v) {
+		JOptionPane.showMessageDialog(this, "TODO");
 	}
 
 	@Override

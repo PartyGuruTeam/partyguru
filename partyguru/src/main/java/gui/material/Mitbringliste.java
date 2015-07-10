@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,8 +40,8 @@ public class Mitbringliste extends TabellenLayout
 	}
 
 	@Override
-	public void deleteRow(int id) {
-
+	public void deleteRow(Vector<String> v) {
+		JOptionPane.showMessageDialog(this, "TODO");
 	}
 
 	@Override
@@ -81,17 +82,16 @@ public class Mitbringliste extends TabellenLayout
 																		"','"+mParent.getPID()+
 									"', '"+persid+"', '"+result.elementAt(2)+"','"+result.elementAt(3)+"','"+result.elementAt(4)+"')");
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
 					printTable();
 				}
-
+				
 			}).start();	
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		} 
+		}	
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package gui.material;
 
 import java.awt.Window;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -22,7 +21,7 @@ public class MaterialTabelle extends TabellenLayout {
 	MutterLayout mParent;
 	
 	public MaterialTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM MaterialTemplate"));
+		super(db.executeQuery("SELECT * FROM MaterialTemplate"), new Boolean[]{ });
 		mDB = db;
 		mParent = parent;
 	}
@@ -37,9 +36,9 @@ public class MaterialTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM MaterialTemplate WHERE MTID="+id);
+			mDB.executeUpdate("DELETE FROM MaterialTemplate WHERE MTID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -22,7 +22,8 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	MutterLayout mParent;
 	
 	public GelegenheitenTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+parent.getPID()),
+				new Boolean[]{ });
 		mDB = db;
 		mParent = parent;
 	}
@@ -37,9 +38,9 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM GELEGENHEITEN WHERE GELEGENID="+id);
+			mDB.executeUpdate("DELETE FROM GELEGENHEITEN WHERE GELEGENID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -72,7 +73,6 @@ public class GelegenheitenTabelle extends TabellenLayout {
 						new FormElement("Anzahl Plaetze", FormElement.DROP_DOWN, anz),
 						new FormElement("Anbieter", FormElement.DROP_DOWN,element),
 				}, w);
-				//TODO verbessern
 				if(result.size()==4)
 				{
 					try {

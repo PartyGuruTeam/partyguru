@@ -21,7 +21,7 @@ public class PersonenTabelle extends TabellenLayout {
 	MutterLayout mParent;
 	
 	public PersonenTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PERSONEN"));
+		super(db.executeQuery("SELECT * FROM PERSONEN"), new Boolean[]{ });
 		mDB = db;
 		mParent = parent;
 	}
@@ -36,9 +36,9 @@ public class PersonenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM PARTY WHERE PERSID="+id);
+			mDB.executeUpdate("DELETE FROM PERSONEN WHERE PERSID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,6 @@ public class PersonenTabelle extends TabellenLayout {
 						new FormElement("Email", FormElement.TEXT_FIELD),
 						new FormElement("Handy", FormElement.TEXT_FIELD),
 				}, w);
-				//TODO verbessern
 				if(result.size()==4)
 				{
 					try {
