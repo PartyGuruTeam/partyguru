@@ -138,7 +138,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
 			if(JOptionPane.showConfirmDialog(this, "Wollen Sie den Eintrag wirklich löschen?",
-					"Löschvorgang", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
+					"Löschvorgang", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			{
 				Vector<String> v = new Vector<String>();
 				for(int i=0; i<mTabelle.getColumnCount(); i++)
