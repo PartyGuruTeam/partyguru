@@ -10,6 +10,7 @@ import java.sql.Types;
 import java.util.Vector;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -136,13 +137,17 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			printTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
-			Vector<String> v = new Vector<String>();
-			for(int i=0; i<mTabelle.getColumnCount(); i++)
+			if(JOptionPane.showConfirmDialog(this, "Wollen Sie den Eintrag wirklich löschen?",
+					"Löschvorgang", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
 			{
-				v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
-			}
-			deleteRow(v);
-			printTable();
+				Vector<String> v = new Vector<String>();
+				for(int i=0; i<mTabelle.getColumnCount(); i++)
+				{
+					v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
+				}
+				deleteRow(v);
+				printTable();
+			}	
 		}
 	}
 
