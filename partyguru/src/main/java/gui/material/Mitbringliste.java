@@ -24,7 +24,8 @@ public class Mitbringliste extends TabellenLayout
 	private MutterLayout mParent;
 
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT MID, PERSID, ANZAHL, EINHEIT, NOTIZ FROM Material WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT MID, PERSID, ANZAHL, EINHEIT, NOTIZ FROM Material WHERE PID="+parent.getPID()), 
+				new Boolean[] {false, false, true, true, true } );
 		mDB = db;
 		mParent = parent;
 	}

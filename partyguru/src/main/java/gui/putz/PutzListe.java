@@ -24,7 +24,8 @@ public class PutzListe extends TabellenLayout
 	private MutterLayout mParent;
 	
 	public PutzListe(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()),
+				new Boolean[] { false, false, true, true, true });
 		mDB = db;
 		mParent = parent;
 	}
