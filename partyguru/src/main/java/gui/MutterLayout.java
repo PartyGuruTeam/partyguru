@@ -79,6 +79,7 @@ public class MutterLayout extends JPanel
 				//TODO BUG bei laden von Stammdaten
 				mStammdaten = new PStammdaten(db, this);
 				mTabs.add(mStammdaten, "Stammdaten");
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}			
