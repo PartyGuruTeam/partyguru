@@ -80,6 +80,7 @@ public class MutterLayout extends JPanel
 				mTabs.add(mGelegenheiten, "Gelegenheiten");
 				mStammdaten = new PStammdaten(db, this);
 				mTabs.add(mStammdaten, "Stammdaten");
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}			
