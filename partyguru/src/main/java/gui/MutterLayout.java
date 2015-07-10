@@ -14,7 +14,6 @@ import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
 import gui.material.MaterialTabelle;
 import gui.material.Mitbringliste;
-import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
 
 /**
@@ -63,7 +62,6 @@ public class MutterLayout extends JPanel
 			this.add(mTabs, BorderLayout.CENTER);
 			
 			try {
-				
 				mPersonen = new PersonenTabelle(db, this);
 				mTabs.add(mPersonen, "Personen");
 				mMaterial = new MaterialTabelle(db, this);
@@ -76,7 +74,6 @@ public class MutterLayout extends JPanel
 				mTabs.add(mMitbringliste, "Mitbringliste");
 				mGelegenheiten = new GelegenheitenTabelle(db, this);
 				mTabs.add(mGelegenheiten, "Gelegenheiten");
-				//TODO BUG bei laden von Stammdaten
 				mStammdaten = new PStammdaten(db, this);
 				mTabs.add(mStammdaten, "Stammdaten");
 			} catch (SQLException e) {

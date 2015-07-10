@@ -21,7 +21,7 @@ private static final long serialVersionUID = 1L;
 	MutterLayout mParent;
 	
 	public PutzTemplate(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PUTZTEMPLATE"));
+		super(db.executeQuery("SELECT * FROM PUTZTEMPLATE"), new Boolean[] { });
 		mDB = db;
 		mParent = parent;
 	}
@@ -36,9 +36,9 @@ private static final long serialVersionUID = 1L;
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM PUTZTEMPLATE WHERE PTID="+id);
+			mDB.executeUpdate("DELETE FROM PUTZTEMPLATE WHERE PTID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
