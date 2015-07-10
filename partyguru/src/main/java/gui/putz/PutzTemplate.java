@@ -73,7 +73,8 @@ private static final long serialVersionUID = 1L;
 	public void updateRow(int row, DefaultTableModel modell) {
 		try {
 			mDB.executeUpdate("UPDATE PUTZTEMPLATE SET "
-					+ "ART='"+modell.getValueAt(row, 1));
+					+ "ART='"+modell.getValueAt(row, 1)+"' "
+					+ "WHERE PTID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

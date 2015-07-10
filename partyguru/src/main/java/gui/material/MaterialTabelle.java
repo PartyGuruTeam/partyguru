@@ -80,8 +80,8 @@ public class MaterialTabelle extends TabellenLayout {
 	public void updateRow(int row, DefaultTableModel modell) {
 		try {
 			mDB.executeUpdate("UPDATE MaterialTemplate SET "
-					+ "NAME='"+modell.getValueAt(row, 1)+"', "
-					+ "ART='"+modell.getValueAt(row, 2)+"', "
+					+ "NAME='"+modell.getValueAt(row, 2)+"', "
+					+ "ART='"+modell.getValueAt(row, 1)+"' "
 					+ "WHERE MTID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
