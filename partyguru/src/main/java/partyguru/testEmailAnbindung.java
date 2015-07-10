@@ -9,7 +9,7 @@ public class testEmailAnbindung {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
-		String an = "guru@gmail.com";
+		String an = "derpartyguru@gmail.com";
 		String titel = "Test Titel";
 		String nachricht = "This is a test <b>HOWTO<b>";
 		
