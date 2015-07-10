@@ -36,6 +36,7 @@ public class MutterLayout extends JPanel
 	private GelegenheitenTabelle mGelegenheiten;
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
+	private PutzListe mPutzliste;
 		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -69,7 +70,9 @@ public class MutterLayout extends JPanel
 				mGaesteliste = new Gaesteliste(db, this);
 				mTabs.add(mGaesteliste, "Gästeliste");
 				mPutzen = new PutzTemplate(db, this);
-				mTabs.add(mPutzen, "Putzplan");
+				mTabs.add(mPutzen, "Putzliste");
+				mPutzliste = new PutzListe(db, this);
+				mTabs.add(mPutzliste, "Putzplan");
 				mMitbringliste = new Mitbringliste(db, this);
 				mTabs.add(mMitbringliste, "Mitbringliste");
 				mGelegenheiten = new GelegenheitenTabelle(db, this);

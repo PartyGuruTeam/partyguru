@@ -81,7 +81,7 @@ public class PersonenTabelle extends TabellenLayout {
 					+ "NAME='"+modell.getValueAt(row, 1)+"', "
 					+ "GESCHLECHT='"+modell.getValueAt(row, 2)+"', "
 					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
-					+ "HANDY='"+modell.getValueAt(row, 4)+"' "
+					+ "HANDY='"+modell.getValueAt(row, 4)+"' "			
 					+ "WHERE PERSID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();

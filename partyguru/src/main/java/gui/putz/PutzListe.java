@@ -3,6 +3,7 @@ package gui.putz;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
@@ -23,7 +24,7 @@ public class PutzListe extends TabellenLayout
 	private MutterLayout mParent;
 	
 	public PutzListe(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PUTZ WHERE PID="+parent.getPID()), new Boolean[]{ });
+		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()));
 		mDB = db;
 		mParent = parent;
 	}
@@ -32,7 +33,7 @@ public class PutzListe extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			mDB.executeQuery("SELECT * FROM PUTZ WHERE PID="+mParent.getPID());
+			printTable(mDB.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -90,7 +91,16 @@ public class PutzListe extends TabellenLayout
 	@Override
 	public void updateRow(int row, DefaultTableModel modell) {
 		// TODO Auto-generated method stub
-
+		try {
+			mDB.executeUpdate("UPDATE PUTZ SET "
+					+ "PTID='"+modell.getValueAt(row, 1)+"', "
+					+ "RAUM='"+modell.getValueAt(row, 2)+"', "
+					+ "DAUER='"+modell.getValueAt(row, 3)+"', "
+					+ "NOTIZ='"+modell.getValueAt(row, 4)+"' "	
+					+ "WHERE RID="+modell.getValueAt(row, 0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 }
