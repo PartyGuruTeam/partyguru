@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -25,6 +27,7 @@ public class Frame extends JFrame
 
 		mMutter = new MutterLayout();
 		this.add(mMutter);
+		
 		
 		this.setSize(700, 600);
 		this.setVisible(true);

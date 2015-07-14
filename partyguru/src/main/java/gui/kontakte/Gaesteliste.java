@@ -20,6 +20,7 @@ public class Gaesteliste extends TabellenLayout
 
 	private Database mDB;
 	private MutterLayout mParent;
+	int mpid;
 
 	public Gaesteliste(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT G.PERSID, P.NAME, G.KOMMT FROM GAESTELISTE G, "
@@ -27,6 +28,7 @@ public class Gaesteliste extends TabellenLayout
 				new Boolean[]{ false, false, true });
 		mDB = db;
 		mParent = parent;
+		mpid = parent.getPID();
 	}
 
 
