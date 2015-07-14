@@ -2,6 +2,8 @@ package db;
 
 import java.sql.*;
 
+import javax.swing.JOptionPane;
+
 /**
  * Klasse zur Herstellung der Verbindung zur Datenbank und um DB-Anfragen zu stellen
  * @author Bastian
@@ -10,7 +12,7 @@ import java.sql.*;
 public class Database 
 {
 	Connection mCon;
-	
+
 	/**
 	 * Konstruktor <br>
 	 * Erstellt Verbindung zur Datenbank, die übergeben wurde.
@@ -23,10 +25,13 @@ public class Database
 		if(db!=null && db!="")
 		{
 			Class.forName("org.h2.Driver");
-			mCon = DriverManager.getConnection("jdbc:h2:"+db, "sa", "");
-			if(checkDB()==false)
+			try {
+				mCon = DriverManager.getConnection("jdbc:h2:"+db+";IFEXISTS=TRUE", "sa", "");
+			} catch(SQLException e)
 			{
-				initDB();
+				mCon = DriverManager.getConnection("jdbc:h2:"+db+";"
+						+ "INIT=RUNSCRIPT FROM 'classpath:/resources/party.sql'", "sa", "");
+				JOptionPane.showMessageDialog(null, "Neue Datenbank angelegt");
 			}
 		}
 	}
@@ -40,7 +45,7 @@ public class Database
 		mCon.close();
 		super.finalize();
 	}
-	
+
 	/**
 	 * Führt Datenbankanfrage aus und gibt ResultSet zurück
 	 * @param sql
@@ -56,7 +61,7 @@ public class Database
 			rs = stmt.executeQuery(sql);
 		return rs;
 	}
-	
+
 	/**
 	 * Führt Datenbankanfragen aus, die etwas in der Datenbank verändern
 	 * @param sql
@@ -71,25 +76,6 @@ public class Database
 		if(stmt!=null)
 			result = stmt.executeUpdate(sql);
 		return result;
-	}
-	
-	
-	/**
-	 * Datenbank intial aufsetzen
-	 */
-	public void initDB()
-	{
-		//TODO neue Datenbank aufsetzen
-	}
-	
-	/**
-	 * Prüfen, ob Datenbank die benötigten Tabellen und Spalten enthält. 
-	 * @return true, wenn Prüfung erfolgreich
-	 */
-	private boolean checkDB()
-	{
-		//TODO DB checken
-		return true;
 	}
 
 }

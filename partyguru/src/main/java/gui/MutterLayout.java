@@ -25,11 +25,11 @@ import gui.putz.PutzTemplate;
 public class MutterLayout extends JPanel 
 {
 	private static final long serialVersionUID = 1L;
-	
+
 	private Database db;
 	int mPID;
 	JTabbedPane mTabs;
-	
+
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
@@ -38,60 +38,52 @@ public class MutterLayout extends JPanel
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
 	private PutzListe mPutzliste;
-		
+
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
 	public MutterLayout()
 	{		
 		this.setLayout(new BorderLayout());
-		
-		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
-		File f = new File(path+".h2.db");
-		if(f.exists())
-		{
-			try {
-				db = new Database(path);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			selectDB();
 
-			mTabs = new JTabbedPane(JTabbedPane.TOP);
-			this.add(mTabs, BorderLayout.CENTER);
-			
-			try {
-				mPersonen = new PersonenTabelle(db, this);
-				mTabs.add(mPersonen, "Personen");
-				mMaterial = new MaterialTabelle(db, this);
-				mTabs.add(mMaterial, "Material");
-				mGaesteliste = new Gaesteliste(db, this);
-				mTabs.add(mGaesteliste, "Gästeliste");
-				mPutzen = new PutzTemplate(db, this);
-				mTabs.add(mPutzen, "Putzliste");
-				mPutzliste = new PutzListe(db, this);
-				mTabs.add(mPutzliste, "Putzplan");
-				mMitbringliste = new Mitbringliste(db, this);
-				mTabs.add(mMitbringliste, "Mitbringliste");
-				mGelegenheiten = new GelegenheitenTabelle(db, this);
-				mTabs.add(mGelegenheiten, "Gelegenheiten");
-				mStammdaten = new PStammdaten(db, this);
-				mTabs.add(mStammdaten, "Stammdaten");
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-		} else 
-		{
-			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
-			System.exit(1);
+		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
+		try {
+			db = new Database(path);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		
+
+		selectDB();
+
+		mTabs = new JTabbedPane(JTabbedPane.TOP);
+		this.add(mTabs, BorderLayout.CENTER);
+
+		try {
+			mPersonen = new PersonenTabelle(db, this);
+			mTabs.add(mPersonen, "Personen");
+			mMaterial = new MaterialTabelle(db, this);
+			mTabs.add(mMaterial, "Material");
+			mGaesteliste = new Gaesteliste(db, this);
+			mTabs.add(mGaesteliste, "Gästeliste");
+			mPutzen = new PutzTemplate(db, this);
+			mTabs.add(mPutzen, "Putzliste");
+			mPutzliste = new PutzListe(db, this);
+			mTabs.add(mPutzliste, "Putzplan");
+			mMitbringliste = new Mitbringliste(db, this);
+			mTabs.add(mMitbringliste, "Mitbringliste");
+			mGelegenheiten = new GelegenheitenTabelle(db, this);
+			mTabs.add(mGelegenheiten, "Gelegenheiten");
+			mStammdaten = new PStammdaten(db, this);
+			mTabs.add(mStammdaten, "Stammdaten");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}			
+
 	}
-	
+
 	private void selectDB()
 	{
 		SelectParty selection=null;
@@ -115,7 +107,7 @@ public class MutterLayout extends JPanel
 
 	public int getPID(){
 		return mPID;
-		
+
 	}
-	
+
 }
