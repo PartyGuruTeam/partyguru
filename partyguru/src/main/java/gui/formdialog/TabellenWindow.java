@@ -15,11 +15,15 @@ public class TabellenWindow extends JFrame implements ActionListener {
 	
 	JButton mSubmit;
 	TabellenLayout mPanel;
+	int mColumn;
+
+	private Integer mID;
 	
-	public TabellenWindow(TabellenLayout panel, String titel)
+	public TabellenWindow(TabellenLayout panel, String titel, int column)
 	{
 		super(titel);
 		mPanel = panel;
+		mColumn = column;
 		this.add(mPanel);
 		this.setSize(500, 500);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,11 +40,10 @@ public class TabellenWindow extends JFrame implements ActionListener {
 		{
 			if(mPanel.getTabelle().getSelectedRow()>=0)
 			{
-				Integer result = (Integer) mPanel.getTabelle().getValueAt(mPanel.getTabelle().getSelectedRow(), 0);
+				Integer result = (Integer) mPanel.getTabelle().getValueAt(mPanel.getTabelle().getSelectedRow(), mColumn);
 				if(result!=null)
 				{
-					//TODO return type
-					this.dispose();
+					mID = result;
 				}
 			} else
 			{
@@ -48,5 +51,4 @@ public class TabellenWindow extends JFrame implements ActionListener {
 			}
 		}
 	}
-
 }
