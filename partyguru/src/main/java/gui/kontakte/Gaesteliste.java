@@ -21,11 +21,13 @@ public class Gaesteliste extends TabellenLayout
 
 	private Database mDB;
 	private MutterLayout mParent;
+	int mpid;
 
 	public Gaesteliste(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT * FROM GAESTELISTE WHERE PID="+parent.getPID()));
 		mDB = db;
 		mParent = parent;
+		mpid = parent.getPID();
 	}
 
 
