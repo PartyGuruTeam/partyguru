@@ -21,11 +21,13 @@ public class Mitbringliste extends TabellenLayout
 
 	private Database mDB;
 	private MutterLayout mParent;
+	int mpid;
 
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT MID, PERSID, ANZAHL, EINHEIT, NOTIZ FROM Material WHERE PID="+parent.getPID()));
 		mDB = db;
 		mParent = parent;
+		mpid=parent.getPID();
 	}
 
 
@@ -54,11 +56,11 @@ public class Mitbringliste extends TabellenLayout
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
-			ResultSet rs1 = mDB.executeQuery("SELECT PERSID, NAME FROM PERSONEN");
+			ResultSet rs1 = mDB.executeQuery("SELECT NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
 			final Vector<String> elements1 = new Vector<String>();
 			while(rs1.next())
 			{
-				elements1.add(rs1.getString(1)+"-"+rs1.getString(2));
+				elements1.add(rs1.getString(1));
 			}
 			new Thread(new Runnable(){
 

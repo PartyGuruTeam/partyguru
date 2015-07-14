@@ -20,11 +20,13 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	
 	Database mDB;
 	MutterLayout mParent;
+	int mpid;
 	
 	public GelegenheitenTabelle(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT * FROM GELEGENHEITEN WHERE PID="+parent.getPID()));
 		mDB = db;
 		mParent = parent;
+		mpid=parent.getPID();
 	}
 
 	@Override
@@ -49,12 +51,13 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	public void addRow() {
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
-			ResultSet rs = mDB.executeQuery("SELECT PERSID, NAME FROM PERSONEN");
+			ResultSet rs = mDB.executeQuery("SELECT NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
 			final Vector<String> element = new Vector<String>();
 			while(rs.next())
 			{
-				element.add(rs.getString(1)+"-"+rs.getString(2));
+				element.add(rs.getString(1));
 			}
+			
 		
 		new Thread(new Runnable(){
 
