@@ -21,7 +21,9 @@ public class PersonenTabelle extends TabellenLayout {
 	MutterLayout mParent;
 	
 	public PersonenTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PERSONEN"), new Boolean[]{ });
+		super(db.executeQuery("SELECT * FROM PERSONEN"), new Boolean[]{
+			false, true, false, true, true, true, false
+		});
 		mDB = db;
 		mParent = parent;
 	}
@@ -83,6 +85,7 @@ public class PersonenTabelle extends TabellenLayout {
 					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
 					+ "HANDY='"+modell.getValueAt(row, 4)+"' "			
 					+ "WHERE PERSID="+modell.getValueAt(row, 0));
+			//TODO Geburtsjahr + Verfügbarkeit
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

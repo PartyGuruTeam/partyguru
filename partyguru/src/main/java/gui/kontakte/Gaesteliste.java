@@ -24,7 +24,7 @@ public class Gaesteliste extends TabellenLayout
 	public Gaesteliste(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT G.PERSID, P.NAME, G.KOMMT FROM GAESTELISTE G, "
 				+ "PERSONEN P WHERE G.PERSID=P.PERSID AND G.PID="+parent.getPID()),
-				new Boolean[]{ });
+				new Boolean[]{ false, false, true });
 		mDB = db;
 		mParent = parent;
 	}
@@ -93,7 +93,14 @@ public class Gaesteliste extends TabellenLayout
 
 	@Override
 	public void updateRow(int row, DefaultTableModel modell) {
-		
+		try {
+			mDB.executeUpdate("UPDATE GAESTELISTE SET"
+					+ " KOMMT="+modell.getValueAt(row, 2)
+					+ " WHERE PID="+mParent.getPID()
+					+ " AND PERSID="+modell.getValueAt(row, 0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
