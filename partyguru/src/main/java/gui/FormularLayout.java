@@ -270,10 +270,10 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				while(rs.next())
 				{
 					String nachricht = "<p><span style=\"font-size: large;\"><strong>Einladung zur Party</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: xx-small;\">Hi "+rs.getString(2) +" du bist auf unsere Party eingeladen.</span><br /></span></p><p><span style=\"font-size: xx-small;\">Das Motto ist "+aMotto +".</span></p><p><span style=\"font-size: xx-small;\">Die Party findet am "+mDate.getDate() +" um "+mTime.getTime() +" Uhr statt.</span></p><p><span style=\"font-size: xx-small;\">Bitte gib bescheid ob du kommst, eine Mitfahr oder Schlafgelegenheit brauchst oder anbieten kannst.</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Dein Gastgeber</span></span></p>";
-					System.out.println(rs.getString(1));
-					System.out.println("Einladung zur " + aMotto + "Party am " + mDate.getDate());
-					System.out.println(nachricht);
-//					sendMail.emailSenden(rs.getString(1), "Einladung zur " + aMotto + "Party am " + mDate.getDate(), nachricht);
+//					System.out.println(rs.getString(1));
+//					System.out.println("Einladung zur " + aMotto + " Party am " + mDate.getDate());
+//					System.out.println(nachricht);
+					sendMail.emailSenden(rs.getString(1), "Einladung zur " + aMotto + " Party am " + mDate.getDate(), nachricht);
 				}
 				
 			} catch (SQLException e1) {
@@ -316,10 +316,10 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				while(rs.next())
 				{
 					String nachricht = "<p><span style=\"font-size: small;\"><strong>Umfrage</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: small;\">Hi "+rs.getString(2) +" ,</span></p>	<p>hat dir die "+ aMotto +" Party vom "+mDate.getDate() +" gefallen?</p><p>Dann beantworte bitte unsere Umfrage auf "+umfrage +" , damit die n&auml;chste Party noch besser wird.</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
-					System.out.println(rs.getString(1));
-					System.out.println("Umfrage zur " + aMotto + " Party vom " + mDate.getDate());
-					System.out.println(nachricht);
-//					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aMotto + " Party vom " + mDate.getDate(), nachricht);
+//					System.out.println(rs.getString(1));
+//					System.out.println("Umfrage zur " + aMotto + " Party vom " + mDate.getDate());
+//					System.out.println(nachricht);
+					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aMotto + " Party vom " + mDate.getDate(), nachricht);
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -366,10 +366,10 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 					if (counter != 0){
 						
 						String nachricht = "<p><span style=\"font-size: small;\"><strong>Letzte Infos</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: small;\">Hi "+rs.getString(2) +",</span></p><p>die "+ aMotto +" Party findet am "+mDate.getDate() +" um "+mTime.getTime() +" statt.</p><p>Bitte bring zur Party mit:</p><p>&nbsp;</p><p>"+ material +"</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
-						System.out.println(rs.getString(1));
-						System.out.println("Infos zur " + aMotto + " Party am " + mDate.getDate());
-						System.out.println(nachricht);
-//						sendMail.emailSenden(rs.getString(1), "Infos zur " + aMotto + " Party am " + mDate.getDate(), nachricht);
+//						System.out.println(rs.getString(1));
+//						System.out.println("Infos zur " + aMotto + " Party am " + mDate.getDate());
+//						System.out.println(nachricht);
+						sendMail.emailSenden(rs.getString(1), "Infos zur " + aMotto + " Party am " + mDate.getDate(), nachricht);
 						
 						
 					}
