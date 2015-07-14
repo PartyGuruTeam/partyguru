@@ -30,7 +30,6 @@ public class MutterLayout extends JPanel
 	int mPID;
 	JTabbedPane mTabs;
 
-	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
 	private Mitbringliste mMitbringliste;
@@ -61,12 +60,10 @@ public class MutterLayout extends JPanel
 		this.add(mTabs, BorderLayout.CENTER);
 
 		try {
-			mPersonen = new PersonenTabelle(db, this);
-			mTabs.add(mPersonen, "Personen");
-			mMaterial = new MaterialTabelle(db, this);
-			mTabs.add(mMaterial, "Material");
 			mGaesteliste = new Gaesteliste(db, this);
 			mTabs.add(mGaesteliste, "Gästeliste");
+			mMaterial = new MaterialTabelle(db, this);
+			mTabs.add(mMaterial, "Material");
 			mPutzen = new PutzTemplate(db, this);
 			mTabs.add(mPutzen, "Putzliste");
 			mPutzliste = new PutzListe(db, this);

@@ -43,7 +43,7 @@ public class SelectParty extends TabellenLayout
 		mParent = parent;
 		mSubmit = new JButton("Auswählen");
 		mSubmit.addActionListener(this);
-		this.mButtonPanel.add(mSubmit);
+		this.getButtonPanel().add(mSubmit);
 
 	}
 
@@ -111,9 +111,9 @@ public class SelectParty extends TabellenLayout
 		super.actionPerformed(e);
 		if(e.getSource().equals(mSubmit))
 		{
-			if(super.mTabelle.getSelectedRow()>=0)
+			if(super.getTabelle().getSelectedRow()>=0)
 			{
-				Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
+				Integer result = (Integer) super.getTabelle().getValueAt(super.getTabelle().getSelectedRow(), 0);
 				if(result!=null)
 				{
 					mParent.mPID = result;

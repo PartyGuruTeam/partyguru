@@ -31,10 +31,10 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JButton mNeuButton;
 	private JButton mLoeschenButton;
 
-	JTable mTabelle;
+	private JTable mTabelle;
 	private DefaultTableModel mModell;
 	
-	JPanel mButtonPanel;
+	private JPanel mButtonPanel;
 	
 	Boolean[] mIsEditable;
 
@@ -47,8 +47,8 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		mIsEditable = isEditable;
 		
 		this.setLayout(new BorderLayout());
-		mTabelle = new JTable();
-		this.add(new JScrollPane(mTabelle), BorderLayout.CENTER);
+		setTabelle(new JTable());
+		this.add(new JScrollPane(getTabelle()), BorderLayout.CENTER);
 		try {
 			printTable(rs);
 		} catch (SQLException e) {
@@ -56,19 +56,19 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 		
 		mModell.addTableModelListener(this);
-		mTabelle.getTableHeader().setReorderingAllowed(false);
+		getTabelle().getTableHeader().setReorderingAllowed(false);
 		
-		mButtonPanel = new JPanel();
+		setButtonPanel(new JPanel());
 
 		mNeuButton = new JButton("Neu...");
-		mButtonPanel.add(mNeuButton);
+		getButtonPanel().add(mNeuButton);
 		mNeuButton.addActionListener(this);
 
 		mLoeschenButton = new JButton("Löschen");
-		mButtonPanel.add(mLoeschenButton);
+		getButtonPanel().add(mLoeschenButton);
 		mLoeschenButton.addActionListener(this);
 		
-		this.add(mButtonPanel, BorderLayout.SOUTH);
+		this.add(getButtonPanel(), BorderLayout.SOUTH);
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			tabelle.add(row);
 		}
 		mModell = new MyTableModel(tabelle, columnNames, mIsEditable);
-		mTabelle.setModel(mModell);
+		getTabelle().setModel(mModell);
 	}
 
 	/**
@@ -141,9 +141,9 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 					"Löschvorgang", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 			{
 				Vector<String> v = new Vector<String>();
-				for(int i=0; i<mTabelle.getColumnCount(); i++)
+				for(int i=0; i<getTabelle().getColumnCount(); i++)
 				{
-					v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
+					v.add(getTabelle().getValueAt(getTabelle().getSelectedRow(), i).toString());
 				}
 				deleteRow(v);
 				printTable();
@@ -181,6 +181,22 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	 */
 	public abstract void updateRow(int row, DefaultTableModel modell);
 	//TODO updateRow verbessern
+
+	public JPanel getButtonPanel() {
+		return mButtonPanel;
+	}
+
+	public void setButtonPanel(JPanel mButtonPanel) {
+		this.mButtonPanel = mButtonPanel;
+	}
+
+	public JTable getTabelle() {
+		return mTabelle;
+	}
+
+	public void setTabelle(JTable mTabelle) {
+		this.mTabelle = mTabelle;
+	}
 
 }
 

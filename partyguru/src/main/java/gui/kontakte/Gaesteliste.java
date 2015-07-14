@@ -13,6 +13,7 @@ import gui.MutterLayout;
 import gui.TabellenLayout;
 import gui.formdialog.FormDialog;
 import gui.formdialog.FormElement;
+import gui.formdialog.TabellenWindow;
 
 public class Gaesteliste extends TabellenLayout 
 {	
@@ -53,7 +54,13 @@ public class Gaesteliste extends TabellenLayout
 	@Override
 	public void addRow() 
 	{
-		final Window w = SwingUtilities.getWindowAncestor(this);
+		try {
+			new TabellenWindow(new PersonenTabelle(mDB, mParent), "Person auswählen");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		/*final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
 			ResultSet rs = mDB.executeQuery("SELECT PERSID, NAME FROM PERSONEN");
 			final Vector<String> elements = new Vector<String>();
@@ -88,7 +95,7 @@ public class Gaesteliste extends TabellenLayout
 			}).start();	
 		} catch (SQLException e1) {
 			e1.printStackTrace();
-		}	
+		}	*/
 	}
 
 	@Override
