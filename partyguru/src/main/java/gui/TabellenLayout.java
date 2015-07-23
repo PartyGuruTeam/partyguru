@@ -158,7 +158,12 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	{
 		if(e.getType()==TableModelEvent.UPDATE)
 		{
-			updateRow(e.getFirstRow(), mModell);
+			Vector<String> row = new Vector<String>();
+			for(int i=0; i<mTabelle.getColumnCount(); i++)
+			{
+				row.add((String) mTabelle.getValueAt(e.getFirstRow(), i));
+			}
+			updateRow(row);
 			printTable();
 		}
 	}
@@ -179,9 +184,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	 * @param row Zeile, in der Veränderung vorgenommen wurde.
 	 * @param modell TableModel, welches verwendet wird.
 	 */
-	public abstract void updateRow(int row, DefaultTableModel modell);
-	//TODO updateRow verbessern
-
+	public abstract void updateRow(Vector<String> v);
 }
 
 
