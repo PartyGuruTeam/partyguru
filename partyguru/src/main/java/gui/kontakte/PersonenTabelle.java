@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
 import gui.TabellenLayout;
 import db.Database;
@@ -77,15 +76,17 @@ public class PersonenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
+	public void updateRow(Vector<String> row) {
 		try {
 			mDB.executeUpdate("UPDATE PERSONEN SET "
-					+ "NAME='"+modell.getValueAt(row, 1)+"', "
-					+ "GESCHLECHT='"+modell.getValueAt(row, 2)+"', "
-					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
-					+ "HANDY='"+modell.getValueAt(row, 4)+"' "			
-					+ "WHERE PERSID="+modell.getValueAt(row, 0));
-			//TODO Geburtsjahr + Verfügbarkeit
+					+ "NAME='"+row.elementAt(1)+"', "
+					+ "GESCHLECHT='"+row.elementAt(2)+"', "
+					+ "EMAIL='"+row.elementAt(3)+"', "
+					+ "HANDY='"+row.elementAt(4)+"', "
+					+ "GEBURTSJAHR='"+row.elementAt(5)+"',"
+					+ "VERFUEGBARKEIT'"+row.elementAt(6)+"' "
+					+ "WHERE PERSID="+row.elementAt(0));
+			//TODO Geburtsjahr + Verfügbarkeit prüfen Darstellung
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

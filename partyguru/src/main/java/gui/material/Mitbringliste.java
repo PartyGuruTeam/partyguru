@@ -3,13 +3,9 @@ package gui.material;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
-
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-
 import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
@@ -98,15 +94,14 @@ public class Mitbringliste extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
-		// TODO Auto-generated method stub
+	public void updateRow(Vector<String> row)
+	{
 		try {
 			mDB.executeUpdate("UPDATE Material SET "
-					+ "PERSID='"+modell.getValueAt(row, 1)+"', "
-					+ "ANZAHL='"+modell.getValueAt(row, 2)+"', "
-					+ "EINHEIT='"+modell.getValueAt(row, 3)+"', "
-					+ "NOTIZ='"+modell.getValueAt(row, 4)+"' "
-					+ "WHERE MID="+modell.getValueAt(row, 0));
+					+ "ANZAHL='"+row.elementAt(2)+"', "
+					+ "EINHEIT='"+row.elementAt(3)+"', "
+					+ "NOTIZ='"+row.elementAt(4)+"' "
+					+ "WHERE MID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
