@@ -33,7 +33,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 	
 	//Erstellung der Buttons für unten
 	private JButton mSpeichernButton;
-	//private JPanel mButtonPanel;
+
 	
 	String mAusgabe;
 	Vector<JTextField> tfArray = new Vector<JTextField>();
@@ -44,7 +44,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 	{	
 		super();
 		mSpeichernButton = new JButton("Speichern");
-		//mButtonPanel = new JPanel();
+		
 
 		Border border = this.getBorder();
 		Border margin = new EmptyBorder(10, 10, 10, 10);
@@ -64,14 +64,14 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 		addLabelAndTextField("Partyname:", 1, this);
 		addLabelAndTextField( "Gastgeber:*", 2, this);
 		addLabelAndTextField( "Ort:*", 3, this);
-		//addLabelAndTextField( "Datum:*", 4, this);
 		addLabelAndDateField("Datum", 4, this);
-		//addLabelAndTextField( "Startzeit:", 5, this);
 		addLabelAndTimeField("Startzeit", 5, this);
 		addLabelAndTextField("Motto:", 6, this);
 		
 		addButttons(7, this);
 	}
+	
+	
 	private void addLabelAndTimeField(String labelText, int yPos, Container formular)
 	{
 		JLabel faxLabel = new JLabel(labelText);

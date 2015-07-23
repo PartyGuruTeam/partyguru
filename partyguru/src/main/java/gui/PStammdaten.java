@@ -47,7 +47,6 @@ public class PStammdaten extends FormularLayout
 			mDB = db;
 			mParent = parent;
 			mPID = parent.getPID();
-
 			//Befüllen der Textfelder
 			tfArray.get(0).setText(aName);
 			//tfArray.get(1).setText();			//TODO GASTGEBER einfügen

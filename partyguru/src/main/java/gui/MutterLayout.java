@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import db.Database;
+import gui.couples.Generierung;
 import gui.gelegenheiten.GelegenheitenTabelle;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
@@ -16,6 +17,7 @@ import gui.material.MaterialTabelle;
 import gui.material.Mitbringliste;
 import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
+
 
 /**
  * 
@@ -37,6 +39,7 @@ public class MutterLayout extends JPanel
 	private GelegenheitenTabelle mGelegenheiten;
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
+	private Generierung mGenerierung;
 		
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -79,6 +82,12 @@ public class MutterLayout extends JPanel
 				//TODO BUG bei laden von Stammdaten
 				mStammdaten = new PStammdaten(db, this);
 				mTabs.add(mStammdaten, "Stammdaten");
+				
+				mGenerierung = new Generierung(db, this);
+				mTabs.add(mGenerierung, "Pärchengenerierung");
+				
+				
+				
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}			
