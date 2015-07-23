@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-
 import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
@@ -21,7 +19,8 @@ private static final long serialVersionUID = 1L;
 	MutterLayout mParent;
 	
 	public PutzTemplate(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PUTZTEMPLATE"), new Boolean[] { });
+		super(db.executeQuery("SELECT PTID, ART FROM PUTZTEMPLATE"), 
+				new Boolean[] { false, true });
 		mDB = db;
 		mParent = parent;
 	}
@@ -29,7 +28,7 @@ private static final long serialVersionUID = 1L;
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT * FROM PUTZTEMPLATE"));
+			printTable(mDB.executeQuery("SELECT PTID, ART FROM PUTZTEMPLATE"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -51,10 +50,8 @@ private static final long serialVersionUID = 1L;
 
 			public void run() {
 				Vector<String> result = FormDialog.getDialog("Neue Putztätigkeit anlegen", new FormElement[] {
-						new FormElement("Tätigkeit", FormElement.TEXT_FIELD),
-//						
+						new FormElement("Tätigkeit", FormElement.TEXT_FIELD)			
 				}, w);
-				//TODO verbessern
 				if(result.size()==1)
 				{
 					try {
@@ -70,11 +67,11 @@ private static final long serialVersionUID = 1L;
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
+	public void updateRow(Vector<String> row) {
 		try {
 			mDB.executeUpdate("UPDATE PUTZTEMPLATE SET "
-					+ "ART='"+modell.getValueAt(row, 1)+"' "
-					+ "WHERE PTID="+modell.getValueAt(row, 0));
+					+ "ART='"+row.elementAt(1)+"' "
+					+ "WHERE PTID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

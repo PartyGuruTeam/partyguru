@@ -3,13 +3,9 @@ package gui.putz;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
-import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-
 import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
@@ -44,7 +40,11 @@ public class PutzListe extends TabellenLayout
 
 	@Override
 	public void deleteRow(Vector<String> v) {
-		JOptionPane.showMessageDialog(this, "TODO");
+		try {
+			mDB.executeUpdate("DELETE FROM PUTZ WHERE RID="+v.elementAt(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -58,35 +58,28 @@ public class PutzListe extends TabellenLayout
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
-			
-			ResultSet rs1 = mDB.executeQuery("SELECT NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
-			final Vector<String> element = new Vector<String>();
-			while(rs1.next())
-			{
-				element.add(rs1.getString(1));
-			}
-			
 			new Thread(new Runnable(){
 
 				public void run() {
 					Vector<String> result = FormDialog.getDialog("Neue Tätigkeit hinzufügen", new FormElement[] {
 							new FormElement("Tätigkeit", FormElement.DROP_DOWN, elements),
-							new FormElement("Name", FormElement.DROP_DOWN,element),
 							new FormElement("Raum", FormElement.TEXT_FIELD),
 							new FormElement("Dauer", FormElement.TEXT_FIELD),
-							new FormElement("Notiz", FormElement.TEXT_FIELD),
-							
+							new FormElement("Notiz", FormElement.TEXT_FIELD)
 					}, w);
-					//TODO verbessern
-					if(result.size()==5)
+					if(result.size()==4)
 					{
 						try {
 							String ptid = result.elementAt(0).split("-")[0];
+							int dauer = -1;
+							try
+							{
+								dauer = Integer.parseInt(result.elementAt(2));
+							} catch(NumberFormatException arg)
+							{							
+							}
 							mDB.executeUpdate("INSERT INTO PUTZ (PTID, PID, RAUM, DAUER, NOTIZ) VALUES ('"+ptid+"','"+mParent.getPID()+
-									"', '"+result.elementAt(2)+"','"+result.elementAt(3)+"','"+result.elementAt(4)+"')");
-							
-							// TODO Umwandeln des Namens in PERSID sonst keine Übergabe an PUTZ_PERSONEN möglich
-							mDB.executeUpdate("INSERT INTO PUTZ_PERSONEN (PERSID) VALUES ('"+result.elementAt(1)+"')");
+									"', '"+result.elementAt(1)+"','"+dauer+"','"+result.elementAt(3)+"')");
 						
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -102,15 +95,13 @@ public class PutzListe extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
-		// TODO Auto-generated method stub
+	public void updateRow(Vector<String> row) {
 		try {
 			mDB.executeUpdate("UPDATE PUTZ SET "
-					+ "PTID='"+modell.getValueAt(row, 1)+"', "
-					+ "RAUM='"+modell.getValueAt(row, 2)+"', "
-					+ "DAUER='"+modell.getValueAt(row, 3)+"', "
-					+ "NOTIZ='"+modell.getValueAt(row, 4)+"' "	
-					+ "WHERE RID="+modell.getValueAt(row, 0));
+					+ "RAUM='"+row.elementAt(2)+"', "
+					+ "DAUER='"+row.elementAt(3)+"', "
+					+ "NOTIZ='"+row.elementAt(4)+"' "	
+					+ "WHERE RID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

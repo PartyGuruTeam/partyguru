@@ -5,8 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
 import db.Database;
 import gui.MutterLayout;
@@ -81,7 +81,7 @@ public class Gaesteliste extends TabellenLayout
 							mDB.executeUpdate("INSERT INTO GAESTELISTE (PID, PERSID, KOMMT) "
 									+ "VALUES ('"+mParent.getPID()+"', '"+persid+"', '"+kommt+"')");
 						} catch (SQLException e) {
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(mParent, "Gast ist bereits auf der Gästeliste!");
 						}
 					}
 					printTable();
@@ -94,12 +94,12 @@ public class Gaesteliste extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
+	public void updateRow(Vector<String> row) {
 		try {
 			mDB.executeUpdate("UPDATE GAESTELISTE SET"
-					+ " KOMMT="+modell.getValueAt(row, 2)
+					+ " KOMMT="+row.elementAt(2)
 					+ " WHERE PID="+mParent.getPID()
-					+ " AND PERSID="+modell.getValueAt(row, 0));
+					+ " AND PERSID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

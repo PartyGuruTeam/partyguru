@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
 import db.Database;
 
@@ -95,12 +94,12 @@ public class SelectParty extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) 
+	public void updateRow(Vector<String> row) 
 	{
 		try {
 			mDB.executeUpdate("UPDATE PARTY SET "
-					+ "NAME='"+modell.getValueAt(row, 1)+"' "
-					+ "WHERE PID="+modell.getValueAt(row, 0));
+					+ "NAME='"+row.elementAt(1)+"' "
+					+ "WHERE PID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

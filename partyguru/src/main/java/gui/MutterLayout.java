@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import db.Database;
 import gui.gelegenheiten.GelegenheitenTabelle;
@@ -52,7 +54,8 @@ public class MutterLayout extends JPanel
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Auf die Datenbank kann nicht zugegriffen werden!");
+			System.exit(1);
 		}
 
 		selectDB();
@@ -81,7 +84,18 @@ public class MutterLayout extends JPanel
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}			
-
+		mTabs.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				mPersonen.printTable();
+				mMaterial.printTable();
+				mGaesteliste.printTable();
+				mPutzen.printTable();
+				mPutzliste.printTable();
+				mMitbringliste.printTable();
+				mGelegenheiten.printTable();
+			}
+		});
 	}
 
 	private void selectDB()

@@ -22,7 +22,7 @@ public class TimeFunction extends JSpinner
 	
 	SpinnerDateModel mModel;
 	
-	public TimeFunction(SpinnerDateModel model)
+	private TimeFunction(SpinnerDateModel model)
 	{
 		super(model);
 		mModel = model;
