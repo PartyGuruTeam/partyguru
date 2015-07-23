@@ -54,7 +54,8 @@ public class MutterLayout extends JPanel
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this, "Auf die Datenbank kann nicht zugegriffen werden!");
+			System.exit(1);
 		}
 
 		selectDB();
