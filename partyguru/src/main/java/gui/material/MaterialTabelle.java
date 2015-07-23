@@ -19,7 +19,7 @@ public class MaterialTabelle extends TabellenLayout {
 	
 	public MaterialTabelle(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT * FROM MaterialTemplate"), 
-				new Boolean[]{false, true, true});
+				new Boolean[]{false, false, true});
 		mDB = db;
 		mParent = parent;
 	}
@@ -77,8 +77,8 @@ public class MaterialTabelle extends TabellenLayout {
 	public void updateRow(Vector<String> row) {
 		try {
 			mDB.executeUpdate("UPDATE MaterialTemplate SET "
-					+ "ART='"+row.elementAt(1)+"' "
-					+ "NAME='"+row.elementAt(2)+"', "
+					+ "ART='"+row.elementAt(1)+"', "
+					+ "NAME='"+row.elementAt(2)+"' "
 					+ "WHERE MTID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();

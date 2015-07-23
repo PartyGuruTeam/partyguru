@@ -71,8 +71,15 @@ public class PutzListe extends TabellenLayout
 					{
 						try {
 							String ptid = result.elementAt(0).split("-")[0];
+							int dauer = -1;
+							try
+							{
+								dauer = Integer.parseInt(result.elementAt(2));
+							} catch(NumberFormatException arg)
+							{							
+							}
 							mDB.executeUpdate("INSERT INTO PUTZ (PTID, PID, RAUM, DAUER, NOTIZ) VALUES ('"+ptid+"','"+mParent.getPID()+
-									"', '"+result.elementAt(1)+"','"+result.elementAt(2)+"','"+result.elementAt(3)+"')");
+									"', '"+result.elementAt(1)+"','"+dauer+"','"+result.elementAt(3)+"')");
 						
 						} catch (SQLException e) {
 							e.printStackTrace();

@@ -15,10 +15,10 @@ import gui.formdialog.FormElement;
 public class PersonenTabelle extends TabellenLayout {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	Database mDB;
 	MutterLayout mParent;
-	
+
 	public PersonenTabelle(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT * FROM PERSONEN"), new Boolean[]{
 			false, true, false, true, true, true, false
@@ -59,19 +59,27 @@ public class PersonenTabelle extends TabellenLayout {
 						new FormElement("Geschlecht", FormElement.DROP_DOWN, v),
 						new FormElement("Email", FormElement.TEXT_FIELD),
 						new FormElement("Handy", FormElement.TEXT_FIELD),
+						new FormElement("Geburtsjahr", FormElement.TEXT_FIELD)
 				}, w);
-				if(result.size()==4)
+				if(result.size()==5)
 				{
 					try {
-						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"')");
+						int geb = -1;
+						try
+						{
+							geb = Integer.parseInt(result.elementAt(4));
+						} catch(NumberFormatException e1)
+						{
+						}
+						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY, GEBURTSJAHR) VALUES ('"+result.elementAt(0)+
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"', '"+geb+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 				}
 				printTable();
 			}
-			
+
 		}).start();		
 	}
 
@@ -83,10 +91,8 @@ public class PersonenTabelle extends TabellenLayout {
 					+ "GESCHLECHT='"+row.elementAt(2)+"', "
 					+ "EMAIL='"+row.elementAt(3)+"', "
 					+ "HANDY='"+row.elementAt(4)+"', "
-					+ "GEBURTSJAHR='"+row.elementAt(5)+"',"
-					+ "VERFUEGBARKEIT'"+row.elementAt(6)+"' "
+					+ "GEBURTSJAHR='"+row.elementAt(5)+"' "
 					+ "WHERE PERSID="+row.elementAt(0));
-			//TODO Geburtsjahr + Verfügbarkeit prüfen Darstellung
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import db.Database;
 import gui.gelegenheiten.GelegenheitenTabelle;
@@ -81,7 +83,18 @@ public class MutterLayout extends JPanel
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}			
-
+		mTabs.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				mPersonen.printTable();
+				mMaterial.printTable();
+				mGaesteliste.printTable();
+				mPutzen.printTable();
+				mPutzliste.printTable();
+				mMitbringliste.printTable();
+				mGelegenheiten.printTable();
+			}
+		});
 	}
 
 	private void selectDB()

@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -55,7 +56,6 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			e.printStackTrace();
 		}
 		
-		mModell.addTableModelListener(this);
 		mTabelle.getTableHeader().setReorderingAllowed(false);
 		
 		mButtonPanel = new JPanel();
@@ -125,6 +125,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 		mModell = new MyTableModel(tabelle, columnNames, mIsEditable);
 		mTabelle.setModel(mModell);
+		mModell.addTableModelListener(this);
 	}
 
 	/**
@@ -137,17 +138,21 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			printTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
-			if(JOptionPane.showConfirmDialog(this, "Wollen Sie den Eintrag wirklich löschen?",
-					"Löschvorgang", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
+			if(mTabelle.getSelectedRow()>=0)
 			{
-				Vector<String> v = new Vector<String>();
-				for(int i=0; i<mTabelle.getColumnCount(); i++)
+				if(JOptionPane.showConfirmDialog(this, "Wollen Sie den Eintrag wirklich löschen?",
+						"Löschvorgang", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				{
-					v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
-				}
-				deleteRow(v);
-				printTable();
-			}	
+					Vector<String> v = new Vector<String>();
+					for(int i=0; i<mTabelle.getColumnCount(); i++)
+					{
+							v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
+					}
+					deleteRow(v);
+					printTable();
+				}	
+			}
+			
 		}
 	}
 
@@ -161,7 +166,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			Vector<String> row = new Vector<String>();
 			for(int i=0; i<mTabelle.getColumnCount(); i++)
 			{
-				row.add((String) mTabelle.getValueAt(e.getFirstRow(), i));
+				row.add(mTabelle.getValueAt(e.getFirstRow(), i).toString());
 			}
 			updateRow(row);
 			printTable();
@@ -204,7 +209,10 @@ class MyTableModel extends DefaultTableModel
 	@Override
 	public Class<? extends Object> getColumnClass(int c)
 	{
-		return getValueAt(0, c).getClass();	
+		if(getValueAt(0, c)=="" || getValueAt(0, c)==null)
+			return String.class;
+		else
+			return getValueAt(0, c).getClass();	
 	}
 
 	@Override

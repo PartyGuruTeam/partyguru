@@ -21,8 +21,10 @@ public class Mitbringliste extends TabellenLayout
 	int mpid;
 
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT MID, PERSID, ANZAHL, EINHEIT, NOTIZ FROM Material WHERE PID="+parent.getPID()), 
-				new Boolean[] {false, false, true, true, true } );
+		super(db.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+				+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
+				+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+parent.getPID()), 
+				new Boolean[] {false, false, false, true, true, true } );
 		mDB = db;
 		mParent = parent;
 		mpid=parent.getPID();
@@ -32,7 +34,9 @@ public class Mitbringliste extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT MID, PERSID, ANZAHL, EINHEIT, NOTIZ FROM Material WHERE PID="+mParent.getPID()));
+			printTable(mDB.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+					+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
+					+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+mpid));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -40,7 +44,11 @@ public class Mitbringliste extends TabellenLayout
 
 	@Override
 	public void deleteRow(Vector<String> v) {
-		JOptionPane.showMessageDialog(this, "TODO");
+		try {
+			mDB.executeUpdate("DELETE FROM MATERIAL WHERE MID="+v.elementAt(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -54,11 +62,11 @@ public class Mitbringliste extends TabellenLayout
 			{
 				elements.add(rs.getString(1)+"-"+rs.getString(2));
 			}
-			ResultSet rs1 = mDB.executeQuery("SELECT NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
+			ResultSet rs1 = mDB.executeQuery("SELECT G.PERSID, P.NAME FROM GAESTELISTE G, PERSONEN P WHERE G.PERSID=P.PERSID AND PID="+mpid);
 			final Vector<String> elements1 = new Vector<String>();
 			while(rs1.next())
 			{
-				elements1.add(rs1.getString(1));
+				elements1.add(rs1.getString(1)+"-"+rs1.getString(2));
 			}
 			new Thread(new Runnable(){
 
@@ -76,10 +84,14 @@ public class Mitbringliste extends TabellenLayout
 					{
 						String mtid = result.elementAt(0).split("-")[0];
 						String persid = result.elementAt(1).split("-")[0];
+						int anz = -1;
+						try {
+							anz = Integer.parseInt(result.elementAt(2));
+						} catch(NumberFormatException e2) { }
 						try {
 							mDB.executeUpdate("INSERT INTO Material (MTID, PID, PERSID, ANZAHL, EINHEIT, NOTIZ) VALUES ('"+mtid+
 																		"','"+mParent.getPID()+
-									"', '"+persid+"', '"+result.elementAt(2)+"','"+result.elementAt(3)+"','"+result.elementAt(4)+"')");
+									"', '"+persid+"', '"+anz+"','"+result.elementAt(3)+"','"+result.elementAt(4)+"')");
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -97,8 +109,10 @@ public class Mitbringliste extends TabellenLayout
 	public void updateRow(Vector<String> row)
 	{
 		try {
+			if(row.elementAt(3)=="" || row.elementAt(3)==null)
+				row.set(3, "-1");
 			mDB.executeUpdate("UPDATE Material SET "
-					+ "ANZAHL='"+row.elementAt(2)+"', "
+					+ "ANZAHL='"+row.elementAt(3)+"', "
 					+ "EINHEIT='"+row.elementAt(3)+"', "
 					+ "NOTIZ='"+row.elementAt(4)+"' "
 					+ "WHERE MID="+row.elementAt(0));

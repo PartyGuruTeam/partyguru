@@ -52,11 +52,11 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	public void addRow() {
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
-			ResultSet rs = mDB.executeQuery("SELECT NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
+			ResultSet rs = mDB.executeQuery("SELECT GAESTELISTE.PERSID, NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID=PERSONEN.PERSID WHERE PID="+mpid);
 			final Vector<String> element = new Vector<String>();
 			while(rs.next())
 			{
-				element.add(rs.getString(1));
+				element.add(rs.getString(1)+"-"+rs.getString(2));
 			}
 
 
@@ -99,9 +99,11 @@ public class GelegenheitenTabelle extends TabellenLayout {
 	@Override
 	public void updateRow(Vector<String> row) {
 		try {
+			if(row.elementAt(3)=="" || row.elementAt(3)==null)
+				row.set(3, "-1");
 			mDB.executeUpdate("UPDATE GELEGENHEITEN SET "
 					+ "ORT='"+row.elementAt(1)+"', "
-					+ "ANZPLAETZE='"+row.elementAt(3)+"', "
+					+ "ANZPLAETZE='"+row.elementAt(3)+"' "
 					+ "WHERE GELEGENID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();

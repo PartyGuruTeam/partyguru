@@ -5,7 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+
 import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
@@ -79,7 +81,7 @@ public class Gaesteliste extends TabellenLayout
 							mDB.executeUpdate("INSERT INTO GAESTELISTE (PID, PERSID, KOMMT) "
 									+ "VALUES ('"+mParent.getPID()+"', '"+persid+"', '"+kommt+"')");
 						} catch (SQLException e) {
-							e.printStackTrace();
+							JOptionPane.showMessageDialog(mParent, "Gast ist bereits auf der Gästeliste!");
 						}
 					}
 					printTable();
