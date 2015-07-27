@@ -33,7 +33,7 @@ import frontend.tables.PutzTemplate;
 
 
 /**
- * 
+ * Hauptpanel, in dem alle Tabs eingebunden werden.
  * @author Bastian
  *
  */
@@ -121,6 +121,9 @@ public class MutterLayout extends JPanel
 		});
 	}
 	
+	/**
+	 * Dialog wird aufgerufen, um Party auszuwählen.
+	 */
 	private void selectParty()
 	{
 		SelectParty selection=null;

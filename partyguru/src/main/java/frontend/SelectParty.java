@@ -32,6 +32,12 @@ public class SelectParty extends TabellenLayout
 	JButton mSubmit;
 	JFrame mFrame;
 
+	/**
+	 * Fenster erstellen
+	 * @param db
+	 * @param parent
+	 * @throws SQLException
+	 */
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
 		super(db.executeQuery("SELECT PID, NAME FROM PARTY"), new Boolean[]{ false, true });
