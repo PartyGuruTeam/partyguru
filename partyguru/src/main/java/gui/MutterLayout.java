@@ -11,6 +11,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import db.Database;
+import gui.couples.Generierung;
 import gui.gelegenheiten.GelegenheitenTabelle;
 import gui.kontakte.Gaesteliste;
 import gui.kontakte.PersonenTabelle;
@@ -18,6 +19,7 @@ import gui.material.MaterialTabelle;
 import gui.material.Mitbringliste;
 import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
+
 
 /**
  * 
@@ -27,11 +29,11 @@ import gui.putz.PutzTemplate;
 public class MutterLayout extends JPanel 
 {
 	private static final long serialVersionUID = 1L;
-
+	
 	private Database db;
 	int mPID;
 	JTabbedPane mTabs;
-
+	
 	private PersonenTabelle mPersonen;
 	private Gaesteliste mGaesteliste;
 	private MaterialTabelle mMaterial;
@@ -39,6 +41,7 @@ public class MutterLayout extends JPanel
 	private GelegenheitenTabelle mGelegenheiten;
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
+	private Generierung mGenerierung;	
 	private PutzListe mPutzliste;
 
 	/**
@@ -80,6 +83,8 @@ public class MutterLayout extends JPanel
 			mTabs.add(mGelegenheiten, "Gelegenheiten");
 			mStammdaten = new PStammdaten(db, this);
 			mTabs.add(mStammdaten, "Stammdaten");
+			mGenerierung = new Generierung(db, this);
+			mTabs.add(mGenerierung, "Pärchengenerierung");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,7 +102,7 @@ public class MutterLayout extends JPanel
 			}
 		});
 	}
-
+	
 	private void selectDB()
 	{
 		SelectParty selection=null;
@@ -121,7 +126,7 @@ public class MutterLayout extends JPanel
 
 	public int getPID(){
 		return mPID;
-
+		
 	}
-
+	
 }

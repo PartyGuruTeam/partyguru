@@ -6,6 +6,7 @@ import java.util.Vector;
 
 import javax.swing.SwingUtilities;
 
+
 import gui.TabellenLayout;
 import db.Database;
 import gui.MutterLayout;
@@ -51,17 +52,30 @@ public class PersonenTabelle extends TabellenLayout {
 		new Thread(new Runnable(){
 
 			public void run() {
+				//Dropdown-Optionen für das Geschlecht
 				Vector<String> v = new Vector<String>();
 				v.add("m");
 				v.add("w");
+				
+				//Dropdown-Optionen für die Verfügbarkeit
+				Vector<String> z = new Vector<String>();
+				z.add("nicht verfügbar"); // = 1 in DB
+				z.add("verfügbar für w"); // = 2 in DB
+				z.add("verfügbar für m"); // = 3 in DB
+				z.add("nicht bekannt");	  // = 0 in DB
+				
+				int mVerf = 0; 
+				
 				Vector<String> result = FormDialog.getDialog("Neue Person anlegen", new FormElement[] {
 						new FormElement("Name", FormElement.TEXT_FIELD),
 						new FormElement("Geschlecht", FormElement.DROP_DOWN, v),
 						new FormElement("Email", FormElement.TEXT_FIELD),
 						new FormElement("Handy", FormElement.TEXT_FIELD),
 						new FormElement("Geburtsjahr", FormElement.TEXT_FIELD)
+						new FormElement("Verfügbarkeit", FormElement.DROP_DOWN, z),
+	
 				}, w);
-				if(result.size()==5)
+				if(result.size()==6)
 				{
 					try {
 						int geb = -1;
@@ -71,28 +85,56 @@ public class PersonenTabelle extends TabellenLayout {
 						} catch(NumberFormatException e1)
 						{
 						}
-						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY, GEBURTSJAHR) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"', '"+geb+"')");
+						
+					/**
+					 * @author Franzi
+					 * mVerf übersetzt die Verfügbarkeit in eine Zahl für die DB
+						1 --> nicht verfügbar
+						2 --> verfügbar für w
+						3 --> verfügbar für m
+						0 --> wurde nicht eingetragen
+					*/
+					
+					
+					if(result.elementAt(4) == "nicht verfügbar")
+					{
+						mVerf = 1;
+					}
+					else if (result.elementAt(4) == "verfügbar für w")
+					{
+						mVerf = 2;
+					}
+					else if (result.elementAt(4) == "verfügbar für m")
+					{
+						mVerf = 3;
+					}
+					else
+						mVerf = 0;
+					
+					
+
+						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY, GEBURTSJAHR, VERFUEGBARKEIT) VALUES ('"+result.elementAt(0)+
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"', "+geb+"', '" +mVerf+ "')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
 				}
 				printTable();
 			}
-
+			
 		}).start();		
 	}
 
 	@Override
-	public void updateRow(Vector<String> row) {
+	public void updateRow(int row, DefaultTableModel modell) {
 		try {
 			mDB.executeUpdate("UPDATE PERSONEN SET "
-					+ "NAME='"+row.elementAt(1)+"', "
-					+ "GESCHLECHT='"+row.elementAt(2)+"', "
-					+ "EMAIL='"+row.elementAt(3)+"', "
-					+ "HANDY='"+row.elementAt(4)+"', "
-					+ "GEBURTSJAHR='"+row.elementAt(5)+"' "
-					+ "WHERE PERSID="+row.elementAt(0));
+					+ "NAME='"+modell.getValueAt(row, 1)+"', "
+					+ "GESCHLECHT='"+modell.getValueAt(row, 2)+"', "
+					+ "EMAIL='"+modell.getValueAt(row, 3)+"', "
+					+ "HANDY='"+modell.getValueAt(row, 4)+"', "
+					+ "VERFUEGBARKEIT = '" + modell.getValueAt(row, 6) + "' "
+					+ "WHERE PERSID="+modell.getValueAt(row, 0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
