@@ -28,7 +28,7 @@ public class CalendarFunction extends JDatePickerImpl
 
 	UtilDateModel mModel;
 
-	public CalendarFunction(JDatePanelImpl panel, UtilDateModel model) 
+	private CalendarFunction(JDatePanelImpl panel, UtilDateModel model) 
 	{
 		super(panel);	
 

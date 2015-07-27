@@ -12,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
 
 import db.Database;
 
@@ -33,7 +32,7 @@ public class SelectParty extends TabellenLayout
 
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
-		super(db.executeQuery("SELECT PID, NAME FROM PARTY"));
+		super(db.executeQuery("SELECT PID, NAME FROM PARTY"), new Boolean[]{ false, true });
 		mFrame = new JFrame("Party auswählen");
 		mFrame.add(this);
 		mFrame.setSize(500, 500);
@@ -48,9 +47,9 @@ public class SelectParty extends TabellenLayout
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM PARTY WHERE PID="+id);
+			mDB.executeUpdate("DELETE FROM PARTY WHERE PID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -95,12 +94,12 @@ public class SelectParty extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) 
+	public void updateRow(Vector<String> row) 
 	{
 		try {
 			mDB.executeUpdate("UPDATE PARTY SET "
-					+ "NAME='"+modell.getValueAt(row, 1)+"', "
-					+ "WHERE PID="+modell.getValueAt(row, 0));
+					+ "NAME='"+row.elementAt(1)+"' "
+					+ "WHERE PID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +112,6 @@ public class SelectParty extends TabellenLayout
 		{
 			if(super.mTabelle.getSelectedRow()>=0)
 			{
-				//TODO BUG: wenn Tabelle verändert wurde, richtigen Wert auslesen
 				Integer result = (Integer) super.mTabelle.getValueAt(super.mTabelle.getSelectedRow(), 0);
 				if(result!=null)
 				{

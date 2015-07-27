@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
+
 
 import gui.TabellenLayout;
 import db.Database;
@@ -16,12 +16,14 @@ import gui.formdialog.FormElement;
 public class PersonenTabelle extends TabellenLayout {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	Database mDB;
 	MutterLayout mParent;
-	
+
 	public PersonenTabelle(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PERSONEN"));
+		super(db.executeQuery("SELECT * FROM PERSONEN"), new Boolean[]{
+			false, true, false, true, true, true, false
+		});
 		mDB = db;
 		mParent = parent;
 	}
@@ -36,9 +38,9 @@ public class PersonenTabelle extends TabellenLayout {
 	}
 
 	@Override
-	public void deleteRow(int id) {
+	public void deleteRow(Vector<String> v) {
 		try {
-			mDB.executeUpdate("DELETE FROM PARTY WHERE PERSID="+id);
+			mDB.executeUpdate("DELETE FROM PERSONEN WHERE PERSID="+v.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -50,16 +52,16 @@ public class PersonenTabelle extends TabellenLayout {
 		new Thread(new Runnable(){
 
 			public void run() {
-				//Dropdown-Optionen für das Geschlecht
+				//Dropdown-Optionen fÃ¼r das Geschlecht
 				Vector<String> v = new Vector<String>();
 				v.add("m");
 				v.add("w");
 				
-				//Dropdown-Optionen für die Verfügbarkeit
+				//Dropdown-Optionen fÃ¼r die VerfÃ¼gbarkeit
 				Vector<String> z = new Vector<String>();
-				z.add("nicht verfügbar"); // = 1 in DB
-				z.add("verfügbar für w"); // = 2 in DB
-				z.add("verfügbar für m"); // = 3 in DB
+				z.add("nicht verfÃ¼gbar"); // = 1 in DB
+				z.add("verfÃ¼gbar fÃ¼r w"); // = 2 in DB
+				z.add("verfÃ¼gbar fÃ¼r m"); // = 3 in DB
 				z.add("nicht bekannt");	  // = 0 in DB
 				
 				int mVerf = 0; 
@@ -69,34 +71,40 @@ public class PersonenTabelle extends TabellenLayout {
 						new FormElement("Geschlecht", FormElement.DROP_DOWN, v),
 						new FormElement("Email", FormElement.TEXT_FIELD),
 						new FormElement("Handy", FormElement.TEXT_FIELD),
-						new FormElement("Verfügbarkeit", FormElement.DROP_DOWN, z),
+						new FormElement("Geburtsjahr", FormElement.TEXT_FIELD)
+						new FormElement("VerfÃ¼gbarkeit", FormElement.DROP_DOWN, z),
 	
 				}, w);
-				//TODO verbessern
-				if(result.size()==5)
+				if(result.size()==6)
 				{
-					
 					try {
+						int geb = -1;
+						try
+						{
+							geb = Integer.parseInt(result.elementAt(4));
+						} catch(NumberFormatException e1)
+						{
+						}
 						
 					/**
 					 * @author Franzi
-					 * mVerf übersetzt die Verfügbarkeit in eine Zahl für die DB
-						1 --> nicht verfügbar
-						2 --> verfügbar für w
-						3 --> verfügbar für m
+					 * mVerf Ã¼bersetzt die VerfÃ¼gbarkeit in eine Zahl fÃ¼r die DB
+						1 --> nicht verfÃ¼gbar
+						2 --> verfÃ¼gbar fÃ¼r w
+						3 --> verfÃ¼gbar fÃ¼r m
 						0 --> wurde nicht eingetragen
 					*/
 					
 					
-					if(result.elementAt(4) == "nicht verfügbar")
+					if(result.elementAt(4) == "nicht verfÃ¼gbar")
 					{
 						mVerf = 1;
 					}
-					else if (result.elementAt(4) == "verfügbar für w")
+					else if (result.elementAt(4) == "verfÃ¼gbar fÃ¼r w")
 					{
 						mVerf = 2;
 					}
-					else if (result.elementAt(4) == "verfügbar für m")
+					else if (result.elementAt(4) == "verfÃ¼gbar fÃ¼r m")
 					{
 						mVerf = 3;
 					}
@@ -104,8 +112,9 @@ public class PersonenTabelle extends TabellenLayout {
 						mVerf = 0;
 					
 					
-						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY, VERFUEGBARKEIT) VALUES ('"+result.elementAt(0)+
-								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"', '" +mVerf+ "')");
+
+						mDB.executeUpdate("INSERT INTO PERSONEN (NAME, GESCHLECHT, EMAIL, HANDY, GEBURTSJAHR, VERFUEGBARKEIT) VALUES ('"+result.elementAt(0)+
+								"', '"+result.elementAt(1)+"', '"+result.elementAt(2)+"', '"+result.elementAt(3)+"', "+geb+"', '" +mVerf+ "')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

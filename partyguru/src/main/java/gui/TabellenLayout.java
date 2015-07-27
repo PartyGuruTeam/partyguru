@@ -1,11 +1,13 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -34,13 +36,17 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private DefaultTableModel mModell;
 	
 	JPanel mButtonPanel;
+	
+	Boolean[] mIsEditable;
 
 	/**
 	 * Konstruktor von Tabellen Layout.
 	 * @param rs ResultSet einer SQL Abfrage wird übergeben, um damit die Tabelle zu füllen.
 	 */
-	public TabellenLayout(ResultSet rs)
+	public TabellenLayout(ResultSet rs, Boolean[] isEditable)
 	{
+		mIsEditable = isEditable;
+		
 		this.setLayout(new BorderLayout());
 		mTabelle = new JTable();
 		this.add(new JScrollPane(mTabelle), BorderLayout.CENTER);
@@ -50,7 +56,6 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			e.printStackTrace();
 		}
 		
-		mModell.addTableModelListener(this);
 		mTabelle.getTableHeader().setReorderingAllowed(false);
 		
 		mButtonPanel = new JPanel();
@@ -59,7 +64,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		mButtonPanel.add(mNeuButton);
 		mNeuButton.addActionListener(this);
 
-		mLoeschenButton = new JButton("Löschen...");
+		mLoeschenButton = new JButton("Löschen");
 		mButtonPanel.add(mLoeschenButton);
 		mLoeschenButton.addActionListener(this);
 		
@@ -81,12 +86,12 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		ResultSetMetaData md = null;
 		Vector<Vector<Object>> tabelle = new Vector<Vector<Object>>();
 		Vector<String> columnNames = new Vector<String>();
-
 		try {
 			md = rs.getMetaData();
 			for(int i=1; i<=md.getColumnCount(); i++)
 			{
-				columnNames.add(md.getColumnName(i));
+				columnNames.add(md.getColumnName(i));					
+				//System.out.println(md.getTableName(i)+" - "+md.getColumnName(i)+" - "+md.getColumnType(i));
 			} 	
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -97,12 +102,30 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			Vector<Object> row = new Vector<Object>(columnNames.size());
 			for(int i=1; i<=md.getColumnCount(); i++)
 			{
-				row.addElement(rs.getObject(i));
+				if(rs.getObject(i)!=null)
+				{
+					switch(md.getColumnType(i))
+					{
+					case Types.VARCHAR:
+						row.addElement(rs.getString(i));
+						break;
+					case Types.BOOLEAN:
+						row.addElement(new Boolean(rs.getBoolean(i)));
+						break;
+					default:
+						row.addElement(rs.getObject(i));
+						break;
+					}
+				} else
+				{
+					row.addElement(new String(""));
+				}
 			}
 			tabelle.add(row);
 		}
-		mModell = new DefaultTableModel(tabelle, columnNames);
+		mModell = new MyTableModel(tabelle, columnNames, mIsEditable);
 		mTabelle.setModel(mModell);
+		mModell.addTableModelListener(this);
 	}
 
 	/**
@@ -115,24 +138,21 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 			printTable();
 		} else if(e.getSource().equals(mLoeschenButton))
 		{
-			//TODO aktuell markierte Zeile(n) löschen
-			String result = JOptionPane.showInputDialog("ID eingeben:");
-			if(result!=null)
+			if(mTabelle.getSelectedRow()>=0)
 			{
-				Integer r=null;
-				try
+				if(JOptionPane.showConfirmDialog(this, "Wollen Sie den Eintrag wirklich löschen?",
+						"Löschvorgang", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
 				{
-					r = Integer.parseInt(result);
-				} catch(NumberFormatException e2)
-				{
-					JOptionPane.showMessageDialog(this, "Bitte überprüfen Sie Ihre Eingabe!");
-				}
-				if(r!=null)
-				{
-					deleteRow(r);
+					Vector<String> v = new Vector<String>();
+					for(int i=0; i<mTabelle.getColumnCount(); i++)
+					{
+							v.add(mTabelle.getValueAt(mTabelle.getSelectedRow(), i).toString());
+					}
+					deleteRow(v);
 					printTable();
-				}
+				}	
 			}
+			
 		}
 	}
 
@@ -143,16 +163,21 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	{
 		if(e.getType()==TableModelEvent.UPDATE)
 		{
-			updateRow(e.getFirstRow(), mModell);
+			Vector<String> row = new Vector<String>();
+			for(int i=0; i<mTabelle.getColumnCount(); i++)
+			{
+				row.add(mTabelle.getValueAt(e.getFirstRow(), i).toString());
+			}
+			updateRow(row);
 			printTable();
 		}
 	}
 
 	/**
 	 * Soll Tupel aus Datenbank löschen. Wird von actionPerformed() aufgerufen.
-	 * @param id Id mithilfe dessen das Tupel identifiziert werden kann.
+	 * @param v Id mithilfe dessen das Tupel identifiziert werden kann.
 	 */
-	public abstract void deleteRow(int id);
+	public abstract void deleteRow(Vector<String> v);
 	
 	/**
 	 * Neues Tupel der Datenbank hinzufügen. Wird von actionPerformed() aufgerufen.
@@ -164,6 +189,48 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	 * @param row Zeile, in der Veränderung vorgenommen wurde.
 	 * @param modell TableModel, welches verwendet wird.
 	 */
-	public abstract void updateRow(int row, DefaultTableModel modell);
+	public abstract void updateRow(Vector<String> v);
+}
 
+
+
+class MyTableModel extends DefaultTableModel
+{
+	private static final long serialVersionUID = 1L;
+	
+	Boolean[] mIsEditable;
+
+	public MyTableModel(Vector<Vector<Object>> tabelle,
+			Vector<String> columnNames, Boolean[] isEditable) {
+		super(tabelle, columnNames);
+		mIsEditable = isEditable;
+	}
+
+	@Override
+	public Class<? extends Object> getColumnClass(int c)
+	{
+		if(getValueAt(0, c)=="" || getValueAt(0, c)==null)
+			return String.class;
+		else
+			return getValueAt(0, c).getClass();	
+	}
+
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		Boolean b = null;
+		try
+		{ 
+			b = mIsEditable[column];
+		} catch(ArrayIndexOutOfBoundsException e)
+		{
+			b = null;
+		}
+		if(b!=null)
+			return b;
+		else
+			return false;
+	}
+	
+	
+	
 }

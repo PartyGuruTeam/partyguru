@@ -29,6 +29,8 @@ public class sendMail {
 
 	public static int emailSenden(String an, String titel, String nachricht){
 
+		
+		
 		final String username = "derpartyguru@gmail.com";
 
 		if (password == "password"){
@@ -42,7 +44,7 @@ public class sendMail {
 		    );
 		}
 		
-	    
+		
 		
 		int erfolg = 1;
 
@@ -72,6 +74,8 @@ public class sendMail {
 
 			Transport.send(message);
 
+			
+			
 
 
 		} catch (MessagingException e) {

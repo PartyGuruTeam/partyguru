@@ -3,12 +3,9 @@ package gui.putz;
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-import javax.swing.table.DefaultTableModel;
-
 import db.Database;
 import gui.MutterLayout;
 import gui.TabellenLayout;
@@ -21,26 +18,33 @@ public class PutzListe extends TabellenLayout
 	
 	private Database mDB;
 	private MutterLayout mParent;
+	int mpid;
 	
 	public PutzListe(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT * FROM PUTZ WHERE PID="+parent.getPID()));
+		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()),
+				new Boolean[] { false, false, true, true, true });
 		mDB = db;
 		mParent = parent;
+		mpid=parent.getPID();
 	}
 
 
 	@Override
 	public void printTable() {
 		try {
-			mDB.executeQuery("SELECT * FROM PUTZ WHERE PID="+mParent.getPID());
+			printTable(mDB.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public void deleteRow(int id) {
-		
+	public void deleteRow(Vector<String> v) {
+		try {
+			mDB.executeUpdate("DELETE FROM PUTZ WHERE RID="+v.elementAt(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -59,20 +63,23 @@ public class PutzListe extends TabellenLayout
 				public void run() {
 					Vector<String> result = FormDialog.getDialog("Neue Tätigkeit hinzufügen", new FormElement[] {
 							new FormElement("Tätigkeit", FormElement.DROP_DOWN, elements),
-							new FormElement("Name", FormElement.TEXT_FIELD),
 							new FormElement("Raum", FormElement.TEXT_FIELD),
 							new FormElement("Dauer", FormElement.TEXT_FIELD),
-							new FormElement("Notiz", FormElement.TEXT_FIELD),
-							
+							new FormElement("Notiz", FormElement.TEXT_FIELD)
 					}, w);
-					//TODO verbessern
-					if(result.size()==5)
+					if(result.size()==4)
 					{
 						try {
 							String ptid = result.elementAt(0).split("-")[0];
+							int dauer = -1;
+							try
+							{
+								dauer = Integer.parseInt(result.elementAt(2));
+							} catch(NumberFormatException arg)
+							{							
+							}
 							mDB.executeUpdate("INSERT INTO PUTZ (PTID, PID, RAUM, DAUER, NOTIZ) VALUES ('"+ptid+"','"+mParent.getPID()+
-									"', '"+result.elementAt(2)+"','"+result.elementAt(3)+"','"+result.elementAt(4)+"')");
-							
+									"', '"+result.elementAt(1)+"','"+dauer+"','"+result.elementAt(3)+"')");
 						
 						} catch (SQLException e) {
 							e.printStackTrace();
@@ -88,9 +95,16 @@ public class PutzListe extends TabellenLayout
 	}
 
 	@Override
-	public void updateRow(int row, DefaultTableModel modell) {
-		// TODO Auto-generated method stub
-
+	public void updateRow(Vector<String> row) {
+		try {
+			mDB.executeUpdate("UPDATE PUTZ SET "
+					+ "RAUM='"+row.elementAt(2)+"', "
+					+ "DAUER='"+row.elementAt(3)+"', "
+					+ "NOTIZ='"+row.elementAt(4)+"' "	
+					+ "WHERE RID="+row.elementAt(0));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}		
 	}
 
 }

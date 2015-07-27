@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import db.Database;
@@ -18,13 +19,13 @@ public class PStammdaten extends FormularLayout
 	Database mDB;
 	MutterLayout mParent;
 	int mPID;
-
+	
 	ResultSet result;
 	String mPMotto;
 
 	public PStammdaten(Database db, MutterLayout parent) throws SQLException
 	{	
-		super();
+		super(db, parent);
 		//Erstellung der lokalen Variablen für die Befüllung der Felder
 
 		//int aPID;

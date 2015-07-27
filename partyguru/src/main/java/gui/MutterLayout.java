@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import db.Database;
 import gui.couples.Generierung;
@@ -39,64 +41,66 @@ public class MutterLayout extends JPanel
 	private GelegenheitenTabelle mGelegenheiten;
 	private PutzTemplate mPutzen;
 	private PStammdaten mStammdaten;
-	private Generierung mGenerierung;
-		
+	private Generierung mGenerierung;	
+	private PutzListe mPutzliste;
+
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
 	 */
 	public MutterLayout()
 	{		
 		this.setLayout(new BorderLayout());
-		
-		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
-		File f = new File(path+".h2.db");
-		if(f.exists())
-		{
-			try {
-				db = new Database(path);
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
-			selectDB();
 
-			mTabs = new JTabbedPane(JTabbedPane.TOP);
-			this.add(mTabs, BorderLayout.CENTER);
-			
-			try {
-				
-				mPersonen = new PersonenTabelle(db, this);
-				mTabs.add(mPersonen, "Personen");
-				mMaterial = new MaterialTabelle(db, this);
-				mTabs.add(mMaterial, "Material");
-				mGaesteliste = new Gaesteliste(db, this);
-				mTabs.add(mGaesteliste, "Gästeliste");
-				mPutzen = new PutzTemplate(db, this);
-				mTabs.add(mPutzen, "Putzplan");
-				mMitbringliste = new Mitbringliste(db, this);
-				mTabs.add(mMitbringliste, "Mitbringliste");
-				mGelegenheiten = new GelegenheitenTabelle(db, this);
-				mTabs.add(mGelegenheiten, "Gelegenheiten");
-				//TODO BUG bei laden von Stammdaten
-				mStammdaten = new PStammdaten(db, this);
-				mTabs.add(mStammdaten, "Stammdaten");
-				
-				mGenerierung = new Generierung(db, this);
-				mTabs.add(mGenerierung, "Pärchengenerierung");
-				
-				
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}			
-		} else 
-		{
-			JOptionPane.showMessageDialog(this, "Datenbank nicht gefunden.");
+		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
+		try {
+			db = new Database(path);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(this, "Auf die Datenbank kann nicht zugegriffen werden!");
 			System.exit(1);
 		}
-		
+
+		selectDB();
+
+		mTabs = new JTabbedPane(JTabbedPane.TOP);
+		this.add(mTabs, BorderLayout.CENTER);
+
+		try {
+			mPersonen = new PersonenTabelle(db, this);
+			mTabs.add(mPersonen, "Personen");
+			mMaterial = new MaterialTabelle(db, this);
+			mTabs.add(mMaterial, "Material");
+			mGaesteliste = new Gaesteliste(db, this);
+			mTabs.add(mGaesteliste, "Gästeliste");
+			mPutzen = new PutzTemplate(db, this);
+			mTabs.add(mPutzen, "Putzliste");
+			mPutzliste = new PutzListe(db, this);
+			mTabs.add(mPutzliste, "Putzplan");
+			mMitbringliste = new Mitbringliste(db, this);
+			mTabs.add(mMitbringliste, "Mitbringliste");
+			mGelegenheiten = new GelegenheitenTabelle(db, this);
+			mTabs.add(mGelegenheiten, "Gelegenheiten");
+			mStammdaten = new PStammdaten(db, this);
+			mTabs.add(mStammdaten, "Stammdaten");
+			mGenerierung = new Generierung(db, this);
+			mTabs.add(mGenerierung, "Pärchengenerierung");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}			
+		mTabs.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent arg0) {
+				mPersonen.printTable();
+				mMaterial.printTable();
+				mGaesteliste.printTable();
+				mPutzen.printTable();
+				mPutzliste.printTable();
+				mMitbringliste.printTable();
+				mGelegenheiten.printTable();
+			}
+		});
 	}
 	
 	private void selectDB()
