@@ -87,13 +87,7 @@ public class sendMail {
 	}
 
 
-	//Aufruf an EmailMethode 
-	//String an = "testmail@gmail.com";
-	//String titel = "Test Titel";
-	//String nachricht = "Test Nachricht";
-	//
-	//sendMail.emailSenden(an, titel, nachricht);
-
+	
 
 
 }

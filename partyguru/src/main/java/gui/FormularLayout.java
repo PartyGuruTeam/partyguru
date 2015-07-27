@@ -238,7 +238,25 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 	
 	
 
-
+/**
+ * Action Listener der die Auswahl des Buttons prüft und Funktionen Ausführt:
+ * -Speichern
+ * 		Es wird der Datensatz in der Datenbank gespeichert
+ * -Einladung versenden
+ * 		Es wird geprüft wer an der aktuellen Party teilnimmt und eine Email mit Header,Nachricht und EmailAdresse versendet.
+ * 		In der Nachricht werden Party Informationen versendet.
+ * 		In einem Popup wird das Email Passwort verlangt wenn es nicht bereits eingegeben wurde (Temporäre Speicherung)
+ * -Feedback versenden
+ * 		Es wird geprüft wer an der aktuellen Party teilnimmt und eine Email mit Header,Nachricht und EmailAdresse versendet.
+ * 		In einem Popup wird eine URL zum Umfrage abgefragt.
+ * 		In der Nachricht wird eine Umfrage zur Party versendet.
+ * 		In einem Popup wird das Email Passwort verlangt wenn es nicht bereits eingegeben wurde (Temporäre Speicherung)
+ * -Einladung versenden
+ * 		Es wird geprüft wer an der aktuellen Party teilnimmt und laut Mitbringliste etwas mitbringen muss.
+ * 		Dann wird eine Email mit Header,Nachricht und EmailAdresse versendet.
+ * 		In der Nachricht werden Informationen, was jede Person individuell mitbringen soll versendet.
+ * 		In einem Popup wird das Email Passwort verlangt wenn es nicht bereits eingegeben wurde (Temporäre Speicherung)
+ */
 
 	public void actionPerformed(ActionEvent e) {
 		
@@ -283,9 +301,6 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				while(rs.next())
 				{
 					String nachricht = "<p><span style=\"font-size: large;\"><strong>Einladung zur Party</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Hi "+rs.getString(2) +" du bist auf unsere "+aName +" Party eingeladen.</span><br /></span></p><p><span style=\"font-size: medium;\">Das Motto ist "+aMotto +".</span></p><p><span style=\"font-size: medium;\">Die Party findet am "+ datum +" um "+ zeit+" Uhr statt.</span></p><p><span style=\"font-size: medium;\">Bitte gib bescheid ob du kommst, eine Mitfahr oder Schlafgelegenheit brauchst oder anbieten kannst.</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Dein Gastgeber</span></span></p>";
-//					System.out.println(rs.getString(1));
-//					System.out.println("Einladung zur " + aName + " Party am " +datum + "um " + zeit + " Uhr statt");
-//					System.out.println(nachricht);
 					sendMail.emailSenden(rs.getString(1), "Einladung zur " + aName + " Party am " + datum, nachricht);
 				}
 				
@@ -335,9 +350,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				while(rs.next())
 				{
 					String nachricht = "<p><span style=\"font-size: medium;\"><strong>Umfrage</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Hi "+rs.getString(2) +" ,</span></p>	<p><span style=\"font-size: medium;\">hat dir die "+ aName +" Party vom "+ datum +" gefallen?</span></p><p><span style=\"font-size: medium;\">Dann beantworte bitte unsere Umfrage auf "+umfrage +" , damit die n&auml;chste Party noch besser wird.</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Dein Gastgeber&nbsp;</span></p>";
-//					System.out.println(rs.getString(1));
-//					System.out.println("Umfrage zur " + aMotto + " Party vom " + mDate.getDate());
-//					System.out.println(nachricht);
+					
 					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aName + " Party vom " + datum, nachricht);
 				}
 			} catch (SQLException e1) {
@@ -390,9 +403,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 					if (counter != 0){
 						
 						String nachricht = "<p><span style=\"font-size: medium;\"><strong>Letzte Infos</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Hi "+rs.getString(2) +",</span></p><p><span style=\"font-size: medium;\">die "+ aName +" Party findet am "+ datum +" um "+ zeit +" statt.</span></p><p><span style=\"font-size: medium;\">Bitte bring zur Party mit:</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">"+ material +"</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Dein Gastgeber&nbsp;</span></p>";
-//						System.out.println(rs.getString(1));
-//						System.out.println("Infos zur " + aMotto + " Party am " + mDate.getDate());
-//						System.out.println(nachricht);
+						
 						sendMail.emailSenden(rs.getString(1), "Infos zur " + aName + " Party am " +  datum, nachricht);
 						
 						
