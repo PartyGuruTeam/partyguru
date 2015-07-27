@@ -11,12 +11,19 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 
+import javax.print.attribute.standard.DateTimeAtCompleted;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+
+import org.h2.util.StringUtils;
 
 import partyguru.sendMail;
 import date.CalendarFunction;
@@ -259,20 +266,26 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 					{
 						mDate.setDate(result.getDate("ZEIT"));
 						mTime.setTime(result.getTimestamp("ZEIT"));
+												
 					}
+					
 				}	
 			
 				rs = mDB.executeQuery("SELECT EMAIL, NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID WHERE PID =" + mPID);
 				
+				String datum = mDate.getDate().toString();
+				datum = datum.substring(0, datum.length() -18);
+				String zeit = mTime.getTime().toString();
+				zeit = zeit.substring(11, zeit.length() -13);
 				
 				
 				while(rs.next())
 				{
-					String nachricht = "<p><span style=\"font-size: large;\"><strong>Einladung zur Party</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: xx-small;\">Hi "+rs.getString(2) +" du bist auf unsere Party eingeladen.</span><br /></span></p><p><span style=\"font-size: xx-small;\">Das Motto ist "+aMotto +".</span></p><p><span style=\"font-size: xx-small;\">Die Party findet am "+mDate.getDate() +" um "+mTime.getTime() +" Uhr statt.</span></p><p><span style=\"font-size: xx-small;\">Bitte gib bescheid ob du kommst, eine Mitfahr oder Schlafgelegenheit brauchst oder anbieten kannst.</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Dein Gastgeber</span></span></p>";
+					String nachricht = "<p><span style=\"font-size: large;\"><strong>Einladung zur Party</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Hi "+rs.getString(2) +" du bist auf unsere "+aName +" Party eingeladen.</span><br /></span></p><p><span style=\"font-size: small;\">Das Motto ist "+aMotto +".</span></p><p><span style=\"font-size: medium;\">Die Party findet am "+ datum +" um "+ zeit+" Uhr statt.</span></p><p><span style=\"font-size: medium;\">Bitte gib bescheid ob du kommst, eine Mitfahr oder Schlafgelegenheit brauchst oder anbieten kannst.</span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\"><span style=\"font-size: medium;\">Dein Gastgeber</span></span></p>";
 //					System.out.println(rs.getString(1));
-//					System.out.println("Einladung zur " + aMotto + " Party am " + mDate.getDate());
+//					System.out.println("Einladung zur " + aName + " Party am " +datum + "um " + zeit + " Uhr statt");
 //					System.out.println(nachricht);
-					sendMail.emailSenden(rs.getString(1), "Einladung zur " + aMotto + " Party am " + mDate.getDate(), nachricht);
+					sendMail.emailSenden(rs.getString(1), "Einladung zur " + aName + " Party am " + datum, nachricht);
 				}
 				
 			} catch (SQLException e1) {
@@ -302,6 +315,12 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				
 				rs = mDB.executeQuery("SELECT EMAIL, NAME FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID WHERE PID =" + mPID);
 				
+				String datum = mDate.getDate().toString();
+				datum = datum.substring(0, datum.length() -18);
+				String zeit = mTime.getTime().toString();
+				zeit = zeit.substring(11, zeit.length() -13);
+								
+				
 				JFrame frame1 = new JFrame("URL Abfrage");
 			    String umfrage;
 				umfrage = JOptionPane.showInputDialog(
@@ -314,11 +333,11 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				
 				while(rs.next())
 				{
-					String nachricht = "<p><span style=\"font-size: small;\"><strong>Umfrage</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: small;\">Hi "+rs.getString(2) +" ,</span></p>	<p>hat dir die "+ aMotto +" Party vom "+mDate.getDate() +" gefallen?</p><p>Dann beantworte bitte unsere Umfrage auf "+umfrage +" , damit die n&auml;chste Party noch besser wird.</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
+					String nachricht = "<p><span style=\"font-size: medium;\"><strong>Umfrage</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Hi "+rs.getString(2) +" ,</span></p>	<p>hat dir die "+ aName +" Party vom "+ datum +" gefallen?</p><p>Dann beantworte bitte unsere Umfrage auf "+umfrage +" , damit die n&auml;chste Party noch besser wird.</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
 //					System.out.println(rs.getString(1));
 //					System.out.println("Umfrage zur " + aMotto + " Party vom " + mDate.getDate());
 //					System.out.println(nachricht);
-					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aMotto + " Party vom " + mDate.getDate(), nachricht);
+					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aName + " Party vom " + datum, nachricht);
 				}
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -347,6 +366,11 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				
 				rs = mDB.executeQuery("SELECT EMAIL, NAME, PERSONEN.PERSID FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID WHERE PID =" + mPID);
 				   
+				String datum = mDate.getDate().toString();
+				datum = datum.substring(0, datum.length() -18);
+				String zeit = mTime.getTime().toString();
+				zeit = zeit.substring(11, zeit.length() -13);
+				
 				
 				while(rs.next())
 				{
@@ -364,11 +388,11 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 					
 					if (counter != 0){
 						
-						String nachricht = "<p><span style=\"font-size: small;\"><strong>Letzte Infos</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: small;\">Hi "+rs.getString(2) +",</span></p><p>die "+ aMotto +" Party findet am "+mDate.getDate() +" um "+mTime.getTime() +" statt.</p><p>Bitte bring zur Party mit:</p><p>&nbsp;</p><p>"+ material +"</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
+						String nachricht = "<p><span style=\"font-size: medium;\"><strong>Letzte Infos</strong></span></p><p>&nbsp;</p><p><span style=\"font-size: medium;\">Hi "+rs.getString(2) +",</span></p><p>die "+ aName +" Party findet am "+ datum +" um "+ zeit +" statt.</p><p>Bitte bring zur Party mit:</p><p>&nbsp;</p><p>"+ material +"</p><p>&nbsp;</p><p>Dein Gastgeber&nbsp;</p>";
 //						System.out.println(rs.getString(1));
 //						System.out.println("Infos zur " + aMotto + " Party am " + mDate.getDate());
 //						System.out.println(nachricht);
-						sendMail.emailSenden(rs.getString(1), "Infos zur " + aMotto + " Party am " + mDate.getDate(), nachricht);
+						sendMail.emailSenden(rs.getString(1), "Infos zur " + aMotto + " Party am " +  datum, nachricht);
 						
 						
 					}
