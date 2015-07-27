@@ -6,20 +6,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
-
 import javax.swing.*;
 import javax.swing.border.*;
-
 import db.Database;
 
 public class Generierung extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String Color = null;
 
 	/**
 	 *  @author Franzi
@@ -51,13 +46,15 @@ public class Generierung extends JPanel implements ActionListener {
 
 	Vector<JPanel> JPanelArray = new Vector<JPanel>();
 
-
 	public Generierung(Database db, MutterLayout parent) throws SQLException {
 
 
 		//Erstelle die GUI
 		//super();
 		mMixButton = new JButton("Neu mischen");
+		mMixButton.setBackground(MutterLayout.mittelrosa);
+		mMixButton.setForeground(MutterLayout.schriftrosa);
+		mMixButton.setFont(MutterLayout.knoepfe);
 		mPaare = new ArrayList<ArrayList<String>>();
 
 		Border border = this.getBorder();
@@ -70,6 +67,8 @@ public class Generierung extends JPanel implements ActionListener {
 		//gbl.columnWeights = new double[] { 0.0, 1.0,0.0, 0.0, Double.MIN_VALUE };
 		//gbl.rowWeights = new double[] { 0.0, 0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,Double.MIN_VALUE };
 		this.setLayout(gbl);
+		this.setBackground(MutterLayout.hellrosa);
+		
 		mDB = db;
 
 		//mPID = 3;
@@ -85,7 +84,7 @@ public class Generierung extends JPanel implements ActionListener {
 		mMannWillFrau = new ArrayList<String>();
 		mFrauWillFrau = new ArrayList<String>();
 		mPaare = new ArrayList<ArrayList<String>>();
-		
+
 
 		try {
 			result = mDB.executeQuery("SELECT GESCHLECHT, NAME, VERFUEGBARKEIT FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID");
@@ -115,7 +114,6 @@ public class Generierung extends JPanel implements ActionListener {
 				}
 				else if (mGes.contains("w"))
 				{
-
 					if (mVerf.contains("2"))
 					{
 						mFrauWillFrau.add(result.getString("NAME"));
@@ -248,7 +246,7 @@ public class Generierung extends JPanel implements ActionListener {
 		}
 
 		this.removeAll();
-		
+
 		//Erstelle Kopfzeile als Header
 		addLabel("Diese Pärchen wurden für deine Party generiert. Wenn du noch einmal neu mischen möchtest,"
 				+ " klicke den Button ganz unten", 0, this);
@@ -291,8 +289,15 @@ public class Generierung extends JPanel implements ActionListener {
 		JLabel typ2 = new JLabel(labelTextT2);
 		//		JLabel typ3 = new JLabel(labelTextT3);
 		JPanel box = new JPanel();
+		
+		LineBorder border = new LineBorder(MutterLayout.dunkelrosa, 1, true);
+		TitledBorder tborder = new TitledBorder(border, "Pärchen " + aZahl, TitledBorder.LEFT, TitledBorder.DEFAULT_POSITION, MutterLayout.titel, MutterLayout.dunkelrosa );
 		box.setLayout(new BorderLayout());
-		box.setBorder(BorderFactory.createTitledBorder("Pärchen " + aZahl));
+		
+		box.setBorder(tborder);
+		typ1.setBackground(MutterLayout.hellrosa);
+		typ2.setBackground(MutterLayout.hellrosa);
+		box.setBackground(MutterLayout.hellrosa);
 
 
 		GridBagConstraints gbcBox = new GridBagConstraints();
@@ -332,70 +337,20 @@ public class Generierung extends JPanel implements ActionListener {
 		GridBagConstraints gbcButton = new GridBagConstraints();
 		gbcButton.fill = GridBagConstraints.BOTH;
 		gbcButton.insets = new Insets(0, 0, 0, 0);
-		gbcButton.gridx = 1;
-		gbcButton.gridy = yPos;
+		gbcButton.gridx = 0;
+		gbcButton.gridy = yPos + 1;
 		formular.add(mMixButton, gbcButton);
 
 	}
 
 
-
-
-
-
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource().equals(mMixButton))
-		{
-			//Methode, die den Datensatz in die Datenbank speichert
-			print();
-		}
-		else 
-		{
-
-		}
-
-	}	
+		//Methode, die den Datensatz in die Datenbank speichert
+		print();
 
 
-	//public abstract void updateData();
-
-
-	/*public abstract void refreshTable();
-
-	/**VON BASTI ÜBERNOMMEN
-	 * Soll von refreshTable() aufgerufen werden. Stellt übergebenes Resultset dar.
-	 * @param rs
-	 * @throws SQLException
-	 */
-
-	/*public void refreshTable(ResultSet rs) throws SQLException
-	{
-		ResultSetMetaData md = null;
-		Vector<Vector<Object>> tabelle = new Vector<Vector<Object>>();
-		Vector<String> columnNames = new Vector<String>();
-
-		try {
-			md = rs.getMetaData();
-			for(int i=1; i<=md.getColumnCount(); i++)
-			{
-				columnNames.add(md.getColumnName(i));
-			} 	
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		while(rs.next())
-		{
-			Vector<Object> row = new Vector<Object>(columnNames.size());
-			for(int i=1; i<=md.getColumnCount(); i++)
-			{
-				row.addElement(rs.getObject(i));
-			}
-			tabelle.add(row);
-		}
-
-	}*/
-
-
+	}
+	
+	
 }

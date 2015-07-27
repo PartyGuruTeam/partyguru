@@ -1,15 +1,14 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.io.File;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.SQLException;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import db.Database;
 import gui.couples.Generierung;
 import gui.gelegenheiten.GelegenheitenTabelle;
@@ -29,6 +28,16 @@ import gui.putz.PutzTemplate;
 public class MutterLayout extends JPanel 
 {
 	private static final long serialVersionUID = 1L;
+	
+	public static final Color dunkelrosa = new Color(205, 16, 118);
+	public static final Color schriftrosa = new Color(139, 10, 80);
+	public static final Color mittelrosa = new Color(255, 105, 180);
+	public static final Color hellrosa = new Color(255, 228, 225);
+	public static final Color schriftweiﬂ = new Color(255,255,255);
+	public static final Color grau = Color.LIGHT_GRAY;
+	
+	public static final Font titel = new Font ("Comic Sans MS", Font.BOLD, 12);
+	public static final Font knoepfe = new Font ("Comic Sans MS", Font.PLAIN, 14);
 	
 	private Database db;
 	int mPID;
@@ -50,6 +59,7 @@ public class MutterLayout extends JPanel
 	public MutterLayout()
 	{		
 		this.setLayout(new BorderLayout());
+		this.setBackground(hellrosa);
 
 		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
 		try {
@@ -64,6 +74,9 @@ public class MutterLayout extends JPanel
 		selectDB();
 
 		mTabs = new JTabbedPane(JTabbedPane.TOP);
+		mTabs.setBackground(mittelrosa);
+		mTabs.setForeground(schriftrosa);
+		mTabs.setFont(MutterLayout.knoepfe);
 		this.add(mTabs, BorderLayout.CENTER);
 
 		try {

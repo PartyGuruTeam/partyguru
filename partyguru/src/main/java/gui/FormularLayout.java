@@ -58,21 +58,33 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 	{	
 		super();
 		
-		MutterLayout mParent;
 		mPID = parent.getPID();
 		mDB = db;
 		
 		
 		
 		mSpeichernButton = new JButton("Speichern");
+		mSpeichernButton.setBackground(MutterLayout.mittelrosa);
+		mSpeichernButton.setForeground(MutterLayout.schriftrosa);
+		mSpeichernButton.setFont(MutterLayout.knoepfe);
 		mEmailEinladung = new JButton("Einladungen versenden");
+		mEmailEinladung.setBackground(MutterLayout.mittelrosa);
+		mEmailEinladung.setForeground(MutterLayout.schriftrosa);
+		mEmailEinladung.setFont(MutterLayout.knoepfe);
 		mEmailFeedback = new JButton("Feedbackbogen versenden");
+		mEmailFeedback.setBackground(MutterLayout.mittelrosa);
+		mEmailFeedback.setForeground(MutterLayout.schriftrosa);
+		mEmailFeedback.setFont(MutterLayout.knoepfe);
 		mEmailMitbring = new JButton("Mitbringliste versenden");
+		mEmailMitbring.setBackground(MutterLayout.mittelrosa);
+		mEmailMitbring.setForeground(MutterLayout.schriftrosa);
+		mEmailMitbring.setFont(MutterLayout.knoepfe);
 		//mButtonPanel = new JPanel();
 
 		Border border = this.getBorder();
 		Border margin = new EmptyBorder(10, 10, 10, 10);
 		this.setBorder(new CompoundBorder(border, margin));
+		this.setBackground(MutterLayout.hellrosa);
 
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] {86, 86, 0};

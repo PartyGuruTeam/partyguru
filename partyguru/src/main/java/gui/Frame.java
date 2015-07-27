@@ -1,11 +1,6 @@
 package gui;
 
-import java.awt.Color;
-
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 /**
  * Klasse, die das Hauptfenster beinhaltet
@@ -32,6 +27,7 @@ public class Frame extends JFrame
 		this.setSize(700, 600);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.setBackground(MutterLayout.grau);
 	}
 
 	/**
