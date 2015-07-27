@@ -5,16 +5,20 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+
 import javax.swing.JPanel;
 
 import gui.MutterLayout;
@@ -57,22 +61,22 @@ public class Tasks extends JPanel implements ActionListener
 		this.setBorder(new CompoundBorder(border, margin));
 
 		GridBagLayout gbl = new GridBagLayout();
-		gbl.columnWidths = new int[] {86, 86, 0};
-		gbl.rowHeights = new int[] { 50, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
-		gbl.columnWeights = new double[] { 0.0, 1.0,0.0, 0.0, Double.MIN_VALUE };
-		gbl.rowWeights = new double[] { 0.0, 0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,Double.MIN_VALUE };
+//		gbl.columnWidths = new int[] {86, 86, 0};
+//		gbl.rowHeights = new int[] { 50, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20};
+//		gbl.columnWeights = new double[] { 0.0, 1.0,0.0, 0.0, Double.MIN_VALUE };
+//		gbl.rowWeights = new double[] { 0.0, 0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,Double.MIN_VALUE };
 		this.setLayout(gbl);
 
 
-		addLabel("To-Do Liste", 0, this);
+		addLabel("To-Do Liste", 0, this, true);
 		createList(mDB, mParent);
 
-		addTaskButton(mPosButton, this);
+		//addTaskButton(mPosButton, this);
 	}
 	private void addLabelAndTextField(String labelText, int yPos, Container formular, int atid, int cbStatus) 
 	{
 		
-		JCheckBox checkb = new JCheckBox();
+		JCheckBox checkb = new JCheckBox(labelText);
 		GridBagConstraints gbcCheckbox = new GridBagConstraints();
 		gbcCheckbox.fill = GridBagConstraints.BOTH;
 		gbcCheckbox.insets = new Insets(0, 0, 5, 5);
@@ -108,7 +112,7 @@ public class Tasks extends JPanel implements ActionListener
 				
 				try 
 				{
-					System.out.println("try: set="+cbStatusNEU+" where="+atid);
+					//System.out.println("try: set="+cbStatusNEU+" where="+atid);
 					mDB.executeUpdate("UPDATE TASKS SET STATUS = " + cbStatusNEU + " WHERE TID = " + atid);
 				} 
 				catch (SQLException e1) 
@@ -118,30 +122,29 @@ public class Tasks extends JPanel implements ActionListener
 			}
 		};
 
-		JLabel faxLabel = new JLabel(labelText);
-		GridBagConstraints gbcLabel = new GridBagConstraints();
-		gbcLabel.fill = GridBagConstraints.BOTH;
-		gbcLabel.insets = new Insets(0, 0, 5, 5);
-		gbcLabel.gridx = 1;
-		gbcLabel.gridy = yPos;
-		formular.add(faxLabel, gbcLabel);
 
-		cbArray.add(atid, checkb);
+		cbArray.add(checkb);
 		checkb.addActionListener(checkboxaL);
 
 
 	}
 	//Methode für Kopfzeile
-	private void addLabel(String labelText, int yPos, Container formular)
+	private void addLabel(String labelText, int yPos, Container formular, boolean header)
 	{
 
 		JLabel kopfzeile = new JLabel(labelText);
+		if(header)
+		{
+			Font font = new Font(kopfzeile.getFont().getName(), 
+					kopfzeile.getFont().getStyle(), kopfzeile.getFont().getSize()+3);
+			kopfzeile.setFont(font);
+		}
 		GridBagConstraints gbcLabel = new GridBagConstraints();
 		gbcLabel.fill = GridBagConstraints.BOTH;
-		gbcLabel.insets = new Insets(0, 0, 0, 0);
+		gbcLabel.insets = new Insets(0, 0, 5, 5);
 		gbcLabel.gridx = 0;
 		gbcLabel.gridy = yPos;
-		formular.add(kopfzeile, gbcLabel);
+		formular.add(kopfzeile, gbcLabel);			
 	}
 
 
@@ -152,8 +155,8 @@ public class Tasks extends JPanel implements ActionListener
 
 		GridBagConstraints gbcButton = new GridBagConstraints();
 		gbcButton.fill = GridBagConstraints.BOTH;
-		gbcButton.insets = new Insets(0, 0, 0, 0);
-		gbcButton.gridx = 1;
+		gbcButton.insets = new Insets(0, 0, 5, 5);
+		gbcButton.gridx = 0;
 		gbcButton.gridy = yPos;
 		formular.add(mNeuButton, gbcButton);
 
@@ -171,18 +174,18 @@ public class Tasks extends JPanel implements ActionListener
 
 
 		int pos = 1;
-		for (int i=0; i < checkRID.size(); i++)
+		for (int i=1; i <=checkRID.size(); i++)
 		{
-			String cat = checkRID.get(i);
-			addLabel(cat, pos, this);
+			String cat = checkRID.get(i-1);
+			addLabel(cat, pos, this, false);
 			pos = pos + 1;
-			resultTID = db.executeQuery("SELECT * FROM TASKS WHERE TID = " + i + "AND PID = " + mParent.getPID());
+			resultTID = db.executeQuery("SELECT * FROM TASKS WHERE KID = " + i + "AND PID = " + mParent.getPID());
 
 			while (resultTID.next())
 			{
 				String name = resultTID.getString("NAME");
 				int aStatus = resultTID.getInt("STATUS");
-				System.out.println("Status="+aStatus);
+				//System.out.println("Status="+aStatus);
 				addLabelAndTextField(name, pos, this, i, aStatus);
 				pos = pos + 1;
 			}
@@ -192,7 +195,7 @@ public class Tasks extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
-		System.out.println("Test");
+		//System.out.println("Test");
 
 	}
 

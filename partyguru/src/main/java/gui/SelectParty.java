@@ -5,6 +5,7 @@ import gui.formdialog.FormElement;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -83,15 +84,20 @@ public class SelectParty extends TabellenLayout
 						mDB.executeUpdate("INSERT INTO PARTY"
 								+ " (NAME) VALUES ('"+result.elementAt(0)+"')");
 						
+						ResultSet rs = mDB.executeQuery("SELECT PID FROM PARTY ORDER BY PID DESC LIMIT 1");
+						int pid=-1;
+						if(rs.next())
+							pid = rs.getInt("PID");
+						
 						mDB.executeUpdate("INSERT INTO TASKS(NAME, STATUS, PID, KID) "
-								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', '0', '"+result.elementAt(0)+"', '0'),"
-										+ "('Schlaf-/Mitfahrgelegenheiten', '0', '"+result.elementAt(0)+"', '0'),"
-										+ "('Einladungen', '0', '"+result.elementAt(0)+"', '0'),"
-										+ "('Gästeliste', '0', '"+result.elementAt(0)+"', '1'),"
-										+ "('Mitbringliste', '0', '"+result.elementAt(0)+"', '1'),"
-										+ "('Pärchengenerierung', '0', '"+result.elementAt(0)+"', '1'),"
-										+ "('Partyfeedback', '0', '"+result.elementAt(0)+"', '1'),"
-										+ "('Putzplan', '0', '"+result.elementAt(0)+"', '2')");
+								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', '0', '"+pid+"', '1'),"
+										+ "('Schlaf-/Mitfahrgelegenheiten', '0', '"+pid+"', '1'),"
+										+ "('Einladungen', '0', '"+pid+"', '1'),"
+										+ "('Gästeliste', '0', '"+pid+"', '2'),"
+										+ "('Mitbringliste', '0', '"+pid+"', '2'),"
+										+ "('Pärchengenerierung', '0', '"+pid+"', '2'),"
+										+ "('Partyfeedback', '0', '"+pid+"', '2'),"
+										+ "('Putzplan', '0', '"+pid+"', '3')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

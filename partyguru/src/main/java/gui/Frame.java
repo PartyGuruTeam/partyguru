@@ -29,7 +29,7 @@ public class Frame extends JFrame
 		this.add(mMutter);
 		
 		
-		this.setSize(700, 600);
+		this.setSize(1024, 700);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
