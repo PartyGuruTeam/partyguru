@@ -83,8 +83,15 @@ public class SelectParty extends TabellenLayout
 						mDB.executeUpdate("INSERT INTO PARTY"
 								+ " (NAME) VALUES ('"+result.elementAt(0)+"')");
 						
-//						mDB.executeQuery("INSERT INTO TASKS(NAME, STATUS, PID, KID) "
-//								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', )");
+						mDB.executeUpdate("INSERT INTO TASKS(NAME, STATUS, PID, KID) "
+								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', '0', '"+result.elementAt(0)+"', '0'),"
+										+ "('Schlaf-/Mitfahrgelegenheiten', '0', '"+result.elementAt(0)+"', '0'),"
+										+ "('Einladungen', '0', '"+result.elementAt(0)+"', '0'),"
+										+ "('Gästeliste', '0', '"+result.elementAt(0)+"', '1'),"
+										+ "('Mitbringliste', '0', '"+result.elementAt(0)+"', '1'),"
+										+ "('Pärchengenerierung', '0', '"+result.elementAt(0)+"', '1'),"
+										+ "('Partyfeedback', '0', '"+result.elementAt(0)+"', '1'),"
+										+ "('Putzplan', '0', '"+result.elementAt(0)+"', '2')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

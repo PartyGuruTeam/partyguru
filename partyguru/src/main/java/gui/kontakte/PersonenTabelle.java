@@ -30,6 +30,7 @@ public class PersonenTabelle extends TabellenLayout {
 		mParent = parent;
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(new JLabel("Legende Verfügbarkeit"));
 		panel.add(new JLabel("1: nicht verfügbar"));
 		panel.add(new JLabel("2: verfügbar für w"));
 		panel.add(new JLabel("3: verfügbar für m"));
