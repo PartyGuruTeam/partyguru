@@ -18,6 +18,12 @@ private static final long serialVersionUID = 1L;
 	Database mDB;
 	MutterLayout mParent;
 	
+	/**
+	 * Der Konstruktor ruft die Einträge aus der Relation Putztemplate der DB ab.
+	 * @param db
+	 * @param parent
+	 * @throws SQLException
+	 */
 	public PutzTemplate(Database db, MutterLayout parent) throws SQLException {
 		super(db.executeQuery("SELECT PTID, ART FROM PUTZTEMPLATE"), 
 				new Boolean[] { false, true });
@@ -25,6 +31,11 @@ private static final long serialVersionUID = 1L;
 		mParent = parent;
 	}
 
+
+	/**
+	 * printTable
+	 * Aktualisiert die Tabellenansicht.
+	 */
 	@Override
 	public void printTable() {
 		try {
@@ -34,6 +45,11 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 
+
+	/**
+	 * deleteRow
+	 * Löscht die angegebene Zeile aus der Datenbank.
+	 */
 	@Override
 	public void deleteRow(Vector<String> v) {
 		try {
@@ -43,6 +59,11 @@ private static final long serialVersionUID = 1L;
 		}
 	}
 
+	/**
+	 * addRow
+	 * Fügt eine Zeile zur Datenbank hinzu und fordert den Nutzer zur Eingabe
+	 * der Feldinhalte auf. Die eingegebenen Werte werden der DB hinzugefügt.
+	 */
 	@Override
 	public void addRow() {
 		final Window w = SwingUtilities.getWindowAncestor(this);
@@ -66,6 +87,11 @@ private static final long serialVersionUID = 1L;
 		}).start();		
 	}
 
+	/**
+	 * updateRow
+	 * Fügt eine Zeile zur Datenbank hinzu und fordert den Nutzer zur Eingabe
+	 * der Feldinhalte auf. Die eingegebenen Werte werden der DB hinzugefügt.
+	 */
 	@Override
 	public void updateRow(Vector<String> row) {
 		try {
