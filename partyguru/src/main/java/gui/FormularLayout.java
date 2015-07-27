@@ -387,7 +387,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				
 				while(rs.next())
 				{
-					rsMat = mDB.executeQuery("Select NAME, ANZAHL, EINHEIT, Notiz from MATERIAL left Join MATERIALTEMPLATE on MATERIAL.MTID = MATERIALTEMPLATE.MTID Where Persid="+rs.getString(3) +" and PID="+mPID);
+					rsMat = mDB.executeQuery("Select MATERIALNAME, ANZAHL, EINHEIT, Notiz from MATERIAL left Join MATERIALTEMPLATE on MATERIAL.MTID = MATERIALTEMPLATE.MTID Where Persid="+rs.getString(3) +" and PID="+mPID);
 					String material = "";
 					int counter = 0;
 					while(rsMat.next())

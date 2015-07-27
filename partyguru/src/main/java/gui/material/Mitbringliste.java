@@ -21,7 +21,7 @@ public class Mitbringliste extends TabellenLayout
 	int mpid;
 
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+		super(db.executeQuery("SELECT M.MID, MT.MATERIALNAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
 				+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
 				+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+parent.getPID()), 
 				new Boolean[] {false, false, false, true, true, true } );
@@ -34,7 +34,7 @@ public class Mitbringliste extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+			printTable(mDB.executeQuery("SELECT M.MID, MT.MATERIALNAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
 					+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
 					+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+mpid));
 		} catch (SQLException e) {
@@ -56,7 +56,7 @@ public class Mitbringliste extends TabellenLayout
 	{
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
-			ResultSet rs = mDB.executeQuery("SELECT MTID, NAME FROM MaterialTemplate");
+			ResultSet rs = mDB.executeQuery("SELECT MTID, MATERIALNAME FROM MaterialTemplate");
 			final Vector<String> elements = new Vector<String>();
 			while(rs.next())
 			{

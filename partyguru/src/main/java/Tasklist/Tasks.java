@@ -185,8 +185,9 @@ public class Tasks extends JPanel implements ActionListener
 			{
 				String name = resultTID.getString("NAME");
 				int aStatus = resultTID.getInt("STATUS");
+				int atid = resultTID.getInt("TID");
 				//System.out.println("Status="+aStatus);
-				addLabelAndTextField(name, pos, this, i, aStatus);
+				addLabelAndTextField(name, pos, this, atid, aStatus);
 				pos = pos + 1;
 			}
 			mPosButton = pos;

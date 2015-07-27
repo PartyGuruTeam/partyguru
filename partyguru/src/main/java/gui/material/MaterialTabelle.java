@@ -60,7 +60,7 @@ public class MaterialTabelle extends TabellenLayout {
 				if(result.size()==2)
 				{
 					try {
-						mDB.executeUpdate("INSERT INTO MaterialTemplate (NAME, Art) VALUES ('"+result.elementAt(0)+
+						mDB.executeUpdate("INSERT INTO MaterialTemplate (MATERIALNAME, Art) VALUES ('"+result.elementAt(0)+
 								"', '"+result.elementAt(1)+"')");
 					} catch (SQLException e) {
 						e.printStackTrace();
@@ -77,7 +77,7 @@ public class MaterialTabelle extends TabellenLayout {
 		try {
 			mDB.executeUpdate("UPDATE MaterialTemplate SET "
 					+ "ART='"+row.elementAt(1)+"', "
-					+ "NAME='"+row.elementAt(2)+"' "
+					+ "MATERIALNAME='"+row.elementAt(2)+"' "
 					+ "WHERE MTID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();

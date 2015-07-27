@@ -30,7 +30,7 @@ public class PutzListe extends TabellenLayout
 	 */
 	
 	public PutzListe(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()),
+		super(db.executeQuery("SELECT P.RID, PT.ART, P.RAUM, P.DAUER, P.NOTIZ FROM PUTZ P, PUTZTEMPLATE PT WHERE PT.PTID=P.PTID AND PID="+parent.getPID()),
 				new Boolean[] { false, false, true, true, true });
 		mDB = db;
 		mParent = parent;
@@ -46,7 +46,7 @@ public class PutzListe extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+mParent.getPID()));
+			printTable(mDB.executeQuery("SELECT P.RID, PT.ART, P.RAUM, P.DAUER, P.NOTIZ FROM PUTZ P, PUTZTEMPLATE PT WHERE PT.PTID=P.PTID AND PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
