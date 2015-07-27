@@ -57,7 +57,6 @@ public class MaterialTabelle extends TabellenLayout {
 						new FormElement("Name", FormElement.TEXT_FIELD),
 						new FormElement("Art", FormElement.DROP_DOWN, v)						
 				}, w);
-				//TODO verbessern
 				if(result.size()==2)
 				{
 					try {

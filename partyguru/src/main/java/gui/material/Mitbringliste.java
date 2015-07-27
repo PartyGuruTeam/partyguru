@@ -79,7 +79,6 @@ public class Mitbringliste extends TabellenLayout
 							new FormElement("Notiz", FormElement.TEXT_FIELD)
 
 					}, w);
-					//TODO verbessern
 					if(result.size()==5)
 					{
 						String mtid = result.elementAt(0).split("-")[0];
@@ -113,8 +112,8 @@ public class Mitbringliste extends TabellenLayout
 				row.set(3, "-1");
 			mDB.executeUpdate("UPDATE Material SET "
 					+ "ANZAHL='"+row.elementAt(3)+"', "
-					+ "EINHEIT='"+row.elementAt(3)+"', "
-					+ "NOTIZ='"+row.elementAt(4)+"' "
+					+ "EINHEIT='"+row.elementAt(4)+"', "
+					+ "NOTIZ='"+row.elementAt(5)+"' "
 					+ "WHERE MID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -61,7 +61,7 @@ public class MutterLayout extends JPanel
 			System.exit(1);
 		}
 
-		selectDB();
+		selectParty();
 
 		mTabs = new JTabbedPane(JTabbedPane.TOP);
 		this.add(mTabs, BorderLayout.CENTER);
@@ -103,7 +103,7 @@ public class MutterLayout extends JPanel
 		});
 	}
 	
-	private void selectDB()
+	private void selectParty()
 	{
 		SelectParty selection=null;
 		try {
@@ -115,7 +115,7 @@ public class MutterLayout extends JPanel
 		while(mPID==-1)
 		{
 			if(!selection.isVisible())
-				System.exit(1); //TODO anders lösen
+				System.exit(1);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {

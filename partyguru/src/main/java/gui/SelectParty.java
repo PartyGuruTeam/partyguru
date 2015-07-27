@@ -82,6 +82,9 @@ public class SelectParty extends TabellenLayout
 					try {
 						mDB.executeUpdate("INSERT INTO PARTY"
 								+ " (NAME) VALUES ('"+result.elementAt(0)+"')");
+						
+//						mDB.executeQuery("INSERT INTO TASKS(NAME, STATUS, PID, KID) "
+//								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', )");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
