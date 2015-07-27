@@ -35,7 +35,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	JTable mTabelle;
 	private DefaultTableModel mModell;
 	
-	JPanel mButtonPanel;
+	protected JPanel mButtonPanel;
 	
 	Boolean[] mIsEditable;
 

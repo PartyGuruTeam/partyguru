@@ -4,7 +4,14 @@ import java.awt.Window;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+
+
+
 
 
 import gui.TabellenLayout;
@@ -26,6 +33,13 @@ public class PersonenTabelle extends TabellenLayout {
 		});
 		mDB = db;
 		mParent = parent;
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(new JLabel("1: nicht verfügbar"));
+		panel.add(new JLabel("2: verfügbar für w"));
+		panel.add(new JLabel("3: verfügbar für m"));
+		panel.add(new JLabel("0: wurde nicht eingetragen"));
+		this.mButtonPanel.add(panel);
 	}
 
 	@Override
