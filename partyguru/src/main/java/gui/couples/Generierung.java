@@ -3,6 +3,7 @@ package gui.couples;
 import gui.MutterLayout;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -14,7 +15,7 @@ import javax.swing.border.*;
 
 import db.Database;
 
-public class Generierung extends JPanel {
+public class Generierung extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -69,63 +70,79 @@ public class Generierung extends JPanel {
 		//gbl.columnWeights = new double[] { 0.0, 1.0,0.0, 0.0, Double.MIN_VALUE };
 		//gbl.rowWeights = new double[] { 0.0, 0.0,  0.0, 0.0, 0.0, 0.0, 0.0, 0.0,Double.MIN_VALUE };
 		this.setLayout(gbl);
-
-
+		mDB = db;
 
 		//mPID = 3;
 		//mPID = parent.getPID();
 
-		result = db.executeQuery("SELECT GESCHLECHT, NAME, VERFUEGBARKEIT FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID");
+		print();
+	}
 
-		while (result.next())
-		{
+	public void print()
+	{
+		mMannWillMann = new ArrayList<String>();
+		mFrauWillMann = new ArrayList<String>();
+		mMannWillFrau = new ArrayList<String>();
+		mFrauWillFrau = new ArrayList<String>();
+		mPaare = new ArrayList<ArrayList<String>>();
+		
 
-			String mVerf = result.getString("VERFUEGBARKEIT");
-			String mGes = result.getString("GESCHLECHT");
-			String mName = result.getString("NAME");
+		try {
+			result = mDB.executeQuery("SELECT GESCHLECHT, NAME, VERFUEGBARKEIT FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID");
 
 
-			if( mGes.contains("m"))
-
+			while (result.next())
 			{
 
-				if (mVerf.contains("2"))
-				{
-					mMannWillFrau.add(mName);	
-				}
+				String mVerf = result.getString("VERFUEGBARKEIT");
+				String mGes = result.getString("GESCHLECHT");
+				String mName = result.getString("NAME");
 
-				else if (mVerf.contains("3"))
-				{
-					mMannWillMann.add(result.getString("NAME"));
-				}
-			}
-			else if (mGes.contains("w"))
-			{
 
-				if (mVerf.contains("2"))
+				if( mGes.contains("m"))
+
 				{
-					mFrauWillFrau.add(result.getString("NAME"));
+
+					if (mVerf.contains("2"))
+					{
+						mMannWillFrau.add(mName);	
+					}
+
+					else if (mVerf.contains("3"))
+					{
+						mMannWillMann.add(result.getString("NAME"));
+					}
 				}
-				else if (mVerf.contains("3"))
+				else if (mGes.contains("w"))
 				{
-					mFrauWillMann.add(result.getString("NAME"));
+
+					if (mVerf.contains("2"))
+					{
+						mFrauWillFrau.add(result.getString("NAME"));
+					}
+					else if (mVerf.contains("3"))
+					{
+						mFrauWillMann.add(result.getString("NAME"));
+					}
 				}
-			}
-			/*else
+				/*else
 				JOptionPane.showMessageDialog(parent, "FEHLER IM sYSTEM");**/
 
+			}
+
+			//		System.out.println("Mann will Frau:");
+			//		System.out.println(mMannWillFrau);
+			//		System.out.println("schwul:");
+			//		System.out.println(mMannWillMann);
+			//		System.out.println("lesbisch:");
+			//		System.out.println(mFrauWillFrau);
+			//		System.out.println("Frau will Mann:");
+			//		System.out.println(mFrauWillMann);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-
-		System.out.println("Mann will Frau:");
-		System.out.println(mMannWillFrau);
-		System.out.println("schwul:");
-		System.out.println(mMannWillMann);
-		System.out.println("lesbisch:");
-		System.out.println(mFrauWillFrau);
-		System.out.println("Frau will Mann:");
-		System.out.println(mFrauWillMann);
-
-
 		/**
 		 * @author Franzi
 		 * 
@@ -160,7 +177,7 @@ public class Generierung extends JPanel {
 			}
 
 			mPaare.add(aPaar);
-			System.out.println(aPaar + " an der Stelle " + i);
+			//			System.out.println(aPaar + " an der Stelle " + i);
 		}
 
 
@@ -173,7 +190,7 @@ public class Generierung extends JPanel {
 		{
 			int j = i + 1;
 			ArrayList<String> aPaar = new ArrayList<String>();
-			
+
 			if(aRestFrauen > 1){
 				aPaar.add(mFrauWillFrau.get(i));
 				aPaar.add(mFrauWillFrau.get(j));
@@ -185,8 +202,8 @@ public class Generierung extends JPanel {
 				aRestFrauen = aRestFrauen-1;
 			}
 			mPaare.add(aPaar);
-			System.out.println(aPaar + " an der Stelle " + i);
-			
+			//			System.out.println(aPaar + " an der Stelle " + i);
+
 		}
 
 
@@ -204,7 +221,7 @@ public class Generierung extends JPanel {
 		for (int i = 0; i < (aAnzahlPaare + aUeberbleibsel); i++)
 		{
 			ArrayList<String> aPaar = new ArrayList<String>();
-			
+
 			if (aRestPaare > 0)
 			{
 				aPaar.add(mMannWillFrau.get(i));
@@ -214,7 +231,7 @@ public class Generierung extends JPanel {
 			else 
 			{
 				if(aRest < 0){ 			//mehr Frauen
-			
+
 					aPaar.add(mFrauWillMann.get(i));
 					aPaar.add("Traummann");
 					mPaare.add(aPaar);
@@ -226,12 +243,12 @@ public class Generierung extends JPanel {
 					mPaare.add(aPaar);	
 				}
 			}
-			System.out.println(aPaar + " an der Stelle " + i);
+			//			System.out.println(aPaar + " an der Stelle " + i);
 			aRestPaare = aAnzahlPaare - (i +1);
 		}
 
-
-
+		this.removeAll();
+		
 		//Erstelle Kopfzeile als Header
 		addLabel("Diese Pärchen wurden für deine Party generiert. Wenn du noch einmal neu mischen möchtest,"
 				+ " klicke den Button ganz unten", 0, this);
@@ -242,19 +259,21 @@ public class Generierung extends JPanel {
 		for (int i = 0; i < mPaare.size();i++)
 		{
 			String aName1 = mPaare.get(i).get(0);
-			System.out.println("NAME1:" + i + aName1);
+			//			System.out.println("NAME1:" + i + aName1);
 			String aName2 = mPaare.get(i).get(1);
-			System.out.println("NAME1:" + i + aName2);
+			//			System.out.println("NAME1:" + i + aName2);
 			//String aName3 = mPaare.get(i).get(2);
-//			System.out.println("NAME1:" + i + aName3);
-			
+			//			System.out.println("NAME1:" + i + aName3);
+
 
 			addCouplePanel(aName1, aName2, yPosNEU, this, i+1);
 			yPosNEU = yPosNEU + 1;
 		}
 
 		//Add JButton für das "Neu mischen"
-		//addButttons(yPosNEU, this);
+		addButttons(yPosNEU, this);
+		this.revalidate();
+		this.repaint();
 	}
 
 
@@ -270,11 +289,11 @@ public class Generierung extends JPanel {
 
 		JLabel typ1 = new JLabel(labelTextT1 + " & ");
 		JLabel typ2 = new JLabel(labelTextT2);
-//		JLabel typ3 = new JLabel(labelTextT3);
+		//		JLabel typ3 = new JLabel(labelTextT3);
 		JPanel box = new JPanel();
 		box.setLayout(new BorderLayout());
 		box.setBorder(BorderFactory.createTitledBorder("Pärchen " + aZahl));
-		
+
 
 		GridBagConstraints gbcBox = new GridBagConstraints();
 		gbcBox.fill = GridBagConstraints.BOTH;
@@ -284,7 +303,7 @@ public class Generierung extends JPanel {
 		formular.add(box, gbcBox);
 		box.add(typ1, BorderLayout.WEST);
 		box.add(typ2, BorderLayout.CENTER);
-//		box.add(typ3);
+		//		box.add(typ3);
 
 		JPanelArray.add(box);
 
@@ -305,10 +324,10 @@ public class Generierung extends JPanel {
 
 
 
-	/*private void addButttons(int yPos, Container formular) {
+	private void addButttons(int yPos, Container formular) {
 
 
-		mMixButton.addActionListener((ActionListener) this);
+		mMixButton.addActionListener(this);
 
 		GridBagConstraints gbcButton = new GridBagConstraints();
 		gbcButton.fill = GridBagConstraints.BOTH;
@@ -317,33 +336,26 @@ public class Generierung extends JPanel {
 		gbcButton.gridy = yPos;
 		formular.add(mMixButton, gbcButton);
 
-	}*/
+	}
 
 
 
 
-	/*
+
 
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource().equals(mMixButton))
 		{
 			//Methode, die den Datensatz in die Datenbank speichert
-			updateData();
-			/*TODO Ausgabe
-			mAusgabe = "Die Daten wurden gespeichert.";
-
-
+			print();
 		}
 		else 
 		{
-			/* fehlt
-	 * 
-	 * 
 
 		}
 
-	}	**/
+	}	
 
 
 	//public abstract void updateData();
