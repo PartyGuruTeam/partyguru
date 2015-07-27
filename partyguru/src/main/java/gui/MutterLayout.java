@@ -60,7 +60,10 @@ public class MutterLayout extends JPanel
 			JOptionPane.showMessageDialog(this, "Auf die Datenbank kann nicht zugegriffen werden!");
 			System.exit(1);
 		}
-
+		if(path==null)
+		{
+			System.exit(0);
+		}
 		selectParty();
 
 		mTabs = new JTabbedPane(JTabbedPane.TOP);
@@ -109,7 +112,7 @@ public class MutterLayout extends JPanel
 		try {
 			selection = new SelectParty(db, this);
 		} catch (SQLException e1) {
-			e1.printStackTrace();
+			
 		}
 		mPID = -1;
 		while(mPID==-1)
