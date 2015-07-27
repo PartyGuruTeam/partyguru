@@ -9,11 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-
-
-
-
-
 import gui.TabellenLayout;
 import db.Database;
 import gui.MutterLayout;
