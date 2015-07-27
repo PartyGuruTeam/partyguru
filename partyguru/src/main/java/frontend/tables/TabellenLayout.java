@@ -1,4 +1,4 @@
-package gui;
+package frontend.tables;
 
 import java.awt.BorderLayout;
 import java.awt.Graphics;
@@ -32,7 +32,7 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JButton mNeuButton;
 	private JButton mLoeschenButton;
 
-	JTable mTabelle;
+	protected JTable mTabelle;
 	private DefaultTableModel mModell;
 	
 	protected JPanel mButtonPanel;

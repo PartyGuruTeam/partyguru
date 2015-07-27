@@ -1,4 +1,4 @@
-package gui;
+package frontend;
 
 import java.awt.BorderLayout;
 import java.sql.SQLException;
@@ -10,16 +10,26 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 
-import db.Database;
-import gui.couples.Generierung;
-import gui.gelegenheiten.GelegenheitenTabelle;
-import gui.kontakte.Gaesteliste;
-import gui.kontakte.PersonenTabelle;
-import gui.material.MaterialTabelle;
-import gui.material.Mitbringliste;
-import gui.putz.PutzListe;
-import gui.putz.PutzTemplate;
-import Tasklist.Tasks;
+
+
+
+
+
+
+
+
+
+
+import backend.Database;
+import frontend.forms.Generierung;
+import frontend.forms.PStammdaten;
+import frontend.tables.Gaesteliste;
+import frontend.tables.GelegenheitenTabelle;
+import frontend.tables.MaterialTabelle;
+import frontend.tables.Mitbringliste;
+import frontend.tables.PersonenTabelle;
+import frontend.tables.PutzListe;
+import frontend.tables.PutzTemplate;
 
 
 /**

@@ -1,7 +1,8 @@
-package gui;
+package frontend;
 
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
+import frontend.tables.TabellenLayout;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import db.Database;
+import backend.Database;
 
 /**
  * Klasse, um Party von Datenbank auszuwählen.

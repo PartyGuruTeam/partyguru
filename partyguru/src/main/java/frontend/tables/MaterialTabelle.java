@@ -1,14 +1,15 @@
-package gui.material;
+package frontend.tables;
 
 import java.awt.Window;
 import java.sql.SQLException;
 import java.util.Vector;
+
 import javax.swing.SwingUtilities;
-import gui.TabellenLayout;
-import db.Database;
-import gui.MutterLayout;
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+
+import backend.Database;
+import frontend.MutterLayout;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
 
 public class MaterialTabelle extends TabellenLayout {
 
