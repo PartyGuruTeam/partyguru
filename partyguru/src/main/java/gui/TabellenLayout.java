@@ -193,7 +193,12 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 }
 
 
-
+/**
+ * Klasse wird verwendet, um die Datentypen der Spalten festzustellen und um festzustellen,
+ * ob Spalten editierbar sind.
+ * @author Bastian
+ *
+ */
 class MyTableModel extends DefaultTableModel
 {
 	private static final long serialVersionUID = 1L;

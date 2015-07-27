@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 import db.Database;
 
 /**
- * Testklasse zum Testen von TabellenLayout.
+ * Klasse, um Party von Datenbank auszuwählen.
  * @author Bastian
  *
  */
