@@ -1,4 +1,4 @@
-package gui;
+package frontend.forms;
 
 import java.awt.Container;
 import java.awt.GridBagConstraints;
@@ -25,10 +25,11 @@ import javax.swing.border.EmptyBorder;
 
 import org.h2.util.StringUtils;
 
-import partyguru.sendMail;
-import date.CalendarFunction;
-import date.TimeFunction;
-import db.Database;
+import backend.Database;
+import backend.sendMail;
+import frontend.MutterLayout;
+import frontend.misc.CalendarFunction;
+import frontend.misc.TimeFunction;
 
 
 public abstract  class FormularLayout extends JPanel implements ActionListener {

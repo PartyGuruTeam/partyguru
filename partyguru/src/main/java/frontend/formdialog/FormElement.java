@@ -1,4 +1,4 @@
-package gui.formdialog;
+package frontend.formdialog;
 
 
 import java.util.Vector;

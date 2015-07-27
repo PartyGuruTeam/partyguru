@@ -1,4 +1,4 @@
-package Tasklist;
+package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,8 +21,7 @@ import java.awt.Insets;
 
 import javax.swing.JPanel;
 
-import gui.MutterLayout;
-import db.Database;
+import backend.Database;
 
 public class Tasks extends JPanel implements ActionListener
 {

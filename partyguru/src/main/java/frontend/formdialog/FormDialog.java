@@ -1,4 +1,4 @@
-package gui.formdialog;
+package frontend.formdialog;
 
 import java.awt.Dialog;
 import java.awt.Window;

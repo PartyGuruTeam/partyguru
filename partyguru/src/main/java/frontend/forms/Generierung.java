@@ -1,6 +1,6 @@
-package gui.couples;
+package frontend.forms;
 
-import gui.MutterLayout;
+import frontend.MutterLayout;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import db.Database;
+import backend.Database;
 
 public class Generierung extends JPanel implements ActionListener {
 
