@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.io.File;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -9,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 
 import db.Database;
 import gui.couples.Generierung;
@@ -19,6 +19,7 @@ import gui.material.MaterialTabelle;
 import gui.material.Mitbringliste;
 import gui.putz.PutzListe;
 import gui.putz.PutzTemplate;
+import Tasklist.Tasks;
 
 
 /**
@@ -43,6 +44,7 @@ public class MutterLayout extends JPanel
 	private PStammdaten mStammdaten;
 	private Generierung mGenerierung;	
 	private PutzListe mPutzliste;
+	private Tasks mTasks;
 
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -88,6 +90,9 @@ public class MutterLayout extends JPanel
 			mTabs.add(mStammdaten, "Stammdaten");
 			mGenerierung = new Generierung(db, this);
 			mTabs.add(mGenerierung, "Pärchengenerierung");
+			
+			mTasks = new Tasks(db, this);
+			this.add(mTasks, BorderLayout.EAST);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
