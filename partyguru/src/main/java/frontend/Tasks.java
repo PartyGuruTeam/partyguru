@@ -23,11 +23,14 @@ import javax.swing.JPanel;
 
 import backend.Database;
 
+/**
+ * Stellt die Taskliste im Hauptfenster dar. Kommuniziert mit der DB, um Status zu abzurufen 
+ * und zu ändern. 
+ * @author PartyGuru
+ *
+ */
 public class Tasks extends JPanel implements ActionListener
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	ArrayList<JCheckBox> cbArray = new ArrayList<JCheckBox>();

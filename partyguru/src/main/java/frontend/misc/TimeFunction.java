@@ -13,8 +13,8 @@ import javax.swing.SpinnerDateModel;
 import javax.swing.text.DateFormatter;
 
 /**
+ * Zeitkomponente in GUI mittels JSpinner.
  * @author Lukas
- * @version 1.0 beta
  */
 public class TimeFunction extends JSpinner
 {
@@ -29,7 +29,7 @@ public class TimeFunction extends JSpinner
 
         JSpinner.DateEditor editor = new JSpinner.DateEditor(this, "HH:mm");
         DateFormatter formatter = (DateFormatter)editor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false); //TODO Überschreiben
+        formatter.setAllowsInvalid(false);
         formatter.setOverwriteMode(false);
 
         this.setEditor(editor);

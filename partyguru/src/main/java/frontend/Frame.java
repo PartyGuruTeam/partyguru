@@ -27,7 +27,8 @@ public class Frame extends JFrame
 		this.add(mMutter);
 		
 		
-		this.setSize(700, 600);
+		this.setSize(1024, 700);
+		this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		this.setBackground(MutterLayout.grau);

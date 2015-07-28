@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * Klasse die dem Versenden von Emails über einen SMTP Server dient.
  * Übergeben werden müssen die String Felder: an email Adresse, Titel der Nachricht, Nachricht in HTML.
  * Die Funktion gibt bei Erfolg eine 1 zurück, bei einem Fehler eine 0
- * @author siegmunf
+ * @author felix
  *
  */
 

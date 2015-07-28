@@ -24,8 +24,8 @@ import frontend.tables.PutzTemplate;
 
 
 /**
- * Hauptpanel, in dem alle Tabs eingebunden werden.
- * @author Bastian
+ * Hauptpanel, in das alle Tabs eingebunden werden.
+ * @author PartyGuru
  *
  */
 public class MutterLayout extends JPanel 
@@ -65,7 +65,10 @@ public class MutterLayout extends JPanel
 		this.setLayout(new BorderLayout());
 		this.setBackground(hellrosa);
 
-		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben", System.getProperty("user.home")+"/party");
+		String path = JOptionPane.showInputDialog("Bitte Pfad zur Datenbank eingeben.\n"
+				+ "Wenn noch keine DB vorhanden ist,\n"
+				+ "Neuanlage im angegebenen Verzeichnis.", 
+				System.getProperty("user.home")+"/party");
 		try {
 			db = new Database(path);
 		} catch (ClassNotFoundException e) {
@@ -87,24 +90,24 @@ public class MutterLayout extends JPanel
 		this.add(mTabs, BorderLayout.CENTER);
 
 		try {
+			mStammdaten = new PStammdaten(db, this);
+			mTabs.add(mStammdaten, "Stammdaten");
 			mPersonen = new PersonenTabelle(db, this);
 			mTabs.add(mPersonen, "Personen");
-			mMaterial = new MaterialTabelle(db, this);
-			mTabs.add(mMaterial, "Material");
 			mGaesteliste = new Gaesteliste(db, this);
 			mTabs.add(mGaesteliste, "Gästeliste");
-			mPutzen = new PutzTemplate(db, this);
-			mTabs.add(mPutzen, "Putzliste");
-			mPutzliste = new PutzListe(db, this);
-			mTabs.add(mPutzliste, "Putzplan");
+			mGenerierung = new Generierung(db, this);
+			mTabs.add(mGenerierung, "Pärchengenerierung");
+			mMaterial = new MaterialTabelle(db, this);
+			mTabs.add(mMaterial, "Material");
 			mMitbringliste = new Mitbringliste(db, this);
 			mTabs.add(mMitbringliste, "Mitbringliste");
 			mGelegenheiten = new GelegenheitenTabelle(db, this);
 			mTabs.add(mGelegenheiten, "Gelegenheiten");
-			mStammdaten = new PStammdaten(db, this);
-			mTabs.add(mStammdaten, "Stammdaten");
-			mGenerierung = new Generierung(db, this);
-			mTabs.add(mGenerierung, "Pärchengenerierung");
+			mPutzen = new PutzTemplate(db, this);
+			mTabs.add(mPutzen, "Putzliste");
+			mPutzliste = new PutzListe(db, this);
+			mTabs.add(mPutzliste, "Putzplan");
 			
 			mTasks = new Tasks(db, this);
 			this.add(mTasks, BorderLayout.EAST);

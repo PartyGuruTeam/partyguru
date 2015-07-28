@@ -31,13 +31,14 @@ import frontend.MutterLayout;
 import frontend.misc.CalendarFunction;
 import frontend.misc.TimeFunction;
 
-
+/**
+ * Die Klasse ist für die Initialisierung der Stammdaten verantwortlich. Es basiert auf einem GridBag
+ * Layout und der ActionListener wird implementiert.
+ * @author PartyGuru
+ *
+ */
 public abstract  class FormularLayout extends JPanel implements ActionListener {
 
-	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	
@@ -106,13 +107,13 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 		addLabel("Gebe hier deine Party-Stammdaten ein!", 0, this);
 		
 		addLabelAndTextField("Partyname:", 1, this);
-		addLabelAndTextField( "Gastgeber:*", 2, this);
-		addLabelAndTextField( "Ort:*", 3, this);
+		//addLabelAndTextField( "Gastgeber:*", 2, this);
+		addLabelAndTextField( "Ort:*", 2, this);
 		//addLabelAndTextField( "Datum:*", 4, this);
-		addLabelAndDateField("Datum", 4, this);
+		addLabelAndDateField("Datum", 3, this);
 		//addLabelAndTextField( "Startzeit:", 5, this);
-		addLabelAndTimeField("Startzeit", 5, this);
-		addLabelAndTextField("Motto:", 6, this);
+		addLabelAndTimeField("Startzeit", 4, this);
+		addLabelAndTextField("Motto:", 5, this);
 		
 		addButttons(7, this);
 		addButttons(8, this);
@@ -276,7 +277,7 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 		{
 			//Methode, die den Datensatz in die Datenbank speichert
 			updateData();
-			/*TODO Ausgabe
+			/*Ausgabe
 			mAusgabe = "Die Daten wurden gespeichert.";*/
 		
 			
@@ -317,7 +318,6 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 				}
 				
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			
@@ -366,7 +366,6 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 					sendMail.emailSenden(rs.getString(1), "Umfrage zur " + aName + " Party vom " + datum, nachricht);
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 
@@ -423,7 +422,6 @@ public abstract  class FormularLayout extends JPanel implements ActionListener {
 
 				}
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}

@@ -12,6 +12,11 @@ import frontend.MutterLayout;
 import frontend.formdialog.FormDialog;
 import frontend.formdialog.FormElement;
 
+/**
+ * Kommunikation mit der DB für die Datensätze der Putzliste.
+ * @author PartyGuru
+ *
+ */
 public class PutzListe extends TabellenLayout 
 {	
 	private static final long serialVersionUID = 1L;

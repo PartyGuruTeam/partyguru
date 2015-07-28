@@ -10,8 +10,11 @@ import javax.swing.JOptionPane;
 import frontend.MutterLayout;
 import backend.Database;
 
-//TODO Tabs entfernen
-
+/**
+ * Backend von Stammdaten Formular. Stellt DB Verbindung her und ließt Attribute ein.
+ * @author PartyGuru
+ *
+ */
 public class PStammdaten extends FormularLayout
 {
 	private static final long serialVersionUID = 1L;
@@ -32,28 +35,21 @@ public class PStammdaten extends FormularLayout
 		String aMotto = null;
 		String aOrt = null;
 
-		//TODO Parties eingrenzen mit ID
-
 		result = db.executeQuery("SELECT * FROM PARTY WHERE PID=" + parent.getPID());
 		
 		if(result.next())
 		{
-			//aPID = result.getInt("PID");
 			aName = result.getString("NAME");
 			aMotto = result.getString("MOTTO");
 			aOrt = result.getString("ORT");
-			//TODO Zeit auslesen lassen
 			
 			mDB = db;
 			mParent = parent;
 			mPID = parent.getPID();
 			//Befüllen der Textfelder
 			tfArray.get(0).setText(aName);
-			//tfArray.get(1).setText();			//TODO GASTGEBER einfügen
-			tfArray.get(2).setText(aOrt);
-			//tfArray.get(3)				//TODO Datum / Uhrzeit Lukas 3: Datum
-			//tfArray.get(4)												4: Uhrzeit
-			tfArray.get(3).setText(aMotto);
+			tfArray.get(1).setText(aOrt);
+			tfArray.get(2).setText(aMotto);
 			if(result.getDate("ZEIT")!=null)
 			{
 				mDate.setDate(result.getDate("ZEIT"));
@@ -82,11 +78,9 @@ public class PStammdaten extends FormularLayout
 
 	@Override
 	public void updateData() {
-		// TODO Auto-generated method stub
 
 		String name = tfArray.elementAt(0).getText();
-		//String gastgeber = tfArray.elementAt(1).getText();		//TODO noch nicht berücksichtigt
-		String ort = tfArray.elementAt(2).getText();
+		String ort = tfArray.elementAt(1).getText();
 		
 		Date time = mTime.getTime();
 		Calendar cTime = Calendar.getInstance();
@@ -102,12 +96,11 @@ public class PStammdaten extends FormularLayout
 
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String datum = sf.format(cal.getTime());
-		String motto = tfArray.elementAt(3).getText();
+		String motto = tfArray.elementAt(2).getText();
 
 		try {
 			mDB.executeUpdate("UPDATE PARTY SET NAME='"+name+"', ZEIT='"+datum+"', ORT='"+ort+"', MOTTO='"+motto+"' WHERE PID =" + mPID);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

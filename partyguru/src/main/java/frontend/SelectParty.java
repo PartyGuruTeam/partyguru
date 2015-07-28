@@ -19,7 +19,7 @@ import backend.Database;
 
 /**
  * Klasse, um Party von Datenbank auszuwählen.
- * @author Bastian
+ * @author PartyGuru
  *
  */
 public class SelectParty extends TabellenLayout 

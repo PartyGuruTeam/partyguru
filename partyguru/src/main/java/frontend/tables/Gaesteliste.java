@@ -13,6 +13,11 @@ import frontend.MutterLayout;
 import frontend.formdialog.FormDialog;
 import frontend.formdialog.FormElement;
 
+/**
+ * Kommunikation mit der DB für die Datensätze der Gästeliste.
+ * @author PartyGuru
+ *
+ */
 public class Gaesteliste extends TabellenLayout 
 {	
 	private static final long serialVersionUID = 1L;

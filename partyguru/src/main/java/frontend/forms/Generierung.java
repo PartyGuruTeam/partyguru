@@ -15,6 +15,11 @@ import javax.swing.border.*;
 
 import backend.Database;
 
+/**
+ * Es werden zufällige Pärchen generiert basierend auf der Gästeliste.
+ * @author PartyGuru
+ *
+ */
 public class Generierung extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -145,7 +150,6 @@ public class Generierung extends JPanel implements ActionListener {
 			//		System.out.println(mFrauWillMann);
 
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		/**
@@ -153,7 +157,7 @@ public class Generierung extends JPanel implements ActionListener {
 		 * 
 		 * Mapping der Personen für die Pärchengenerierung: 
 		 * 
-		 * TODO Mehrere Personen zusammen mappen
+		 * Mehrere Personen zusammen mappen
 		 * 
 		 */
 

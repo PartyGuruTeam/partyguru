@@ -19,7 +19,6 @@ import net.sourceforge.jdatepicker.impl.UtilDateModel;
 /**
  * Kalenderkomponente in GUI
  * @author Lukas
- * @version 1.0 beta
  */
 
 public class CalendarFunction extends JDatePickerImpl
