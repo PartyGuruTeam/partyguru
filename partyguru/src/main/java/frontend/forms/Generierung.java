@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -23,8 +22,6 @@ import backend.Database;
 public class Generierung extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final String Color = null;
 
 	/**
 	 *  @author Franzi

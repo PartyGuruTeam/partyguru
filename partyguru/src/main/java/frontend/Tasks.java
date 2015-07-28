@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
@@ -38,7 +37,7 @@ public class Tasks extends JPanel implements ActionListener
 	MutterLayout mParent;
 	JLabel mContent;
 	JCheckBox mBox;
-	private JButton mNeuButton;
+	//private JButton mNeuButton;
 	int mPosButton;
 
 	ResultSet resultKID, resultTID, resultUpdate;
@@ -47,7 +46,7 @@ public class Tasks extends JPanel implements ActionListener
 	//Konstruktoraufruf
 	public Tasks(Database db, MutterLayout parent) throws SQLException
 	{
-		mNeuButton = new JButton("Neuer Eintrag");
+		//mNeuButton = new JButton("Neuer Eintrag");
 
 
 		mContent = new JLabel();
@@ -151,7 +150,7 @@ public class Tasks extends JPanel implements ActionListener
 
 
 
-	private void addTaskButton(int yPos, Container formular) 
+	/*private void addTaskButton(int yPos, Container formular) 
 	{
 		mNeuButton.addActionListener((ActionListener)this);
 
@@ -162,7 +161,7 @@ public class Tasks extends JPanel implements ActionListener
 		gbcButton.gridy = yPos;
 		formular.add(mNeuButton, gbcButton);
 
-	}
+	}*/
 
 	private void createList(Database db, MutterLayout parent) throws SQLException
 	{
