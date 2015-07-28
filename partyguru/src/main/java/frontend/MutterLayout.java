@@ -1,27 +1,30 @@
-package gui;
+package frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.SQLException;
+
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import db.Database;
-import gui.couples.Generierung;
-import gui.gelegenheiten.GelegenheitenTabelle;
-import gui.kontakte.Gaesteliste;
-import gui.kontakte.PersonenTabelle;
-import gui.material.MaterialTabelle;
-import gui.material.Mitbringliste;
-import gui.putz.PutzListe;
-import gui.putz.PutzTemplate;
+
+import backend.Database;
+import frontend.forms.Generierung;
+import frontend.forms.PStammdaten;
+import frontend.tables.Gaesteliste;
+import frontend.tables.GelegenheitenTabelle;
+import frontend.tables.MaterialTabelle;
+import frontend.tables.Mitbringliste;
+import frontend.tables.PersonenTabelle;
+import frontend.tables.PutzListe;
+import frontend.tables.PutzTemplate;
 
 
 /**
- * 
+ * Hauptpanel, in dem alle Tabs eingebunden werden.
  * @author Bastian
  *
  */
@@ -52,6 +55,7 @@ public class MutterLayout extends JPanel
 	private PStammdaten mStammdaten;
 	private Generierung mGenerierung;	
 	private PutzListe mPutzliste;
+	private Tasks mTasks;
 
 	/**
 	 * Konstruktor von MutterLayout. Initialisiert die verschiedenen Views des Programms.
@@ -70,8 +74,11 @@ public class MutterLayout extends JPanel
 			JOptionPane.showMessageDialog(this, "Auf die Datenbank kann nicht zugegriffen werden!");
 			System.exit(1);
 		}
-
-		selectDB();
+		if(path==null)
+		{
+			System.exit(0);
+		}
+		selectParty();
 
 		mTabs = new JTabbedPane(JTabbedPane.TOP);
 		mTabs.setBackground(mittelrosa);
@@ -98,6 +105,9 @@ public class MutterLayout extends JPanel
 			mTabs.add(mStammdaten, "Stammdaten");
 			mGenerierung = new Generierung(db, this);
 			mTabs.add(mGenerierung, "Pärchengenerierung");
+			
+			mTasks = new Tasks(db, this);
+			this.add(mTasks, BorderLayout.EAST);
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -116,19 +126,22 @@ public class MutterLayout extends JPanel
 		});
 	}
 	
-	private void selectDB()
+	/**
+	 * Dialog wird aufgerufen, um Party auszuwählen.
+	 */
+	private void selectParty()
 	{
 		SelectParty selection=null;
 		try {
 			selection = new SelectParty(db, this);
 		} catch (SQLException e1) {
-			e1.printStackTrace();
+
 		}
 		mPID = -1;
 		while(mPID==-1)
 		{
 			if(!selection.isVisible())
-				System.exit(1); //TODO anders lösen
+				System.exit(1);
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {

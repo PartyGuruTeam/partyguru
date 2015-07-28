@@ -1,20 +1,25 @@
-package gui.couples;
+package frontend.forms;
 
-import gui.MutterLayout;
+import frontend.MutterLayout;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.*;
+
 import javax.swing.*;
 import javax.swing.border.*;
-import db.Database;
+
+import backend.Database;
 
 public class Generierung extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+
+	private static final String Color = null;
 
 	/**
 	 *  @author Franzi
@@ -45,6 +50,7 @@ public class Generierung extends JPanel implements ActionListener {
 	private JButton mMixButton;
 
 	Vector<JPanel> JPanelArray = new Vector<JPanel>();
+
 
 	public Generierung(Database db, MutterLayout parent) throws SQLException {
 
@@ -84,7 +90,7 @@ public class Generierung extends JPanel implements ActionListener {
 		mMannWillFrau = new ArrayList<String>();
 		mFrauWillFrau = new ArrayList<String>();
 		mPaare = new ArrayList<ArrayList<String>>();
-
+		
 
 		try {
 			result = mDB.executeQuery("SELECT GESCHLECHT, NAME, VERFUEGBARKEIT FROM GAESTELISTE LEFT JOIN PERSONEN ON GAESTELISTE.PERSID = PERSONEN.PERSID");
@@ -114,6 +120,7 @@ public class Generierung extends JPanel implements ActionListener {
 				}
 				else if (mGes.contains("w"))
 				{
+
 					if (mVerf.contains("2"))
 					{
 						mFrauWillFrau.add(result.getString("NAME"));
@@ -246,7 +253,7 @@ public class Generierung extends JPanel implements ActionListener {
 		}
 
 		this.removeAll();
-
+		
 		//Erstelle Kopfzeile als Header
 		addLabel("Diese Pärchen wurden für deine Party generiert. Wenn du noch einmal neu mischen möchtest,"
 				+ " klicke den Button ganz unten", 0, this);
@@ -343,12 +350,17 @@ public class Generierung extends JPanel implements ActionListener {
 
 	}
 
-
 	public void actionPerformed(ActionEvent e) {
 
-		//Methode, die den Datensatz in die Datenbank speichert
-		print();
+		if (e.getSource().equals(mMixButton))
+		{
+			//Methode, die den Datensatz in die Datenbank speichert
+			print();
+		}
+		else 
+		{
 
+		}
 
 	}
 	

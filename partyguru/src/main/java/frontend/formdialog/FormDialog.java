@@ -1,4 +1,4 @@
-package gui.formdialog;
+package frontend.formdialog;
 
 import java.awt.Dialog;
 import java.awt.Window;
@@ -19,6 +19,12 @@ import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.text.JTextComponent;
 
+/**
+ * Klasse zum automatischen Erstellen von Dialogen. Diese werden u.a. verwendet, um neue Einträge in 
+ * die Tabellen einzufügen. 
+ * @author Bastian
+ *
+ */
 public class FormDialog extends JPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +35,14 @@ public class FormDialog extends JPanel implements ActionListener
 
 	Vector<String> mResult;
 
-	public FormDialog(String titel, FormElement[] elements, Vector<String> result, Window parent)
+	/**
+	 * Erstellen eines neuen Fensters
+	 * @param titel Titel des Fensters
+	 * @param elements Array von FormElementen, die im Dialog dargestellt werden sollen.
+	 * @param result Vektor, in den die ausgewählten Ergebnisse geschrieben werden sollen.
+	 * @param parent Eltern Fenster
+	 */
+	private FormDialog(String titel, FormElement[] elements, Vector<String> result, Window parent)
 	{
 		super();
 		mFrame = new JDialog(parent, titel, Dialog.ModalityType.DOCUMENT_MODAL);
@@ -118,6 +131,13 @@ public class FormDialog extends JPanel implements ActionListener
 		}
 	}
 	
+	/**
+	 * Statische Funktion, um ein FormDialog aufzurufen und das Ergebnis auszugeben. 
+	 * @param string Titel des Fensters
+	 * @param formElements FormElemente, die in den Dialog eingefügt werden sollen
+	 * @param parent Eltern Fenster
+	 * @return String Vektor, mit allen ausgewählten/eingegebenen Daten.
+	 */
 	public static Vector<String> getDialog(String string, FormElement[] formElements, Window parent)
 	{
 		Vector<String> result = new Vector<String>();

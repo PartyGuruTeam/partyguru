@@ -1,4 +1,4 @@
-package gui;
+package frontend.forms;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -7,7 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-import db.Database;
+import frontend.MutterLayout;
+import backend.Database;
 
 //TODO Tabs entfernen
 

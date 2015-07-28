@@ -1,10 +1,15 @@
-package gui.formdialog;
+package frontend.formdialog;
 
 
 import java.util.Vector;
 
 import javax.swing.JComponent;
 
+/**
+ * Elemente, die in FormDialog eingefügt werden können. 
+ * @author Bastian
+ *
+ */
 public class FormElement 
 {
 	public static final int TEXT_FIELD = 1;
@@ -19,6 +24,11 @@ public class FormElement
 	Vector<String> mInitVector;
 	JComponent mComp;
 	
+	/** 
+	 * Erstellen eines neuen Elements.
+	 * @param label Schriftzug, der neben dem Element dargestellt wird.
+	 * @param type Sollte eines der statischen FormElement Konstanten sein (außer DROP_DOWN).
+	 */
 	public FormElement(String label, int type)
 	{
 		mLabel = label;
@@ -27,6 +37,12 @@ public class FormElement
 		mComp = null;
 	}
 	
+	/**
+	 * Erstellen eines neuen Elements.
+	 * @param label Schriftzug, der neben dem Element dargestellt wird.
+	 * @param type Sollte eines der statischen FormElement Konstanten sein
+	 * @param init Für DROP_DOWN: Elemente, die im DropDown stehen sollen.
+	 */
 	public FormElement(String label, int type, Vector<String> init)
 	{
 		mLabel = label;

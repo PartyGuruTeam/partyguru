@@ -1,4 +1,4 @@
-package gui;
+package frontend.tables;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
@@ -30,10 +30,10 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 	private JButton mNeuButton;
 	private JButton mLoeschenButton;
 
-	JTable mTabelle;
+	protected JTable mTabelle;
 	private DefaultTableModel mModell;
 	
-	JPanel mButtonPanel;
+	protected JPanel mButtonPanel;
 	
 	Boolean[] mIsEditable;
 
@@ -204,7 +204,12 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 }
 
 
-
+/**
+ * Klasse wird verwendet, um die Datentypen der Spalten festzustellen und um festzustellen,
+ * ob Spalten editierbar sind.
+ * @author Bastian
+ *
+ */
 class MyTableModel extends DefaultTableModel
 {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package gui.kontakte;
+package frontend.tables;
 
 import java.awt.Window;
 import java.sql.ResultSet;
@@ -8,11 +8,10 @@ import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import db.Database;
-import gui.MutterLayout;
-import gui.TabellenLayout;
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+import backend.Database;
+import frontend.MutterLayout;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
 
 public class Gaesteliste extends TabellenLayout 
 {	

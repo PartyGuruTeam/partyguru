@@ -1,4 +1,4 @@
-package gui.putz;
+package frontend.tables;
 
 import java.awt.Window;
 import java.sql.ResultSet;
@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 import javax.swing.SwingUtilities;
-import db.Database;
-import gui.MutterLayout;
-import gui.TabellenLayout;
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+
+import backend.Database;
+import frontend.MutterLayout;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
 
 public class PutzListe extends TabellenLayout 
 {	
@@ -20,8 +20,17 @@ public class PutzListe extends TabellenLayout
 	private MutterLayout mParent;
 	int mpid;
 	
+	/**
+	 * Der Konstruktor ruft aktuelle Daten aus der Relation Putz der DB ab, 
+	 * woraus die Ansicht des Putzplans erstellt wird.
+	 * 
+	 * @param db
+	 * @param parent
+	 * @throws SQLException
+	 */
+	
 	public PutzListe(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+parent.getPID()),
+		super(db.executeQuery("SELECT P.RID, PT.ART, P.RAUM, P.DAUER, P.NOTIZ FROM PUTZ P, PUTZTEMPLATE PT WHERE PT.PTID=P.PTID AND PID="+parent.getPID()),
 				new Boolean[] { false, false, true, true, true });
 		mDB = db;
 		mParent = parent;
@@ -29,15 +38,24 @@ public class PutzListe extends TabellenLayout
 	}
 
 
+	/**
+	 * printTable
+	 * Aktualisiert die Tabellenansicht.
+	 */
+	
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT RID, PTID, RAUM, DAUER, NOTIZ FROM PUTZ WHERE PID="+mParent.getPID()));
+			printTable(mDB.executeQuery("SELECT P.RID, PT.ART, P.RAUM, P.DAUER, P.NOTIZ FROM PUTZ P, PUTZTEMPLATE PT WHERE PT.PTID=P.PTID AND PID="+mParent.getPID()));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * deleteRow
+	 * Löscht das angegebene Tupel aus der Datenbank.
+	 */
 	@Override
 	public void deleteRow(Vector<String> v) {
 		try {
@@ -47,6 +65,11 @@ public class PutzListe extends TabellenLayout
 		}
 	}
 
+	/**
+	 * addRow
+	 * Fügt ein Tupel zur Datenbank hinzu und fordert den Nutzer zur Eingabe
+	 * der Feldinhalte auf. Die eingegebenen Werte werden der DB hinzugefügt.
+	 */
 	@Override
 	public void addRow() 
 	{
@@ -94,6 +117,13 @@ public class PutzListe extends TabellenLayout
 		}	
 	}
 
+
+	/**
+	 * updateRow
+	 * Führt Änderungen in den entsprechenden Feldern aus und schreibt 
+	 * sie in die DB.
+	 */
+	
 	@Override
 	public void updateRow(Vector<String> row) {
 		try {

@@ -1,17 +1,18 @@
-package gui.kontakte;
+package frontend.tables;
 
 import java.awt.Window;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-
-import gui.TabellenLayout;
-import db.Database;
-import gui.MutterLayout;
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+import backend.Database;
+import frontend.MutterLayout;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
 
 public class PersonenTabelle extends TabellenLayout {
 
@@ -26,6 +27,14 @@ public class PersonenTabelle extends TabellenLayout {
 		});
 		mDB = db;
 		mParent = parent;
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(new JLabel("Legende Verfügbarkeit"));
+		panel.add(new JLabel("1: nicht verfügbar"));
+		panel.add(new JLabel("2: verfügbar für w"));
+		panel.add(new JLabel("3: verfügbar für m"));
+		panel.add(new JLabel("0: wurde nicht eingetragen"));
+		this.mButtonPanel.add(panel);
 	}
 
 	@Override

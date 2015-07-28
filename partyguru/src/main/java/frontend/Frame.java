@@ -1,6 +1,9 @@
-package gui;
+package frontend;
+
+import java.awt.Color;
 
 import javax.swing.JFrame;
+
 
 /**
  * Klasse, die das Hauptfenster beinhaltet

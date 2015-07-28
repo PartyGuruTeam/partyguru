@@ -1,16 +1,17 @@
-package gui.material;
+package frontend.tables;
 
 import java.awt.Window;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
+
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import db.Database;
-import gui.MutterLayout;
-import gui.TabellenLayout;
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+
+import backend.Database;
+import frontend.MutterLayout;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
 
 public class Mitbringliste extends TabellenLayout 
 {	
@@ -21,7 +22,7 @@ public class Mitbringliste extends TabellenLayout
 	int mpid;
 
 	public Mitbringliste(Database db, MutterLayout parent) throws SQLException {
-		super(db.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+		super(db.executeQuery("SELECT M.MID, MT.MATERIALNAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
 				+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
 				+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+parent.getPID()), 
 				new Boolean[] {false, false, false, true, true, true } );
@@ -34,7 +35,7 @@ public class Mitbringliste extends TabellenLayout
 	@Override
 	public void printTable() {
 		try {
-			printTable(mDB.executeQuery("SELECT M.MID, MT.NAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
+			printTable(mDB.executeQuery("SELECT M.MID, MT.MATERIALNAME, P.NAME, M.ANZAHL, M.EINHEIT, M.NOTIZ "
 					+ "FROM Material M, PERSONEN P, MATERIALTEMPLATE MT "
 					+ "WHERE P.PERSID=M.PERSID AND M.MTID=MT.MTID AND M.PID="+mpid));
 		} catch (SQLException e) {
@@ -56,7 +57,7 @@ public class Mitbringliste extends TabellenLayout
 	{
 		final Window w = SwingUtilities.getWindowAncestor(this);
 		try {
-			ResultSet rs = mDB.executeQuery("SELECT MTID, NAME FROM MaterialTemplate");
+			ResultSet rs = mDB.executeQuery("SELECT MTID, MATERIALNAME FROM MaterialTemplate");
 			final Vector<String> elements = new Vector<String>();
 			while(rs.next())
 			{
@@ -79,7 +80,6 @@ public class Mitbringliste extends TabellenLayout
 							new FormElement("Notiz", FormElement.TEXT_FIELD)
 
 					}, w);
-					//TODO verbessern
 					if(result.size()==5)
 					{
 						String mtid = result.elementAt(0).split("-")[0];
@@ -113,8 +113,8 @@ public class Mitbringliste extends TabellenLayout
 				row.set(3, "-1");
 			mDB.executeUpdate("UPDATE Material SET "
 					+ "ANZAHL='"+row.elementAt(3)+"', "
-					+ "EINHEIT='"+row.elementAt(3)+"', "
-					+ "NOTIZ='"+row.elementAt(4)+"' "
+					+ "EINHEIT='"+row.elementAt(4)+"', "
+					+ "NOTIZ='"+row.elementAt(5)+"' "
 					+ "WHERE MID="+row.elementAt(0));
 		} catch (SQLException e) {
 			e.printStackTrace();

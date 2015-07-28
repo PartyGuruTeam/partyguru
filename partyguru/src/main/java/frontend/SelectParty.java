@@ -1,10 +1,12 @@
-package gui;
+package frontend;
 
-import gui.formdialog.FormDialog;
-import gui.formdialog.FormElement;
+import frontend.formdialog.FormDialog;
+import frontend.formdialog.FormElement;
+import frontend.tables.TabellenLayout;
 
 import java.awt.Window;
 import java.awt.event.ActionEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
@@ -13,10 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 
-import db.Database;
+import backend.Database;
 
 /**
- * Testklasse zum Testen von TabellenLayout.
+ * Klasse, um Party von Datenbank auszuwählen.
  * @author Bastian
  *
  */
@@ -30,6 +32,12 @@ public class SelectParty extends TabellenLayout
 	JButton mSubmit;
 	JFrame mFrame;
 
+	/**
+	 * Fenster erstellen
+	 * @param db
+	 * @param parent
+	 * @throws SQLException
+	 */
 	public SelectParty(Database db, MutterLayout parent) throws SQLException
 	{
 		super(db.executeQuery("SELECT PID, NAME FROM PARTY"), new Boolean[]{ false, true });
@@ -85,6 +93,21 @@ public class SelectParty extends TabellenLayout
 					try {
 						mDB.executeUpdate("INSERT INTO PARTY"
 								+ " (NAME) VALUES ('"+result.elementAt(0)+"')");
+						
+						ResultSet rs = mDB.executeQuery("SELECT PID FROM PARTY ORDER BY PID DESC LIMIT 1");
+						int pid=-1;
+						if(rs.next())
+							pid = rs.getInt("PID");
+						
+						mDB.executeUpdate("INSERT INTO TASKS(NAME, STATUS, PID, KID) "
+								+ "VALUES ('Ort/Datum/Uhrzeit/Motto', '0', '"+pid+"', '1'),"
+										+ "('Schlaf-/Mitfahrgelegenheiten', '0', '"+pid+"', '1'),"
+										+ "('Einladungen', '0', '"+pid+"', '1'),"
+										+ "('Gästeliste', '0', '"+pid+"', '2'),"
+										+ "('Mitbringliste', '0', '"+pid+"', '2'),"
+										+ "('Pärchengenerierung', '0', '"+pid+"', '2'),"
+										+ "('Partyfeedback', '0', '"+pid+"', '2'),"
+										+ "('Putzplan', '0', '"+pid+"', '3')");
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
