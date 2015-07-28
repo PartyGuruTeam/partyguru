@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
 import frontend.MutterLayout;
@@ -105,8 +103,6 @@ public class PStammdaten extends FormularLayout
 		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String datum = sf.format(cal.getTime());
 		String motto = tfArray.elementAt(3).getText();
-
-		//TODO Datenbankeinträge fertig machen
 
 		try {
 			mDB.executeUpdate("UPDATE PARTY SET NAME='"+name+"', ZEIT='"+datum+"', ORT='"+ort+"', MOTTO='"+motto+"' WHERE PID =" + mPID);

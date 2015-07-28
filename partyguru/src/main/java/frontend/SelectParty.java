@@ -49,6 +49,9 @@ public class SelectParty extends TabellenLayout
 		mDB = db;
 		mParent = parent;
 		mSubmit = new JButton("Auswählen");
+		mSubmit.setBackground(MutterLayout.mittelrosa);
+		mSubmit.setForeground(MutterLayout.schriftrosa);
+		mSubmit.setFont(MutterLayout.knoepfe);
 		mSubmit.addActionListener(this);
 		this.mButtonPanel.add(mSubmit);
 

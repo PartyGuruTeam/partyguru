@@ -1,7 +1,6 @@
 package frontend.tables;
 
 import java.awt.BorderLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
@@ -9,7 +8,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Vector;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -48,6 +46,8 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		mIsEditable = isEditable;
 		
 		this.setLayout(new BorderLayout());
+		this.setBackground(MutterLayout.hellrosa);
+		
 		mTabelle = new JTable();
 		this.add(new JScrollPane(mTabelle), BorderLayout.CENTER);
 		try {
@@ -57,16 +57,27 @@ public abstract class TabellenLayout extends JPanel implements ActionListener, T
 		}
 		
 		mTabelle.getTableHeader().setReorderingAllowed(false);
+		mTabelle.getTableHeader().setBackground(MutterLayout.mittelrosa);
+		mTabelle.setBackground(MutterLayout.hellrosa);
+		mTabelle.getTableHeader().setForeground(MutterLayout.schriftrosa);
+		mTabelle.getTableHeader().setFont(MutterLayout.titel);	
 		
 		mButtonPanel = new JPanel();
+		mButtonPanel.setBackground(MutterLayout.hellrosa);
 
 		mNeuButton = new JButton("Neu...");
 		mButtonPanel.add(mNeuButton);
 		mNeuButton.addActionListener(this);
+		mNeuButton.setBackground(MutterLayout.mittelrosa);
+		mNeuButton.setForeground(MutterLayout.schriftrosa);
+		mNeuButton.setFont(MutterLayout.knoepfe);
 
 		mLoeschenButton = new JButton("Löschen");
 		mButtonPanel.add(mLoeschenButton);
 		mLoeschenButton.addActionListener(this);
+		mLoeschenButton.setBackground(MutterLayout.mittelrosa);
+		mLoeschenButton.setForeground(MutterLayout.schriftrosa);
+		mLoeschenButton.setFont(MutterLayout.knoepfe);
 		
 		this.add(mButtonPanel, BorderLayout.SOUTH);
 	}
@@ -234,8 +245,5 @@ class MyTableModel extends DefaultTableModel
 			return b;
 		else
 			return false;
-	}
-	
-	
-	
+	}	
 }
